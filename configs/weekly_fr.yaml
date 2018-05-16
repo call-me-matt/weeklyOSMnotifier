@@ -1,0 +1,28 @@
+lang: 'fr' ### overwrite language
+runnable: True
+#do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
+#do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+mail_subject: 'hebdoOSM Nº {c.post_nr} {c.daterange_str}'
+mail_to: 
+ - "osm@coupey.fr"
+ - "talk-africa@openstreetmap.org"
+ - "talk-tn@openstreetmap.org"
+ - "talk-ht@openstreetmap.org"
+ - "hot-francophone@openstreetmap.org"
+ - "talk-sn@openstreetmap.org"
+ - "talk-cm@openstreetmap.org"
+ - "talk-ca@openstreetmap.org"
+ - "talk-fr@openstreetmap.org"
+tw_text: "Une semaine d'actualité #OpenStreetMap : hebdoOSM n°{c.post_nr} à lire *en français* sur http://www.weeklyosm.eu/fr/archives/{c.url_nr}"
+mail_body: |
+  Bonjour,
+
+  Le résumé hebdomadaire n° {c.post_nr} de l'actualité OpenStreetMap vient de paraître *en français*. Un condensé à retrouver sur :
+
+  {c.url}
+
+  Bonne lecture !
+
+  hebdoOSM ? 
+  Qui : https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  Où : https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

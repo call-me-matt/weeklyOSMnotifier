@@ -1,0 +1,24 @@
+context: 'EMAILTEST'
+lang: 'en'
+runnable: False
+mail_smtp_host: "smtp.gmail.com"
+mail_smtp_port: 587
+url: "http://www.weeklyosm.eu/"
+do_mail: True # " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
+do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+do_forum: False
+mail_subject: 'Python email test'
+mail_to:
+ - "test@test.com" # this property gets overwritten in the file with the same name found in mailto/ folder
+mail_body: | 
+  This is test...
+  This is _only_ a test! 
+  With a link: {c.url}
+
+
+  and empty lines:
+
+
+  lots!
+
+  If you can read this be happy! the spamtool is now available with yaml-config files!

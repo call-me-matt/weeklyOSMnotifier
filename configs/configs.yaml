@@ -1,0 +1,24 @@
+# This creates a hierarchy of files which are loaded after each other
+# Each config which is loaded passes its settings down to files which are loaded as children
+# Children as such can override settings from their parrents
+# Each config which leaves its "runnable" flag set to True
+# Will be added by context and language to the list of available configurations 
+# Note that if you don't provide a new context or language key in a file
+# the child might overwrite any other existing configuration with the same context name and language
+# - in some cases this might be wanted behaviour - like keeping e-mail adresses secret
+
+
+- secrets/weeklysecrets.yaml:
+  - weekly_base.yaml:
+    - weekly_en.yaml:
+      - mailto/weekly_en.yaml
+    - weekly_es.yaml:
+      - mailto/weekly_en.yaml
+    - weekly_pb.yaml:
+      - mailto/weekly_en.yaml
+    - weekly_fr.yaml:
+      - mailto/weekly_en.yaml
+  - emailtest.yaml:
+    - mailto/emailtest.yaml
+- secrets/weeklytwtest_secrets.yaml:
+  - weeklytwtest_en.yaml

@@ -1,0 +1,32 @@
+
+lang: 'en'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+mail_to: 
+  - "talk@openstreetmap.org"
+  - "talk-gh@openstreetmap.org"
+  - "hot@openstreetmap.org"
+  - "talk-scotland@openstreetmap.org"
+  - "talk-id@openstreetmap.org"
+  - "talk-africa@openstreetmap.org"
+  - "talk-ph@openstreetmap.org"
+  - "talk-us@openstreetmap.org"
+  - "talk-ca@openstreetmap.org"
+  - "talk-in@openstreetmap.org"
+  - "talk-gb@openstreetmap.org"
+  - "talk-ie@openstreetmap.org"
+tw_text: "weeklyOSM issue {c.post_nr}  now available in *English* the news from the #openstreetmap #osm world http://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_body: | 
+  The weekly round-up of OSM news, issue # {c.post_nr},
+  is now available online in English, giving as always a summary of all things happening in the openstreetmap world:
+
+  {c.url}
+
+  Enjoy!
+
+  weeklyOSM? 
+  who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

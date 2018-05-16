@@ -56,3 +56,10 @@ docs/_build/
 
 # PyBuilder
 target/
+
+configs/secrets/
+
+spamenv/
+.vscode/tags
+
+configs/mailto/

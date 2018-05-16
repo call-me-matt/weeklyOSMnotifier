@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "${workspaceFolder}/spamenv/bin/python",
+    "python.linting.pylintEnabled": false
+}

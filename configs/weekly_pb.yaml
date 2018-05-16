@@ -1,0 +1,21 @@
+lang: 'pb' ### overwrite language
+runnable: True
+#do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
+#do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
+mail_to: 
+ - "talk-pt@openstreetmap.org"
+ - "talk-br@openstreetmap.org"
+tw_text: "O semanário nº {c.post_nr} está disponível em *português*. Conheça as novidades do mundo #openstreetmap http://www.weeklyosm.eu/pb/archives/{c.url_nr}"
+mail_body: |
+  Bom dia,
+
+  O semanárioOSM Nº {c.post_nr}, o resumo de tudo o que acontece no mundo OpenStreetMap, está publicado *em português*:
+
+  {c.url}
+
+  Aproveite!
+
+  semanarioOSM? 
+  Quem?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  Onde?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
