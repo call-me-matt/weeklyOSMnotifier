@@ -2,7 +2,7 @@ lang: 'ko'
 runnable: True
 #do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
-mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 mail_to: 
   - "you could enter emails directly here, but it can/will"

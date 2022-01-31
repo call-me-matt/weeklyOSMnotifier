@@ -2,7 +2,7 @@ lang: 'pl'
 runnable: True
 #do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
-mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim! Najnowsze wieści ze świata #openstreetmap #osm weeklyosm.eu/pl/archives/{c.url_nr}"
 mail_to: 

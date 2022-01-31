@@ -1,12 +1,13 @@
 context: 'EMAILTEST'
 lang: 'en'
 runnable: False
-mail_smtp_host: "smtp.gmail.com"
+mail_smtp_host: "www.weeklyosm.eu"
 mail_smtp_port: 587
 url: "https://www.weeklyosm.eu/"
 do_mail: True # " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
 do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
 do_forum: False
+mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'Python email test'
 mail_to:
  - "test@test.com" # this property gets overwritten in the file with the same name found in mailto/ folder

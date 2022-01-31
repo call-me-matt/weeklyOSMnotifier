@@ -3,7 +3,7 @@ lang: 'sw'
 runnable: True
 #do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
-mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'OSMkilawiki #{c.post_nr} {c.daterange_str}'
 tw_text: "OSMkilawiki, suala {c.post_nr}, sasa linapatikana kwenye mtandao katika lugha ya *Kiswahili*, kutupa muhtasari wa mambo yote yanayotokea katika ulimwengu wa #OpenStreetMap #OSM http://www.weeklyosm.eu/sw/archives/{c.url_nr}"
 mail_to: 
