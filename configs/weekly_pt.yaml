@@ -1,0 +1,25 @@
+lang: 'pt' ### overwrite language
+runnable: True
+#do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
+#do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_pb.yaml"
+tw_text: "O semanário nº {c.post_nr} está disponível em *português*. 
+Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/pt/archives/{c.url_nr}"
+mail_body: |
+  Bom dia,
+
+  O semanárioOSM Nº {c.post_nr}, o resumo de tudo o que acontece no mundo OpenStreetMap, está publicado *em português* : 
+  
+  {c.url}
+
+  Aproveite!
+
+  Você sabia que também pode enviar mensagens para o OSM semanal/semanárioOSMſ sem ser membro? Basta fazer login em https://osmbc.openstreetmap.de/login com sua conta OSM e usar a conta de convidado. Leia mais sobre como escrever um post aqui: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+
+  semanarioOSM? 
+  Quem?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  Onde?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

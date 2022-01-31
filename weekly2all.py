@@ -180,10 +180,12 @@ class osmSPAM(object):
             server.login(self.mail_user, self.mail_pw)
             server.sendmail(self.mail_from, TO, msg.as_string())
             server.close()
-            print('successfully sent the mail')
+            print('successfully sent the mail to '+", ".join(TO))
         except:
             print("failed to send mail")
-
+            traceback.print_exc() 
+            pprint.pprint((self.mail_user, self.mail_pw,self.mail_from))
+            
         return
 
     def post_forum(self):
@@ -229,7 +231,7 @@ class osmSPAM(object):
                         time.sleep(1)
                 print('sending tweet with image')
                 pic = api.media_upload(self.tw_pic)
-                pprint.pprint(api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] ))                
+                api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )                
             else:
                 print('image not found!')
                 exit(1)

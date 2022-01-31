@@ -1,6 +1,6 @@
 
 
-# OSM Weekly "SPAM" Tool
+# weeklyOSM "SPAM" Tool
 This is the OSM Weekly "SPAM" Tool for sending updates in different languages. It supports posting to a forum,
 sending emails via google and sending tweets via twitter. 
 Feel free to use it as a baseline for simmilar usecases.
@@ -47,7 +47,23 @@ leading to additional mail sent to the first three lines instead of only to the 
 For calling this from a script within the prepared environment call the shellscript runenvweekly2all.sh.
 It takes the same parameters as the python script but fixes PYTHONIOENCODING to UTF-8 and LC_CTYPE to C.UFT-8 avoiding issues when called from node or other environments.
 
+
+test call - for twitter
 ```
 ./runenvweekly2all.sh --twitter --twpic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en" "401" "7831" "2016" "02" "23.02.2016" "29.02.2016"
 ```
 
+how to call - mail and twitter
+```
+./runenvweekly2all.sh --mail --twitter --twpic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en" "420" "10586" "2018" "02" "2018-07-31" "2018-08-06"
+```
+
+INTRODUCING a new language xx 
+1. in configs.yaml add two lines for the xx language
+    - weekly_xx.yaml:
+    - mailto/weekly_xx.yaml
+2. in mailto 
+    - create weekly_xx.yaml - content: email addresses
+3. create weekyl_xx.yaml - content: Twitter and email text
+
+If you copy from another language ... DON'T forget to change the language_header

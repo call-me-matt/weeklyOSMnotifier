@@ -1,0 +1,21 @@
+lang: 'ko'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+tw_text: "#openstreetmap #osm 관련 뉴스를 전하는 주간OSM이 {c.post_nr}번째 기사를 발행했습니다! https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_body: | 
+  매주 일어나는 오픈스트리트맵 소식을 종합한,{c.post_nr}번째 주간OSM이 발행되었습니다. 
+  
+  {c.url}
+
+  읽어 주셔서 감사합니다!
+  주간OSM에 올라갈 만한 소식을 알고 계시나요? 그렇다면 https://osmbc.openstreetmap.de/login 에서 오픈스트리트맵 계정으로 로그인만 하면 여
+  러분도 기사를 쓸 수 있습니다. 기사 작성법 등의 정보는 http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 을 참조하세요.
+  주간OSM이란? 
+  누가 만드나요?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  어디서 만드나요?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

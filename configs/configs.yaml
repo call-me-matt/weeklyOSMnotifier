@@ -1,23 +1,42 @@
 # This creates a hierarchy of files which are loaded after each other
 # Each config which is loaded passes its settings down to files which are loaded as children
-# Children as such can override settings from their parrents
+# Children as such can override settings from their parents
 # Each config which leaves its "runnable" flag set to True
 # Will be added by context and language to the list of available configurations 
 # Note that if you don't provide a new context or language key in a file
 # the child might overwrite any other existing configuration with the same context name and language
 # - in some cases this might be wanted behaviour - like keeping e-mail adresses secret
 
-
 - secrets/weeklysecrets.yaml:
   - weekly_base.yaml:
     - weekly_en.yaml:
       - mailto/weekly_en.yaml
+    - weekly_de.yaml:
+      - mailto/weekly_de.yaml
     - weekly_es.yaml:
-      - mailto/weekly_en.yaml
-    - weekly_pb.yaml:
-      - mailto/weekly_en.yaml
+      - mailto/weekly_es.yaml
+    - weekly_pt.yaml:
+      - mailto/weekly_pt.yaml
     - weekly_fr.yaml:
-      - mailto/weekly_en.yaml
+      - mailto/weekly_fr.yaml   
+    - weekly_sw.yaml:
+      - mailto/weekly_sw.yaml
+    - weekly_ko.yaml:
+      - mailto/weekly_ko.yaml
+    - weekly_it.yaml:
+      - mailto/weekly_it.yaml
+    - weekly_pl.yaml:
+      - mailto/weekly_pl.yaml   
+    - weekly_zh.yaml:
+      - mailto/weekly_zh.yaml
+    - weekly_cn.yaml:
+      - mailto/weekly_cn.yaml      
+    - weekly_ru.yaml:
+      - mailto/weekly_ru.yaml
+    - weekly_tr.yaml:
+      - mailto/weekly_tr.yaml 
+    - weekly_ja.yaml:
+      - mailto/weekly_ja.yaml     
   - emailtest.yaml:
     - mailto/emailtest.yaml
 - secrets/weeklytwtest_secrets.yaml:

@@ -1,0 +1,22 @@
+lang: 'ja'
+runnable: True
+do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+tw_text: "週刊OSM issue {c.post_nr} が公開されています。世界の #OpenStreetMap 関連ニュースはこちらからhttps://weeklyosm.eu/ja/archives/{c.url_nr} … どうぞご覧ください！ #osmjp"
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_body: | 
+   週刊OSMの第{c.post_nr}号が公開されました。OpenStreetMapに関する出来事を毎週お届けしています。
+
+   {c.url}
+
+    ぜひご覧ください！
+
+    週刊OSMに掲載したいニュースをお持ちの方は、 https://osmbc.openstreetmap.de/login からぜひ情報をお寄せください。詳細は http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm をお読みください。
+
+    週刊OSMは世界の各地からお届けしています。
+    制作メンバー: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    地域: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.

@@ -1,0 +1,23 @@
+lang: 'zh'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+tw_text: "weeklyOSM {c.post_nr} 期涵蓋 #開放街圖 #osm 世界大小事，已經發佈台灣華語版本 https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_body: | 
+  台灣社群朋友好：
+  每週 OSM 新聞匯集文摘，# {c.post_nr} 期，如今已經發佈台灣華語版本，涵蓋開放街圖世界的大小事情！
+
+  {c.url}
+
+  歡迎閱讀！
+
+  你知道你能提供消息給 weeklyOSM 小組嗎？只要用 OSM 帳號登入 https://osmbc.openstreetmap.de/login 就可以了。關於怎麼撰寫的方式請參閱：http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+
+  weeklyOSM? 
+  誰：https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  那裡呢？：https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

@@ -1,0 +1,24 @@
+lang: 'tr'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+tw_text: "weeklyOSM {c.post_nr}. hafta içeriği Türkçe olarak çevrimiçi. #OpenStreetMap #osm dünyasından haberler: https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_body: | 
+  OSM ile ilgili haberlerin haftalık derlemesi, sayı {c.post_nr} Türkçe olarak çevrimiçi, ve her zamanki gibi OpenStreetMap dünyasında olan pek çok şeyin özetini size sunuyor:
+  
+  {c.url}
+  
+  İyi okumalar!
+  
+  weeklyOSM'e sizin de içerik önerisi yapabileceğinizi biliyor muydunuz? Sadece https://osmbc.openstreetmap.de/login adresine OSM hesabınızla giriş yapmanız yeterli.
+  
+  Makale eklemekle ilgili daha detaylı bilgi almak için burayı okuyun: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+  
+  weeklyOSM?
+  kim: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  nerede: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

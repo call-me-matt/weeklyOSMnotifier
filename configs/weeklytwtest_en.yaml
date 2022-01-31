@@ -1,9 +1,9 @@
 context: 'WEEKLYTWTEST'
-lang: 'en'
+lang: 'ko'
 runnable: True
 url: "http://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"
 do_mail: False
 do_forum: False
 do_twitter: True
 #tw_text = "Die OpenStreetMap Wochennotiz Nr. {c.post_nr} ist da, wie immer mit allen Neuigkeiten aus der #openstreetmap #osm Welt: {c.url}"
-tw_text: "This is a testmessage via twitter - go here:  http://www.weeklyosm.eu/archives/{c.url_nr}"
+tw_text: "#openstreetmap #osm 관련 뉴스를 전하는 주간OSM이 {c.post_nr}번째 기사를 발행했습니다! http://www.weeklyosm.eu/archives/{c.url_nr}"

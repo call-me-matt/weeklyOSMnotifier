@@ -2,18 +2,12 @@ lang: 'fr' ### overwrite language
 runnable: True
 #do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
 #do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
 mail_subject: 'hebdoOSM Nº {c.post_nr} {c.daterange_str}'
 mail_to: 
- - "osm@coupey.fr"
- - "talk-africa@openstreetmap.org"
- - "talk-tn@openstreetmap.org"
- - "talk-ht@openstreetmap.org"
- - "hot-francophone@openstreetmap.org"
- - "talk-sn@openstreetmap.org"
- - "talk-cm@openstreetmap.org"
- - "talk-ca@openstreetmap.org"
- - "talk-fr@openstreetmap.org"
-tw_text: "Une semaine d'actualité #OpenStreetMap : hebdoOSM n°{c.post_nr} à lire *en français* sur http://www.weeklyosm.eu/fr/archives/{c.url_nr}"
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_fr.yaml"
+tw_text: "Une semaine d'actualité #OpenStreetMap : hebdoOSM n°{c.post_nr} à lire *en français* sur https://www.weeklyosm.eu/fr/archives/{c.url_nr}"
 mail_body: |
   Bonjour,
 
@@ -22,6 +16,8 @@ mail_body: |
   {c.url}
 
   Bonne lecture !
+
+  Saviez-vous que vous pouvez vous aussi soumettre des messages pour la note hebdomadaire sans être membre ? Il vous suffit de vous connecter sur https://osmbc.openstreetmap.de/login avec votre compte OSM. Pour en savoir plus sur la rédaction d'un article, cliquez ici: http://www.weeklyosm.eu/fr/this-news-should-be-in-weeklyosm
 
   hebdoOSM ? 
   Qui : https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 

@@ -1,0 +1,26 @@
+lang: 'it'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+tw_text: "Il numero {c.post_nr} del weeklyOSM è ora disponibile in Italiano. Le ultime notizie dal mondo #openstreetmap #osm https://www.weeklyosm.eu/it/archives/{c.url_nr}."  
+mail_body: | 
+  Il settimanale di notizie su OSM, numero # {c.post_nr}, è ora disponibile online in italiano, 
+  fornendo come sempre un riassunto di molte cose che accadono nel mondo OpenStreetMap: 
+ 
+  {c.url}
+ 
+  Buona lettura! 
+
+  Sai che possono anche inviare messaggi per il weeklyOSM? Basta effettuare il login 
+  su https://osmbc.openstreetmap.de/login con il tuo account OSM. 
+
+  Per saperne di più su come scrivere un messaggio, leggi qui: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+  weeklyOSM? 
+ 
+  chi: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  dove?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

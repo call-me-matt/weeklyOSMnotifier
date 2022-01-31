@@ -3,7 +3,7 @@ lang: 'en'
 runnable: False
 mail_smtp_host: "smtp.gmail.com"
 mail_smtp_port: 587
-url: "http://www.weeklyosm.eu/"
+url: "https://www.weeklyosm.eu/"
 do_mail: True # " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
 do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
 do_forum: False

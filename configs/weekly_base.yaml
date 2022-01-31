@@ -1,4 +1,4 @@
 context: 'WEEKLY'
-url: "http://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"
+url: "https://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"
 mail_smtp_host: "smtp.gmail.com"
 mail_smtp_port: 587

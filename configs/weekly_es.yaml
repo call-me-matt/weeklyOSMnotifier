@@ -2,22 +2,20 @@ lang: 'es' ### overwrite language
 runnable: True
 #do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
 #do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}@gmail.com>"
 mail_subject: 'semanarioOSM Nº {c.post_nr} {c.daterange_str}'
 mail_to: 
- - "talk-bo@openstreetmap.org"
- - "talk-latam@openstreetmap.org"
- - "talk-co@openstreetmap.org"
- - "talk-mx@openstreetmap.org"
- - "talk-cl@openstreetmap.org"
- - "talk-cu@openstreetmap.org"
- - "talk-es@openstreetmap.org"
-tw_text: "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del mundo #openstreetmap #osm - http://www.weeklyosm.eu/es/archives/{c.url_nr}"
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_es.yaml"
+tw_text: "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del mundo #openstreetmap #osm - https://www.weeklyosm.eu/es/archives/{c.url_nr}"
 mail_body: |
   Hola, el semanario Nº {c.post_nr}, el sumario de todo lo que está ocurriendo en el mundo de openstreetmap está en línea en *español*:
 
   {c.url}
 
   ¡Disfruta!
+
+  ¿Sabías que también puedes enviar mensajes para la nota semanal sin ser miembro? Simplemente ingresa a https://osmbc.openstreetmap.de/login con tu cuenta de OSM. Lee más sobre cómo escribir una publicación aquí: http://www.weeklyosm.eu/es/this-news-should-be-in-weeklyosm 
 
   semanarioOSM? 
   ¿Dónde?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
