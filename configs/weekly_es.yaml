@@ -9,7 +9,7 @@ mail_to:
   - "be overwritten by content from mailto/weekly_es.yaml"
 tw_text: "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del mundo #openstreetmap #osm - https://www.weeklyosm.eu/es/archives/{c.url_nr}"
 mail_body: |
-  Hola, el semanario Nº {c.post_nr}, el sumario de todo lo que está ocurriendo en el mundo de openstreetmap está en línea en *español*:
+  Hola, el semanario Nº {c.post_nr}, el sumario de mucho lo que está ocurriendo en el mundo de openstreetmap está en línea en *español*:
 
   {c.url}
 
