@@ -23,6 +23,8 @@
       - mailto/weekly_sw.yaml
     - weekly_ko.yaml:
       - mailto/weekly_ko.yaml
+    - weekly_id.yaml:
+      - mailto/weekly_id.yaml
     - weekly_it.yaml:
       - mailto/weekly_it.yaml
     - weekly_pl.yaml:

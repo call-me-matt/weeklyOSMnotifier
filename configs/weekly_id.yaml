@@ -1,0 +1,22 @@
+lang: 'id'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}>"
+mail_subject: 'OSM Mingguan #{c.post_nr} {c.daterange_str}'
+tw_text: "weeklyOSM edisi {c.post_nr} kini tersedia dalam Bahasa Indonesia kumpulan berita terkini mengenai #openstreetmap #osm dari seluruh penjuru dunia https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_body: | 
+  Kabar mingguan OSM edisi # {c.post_nr} sudah terbit dalam Bahasa Indonesia, menyajikan rangkuman berita mengenai hal-hal yang terjadi di dunia OpenStreetMap dalam minggu ini :
+
+  {c.url}
+
+  Selamat membaca!
+
+  Anda juga dapat berkontribusi dengan mengirimkan artikel untuk diterbitkan dalam edisi selanjutnya. Kunjungi https://osmbc.openstreetmap.de/login menggunakan akun OpenStreetMap Anda. Untuk informasi lebih lanjut, silahkan simak panduan berikut : http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+
+  weeklyOSM? 
+  who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
