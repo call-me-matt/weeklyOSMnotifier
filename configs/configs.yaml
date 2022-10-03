@@ -38,8 +38,10 @@
     - weekly_tr.yaml:
       - mailto/weekly_tr.yaml 
     - weekly_ja.yaml:
-      - mailto/weekly_ja.yaml     
-  - emailtest.yaml:
-    - mailto/emailtest.yaml
-- secrets/weeklytwtest_secrets.yaml:
-  - weeklytwtest_en.yaml
+      - mailto/weekly_ja.yaml  
+    - weekly_uk.yaml:
+      - mailto/weekly_uk.yaml  
+    - emailtest.yaml:
+      - mailto/emailtest.yaml
+    - secrets/weeklytwtest_secrets.yaml:
+      - weeklytwtest_en.yaml

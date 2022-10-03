@@ -1,0 +1,21 @@
+lang: 'uk'
+runnable: True
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+mail_from: "weeklyteam <{c.mail_user}>"
+mail_subject: 'Тижневик OSM № {c.post_nr} {c.daterange_str}'
+tw_text: "Тижневик OSM № {c.post_nr} тепер доступний *Українською*. Це новини зі світу #openstreetmap #osm https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_to: 
+  - "you could enter emails directly here, but it can/will"
+  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_body: | 
+  Щотижневий огляд новин OSM, випуск № {c.post_nr}, тепер доступний онлайн українською мовою, надаючи, як завжди, короткий опис багатьох подій, що відбуваються у світі openstreetmap:
+  
+   {c.url}
+
+  Насолоджуйтесь! 
+  Чи знаєте ви, що також можете надсилати повідомлення для weeklyOSM? Просто увійдіть на https://osmbc.openstreetmap.de/login за допомогою свого облікового запису OSM. Дізнайтеся більше про те, як написати допис тут: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+
+  Тижневик weeklyOSM? 
+  хто: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+  де?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
