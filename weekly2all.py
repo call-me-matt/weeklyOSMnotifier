@@ -19,7 +19,7 @@ import yaml
 class configResolver(object):
     def __init__(self, args):
         with open(os.path.join('configs','configs.yaml'),"r") as hiryaml:
-            self.hierarchy_conf = yaml.load(hiryaml)
+            self.hierarchy_conf = yaml.full_load(hiryaml)
             self.configs = collections.OrderedDict()
             self.args = args
             dummy_conf = osmSPAM()
@@ -40,7 +40,7 @@ class configResolver(object):
             if os.path.isfile(fname) == True:
                 conf = deepcopy(self.stack[-1:][0])
                 with open(fname,"r") as fstr:
-                    data = yaml.load(fstr)
+                    data = yaml.full_load(fstr)
                     if data is not None:
                         conf.load_from_config(data)
                 if conf.runnable == True:

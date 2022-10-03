@@ -64,6 +64,6 @@ INTRODUCING a new language xx
     - mailto/weekly_xx.yaml
 2. in mailto 
     - create weekly_xx.yaml - content: email addresses
-3. create weekyl_xx.yaml - content: Twitter and email text
+3. create weekly_xx.yaml - content: Twitter and email text
 
 If you copy from another language ... DON'T forget to change the language_header
