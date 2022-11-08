@@ -4,7 +4,7 @@ runnable: True
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "weeklyOSM'in {c.post_nr}. hafta edisyonu, #openstreetmap #osm dünyasından haberlerle şimdi Türkçe https://www.weeklyosm.eu/archives/{c.url_nr}"
+tw_text: "weeklyOSM'in {c.post_nr}. hafta edisyonu, #openstreetmap #osm dünyasından haberlerle şimdi Türkçe https://www.weeklyosm.eu/tr/archives/{c.url_nr}"
 mail_to: 
   - "you could enter emails directly here, but it can/will"
   - "be overwritten by content from mailto/weekly_en.yaml"
