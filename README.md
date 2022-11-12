@@ -52,12 +52,12 @@ It takes the same parameters as the python script but fixes PYTHONIOENCODING to 
 
 test call - for twitter
 ```
-./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en" "401" "7831" "xxxx" "xx" "23.02.2016" "29.02.2016"
+./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr" "401" "7831" "23.02.2016" "29.02.2016"
 ```
 
 how to call - mail, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en" "420" "10586" "xxxx" "xx" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en,de,fr" "420" "10586" "2018-07-31" "2018-08-06"
 ```
 
 INTRODUCING a new language xx 

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 #import mechanize => migrate to MechanicalSoup
 import mechanicalsoup
-import requests, time, tweepy, sys
-from mastodon import Mastodon # requires (pip3 install) Mastodon.py
+import requests, time, tweepy
+from mastodon import Mastodon
 import smtplib
 import pprint
 import argparse
@@ -13,8 +13,8 @@ from PIL import Image
 import time
 import os
 import collections
-import yaml 
-
+import yaml
+import traceback
 
 
 class configResolver(object):
@@ -61,7 +61,7 @@ class osmSPAM(object):
     def __init__(self):
         """ key: """
         self.context  = ''  # context we are using (passed in as cli-parameter)
-        self.lang     = ''  # language
+        self.lang     = ''  # language or list of languages
         """ cmd Params: """
         self.post_nr  = '' # wochennotiznr or weeklyosm nr
         self.url_no  = '' # wochennotiznr or weeklyosm nr
@@ -233,6 +233,7 @@ class osmSPAM(object):
                     for i in range(10, 0, -1):
                         print('sending tweet with image in', i)
                         time.sleep(1)
+                        self.do_show_pic = False
                 print('sending tweet with image')
                 pic = api.media_upload(self.pic)
                 api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )                
@@ -257,11 +258,12 @@ class osmSPAM(object):
         if self.pic:
             if os.path.isfile(self.pic):
                 img = Image.open(self.pic)
-                if self.do_show_pic and not self.do_twitter:
+                if self.do_show_pic:
                     img.show()
                     for i in range(10, 0, -1):
                         print('sending toot with image in', i)
                         time.sleep(1)
+                        self.do_show_pic = False
                 print('sending toot with image')
                 pic = mastodon.media_post(self.pic)
                 mastodon.status_post(self.tw_text, language=self.lang, media_ids=[pic.id]) 
@@ -289,7 +291,7 @@ class osmSPAM(object):
         return
 
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --twitter --mastodon --pic ~/downloads/1.jpg --mail "WEEKLY" "es" "311" "7831" "23.02.2016" "29.02.2016"')
+argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --twitter --mastodon --pic ~/downloads/1.jpg --mail "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
 
 
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
@@ -298,7 +300,7 @@ argparser.add_argument('--mail',  action='store_true', help='send mail')
 argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
-argparser.add_argument('lang',  help='language of context' )
+argparser.add_argument('lang',  help='list of languages of context' )
 argparser.add_argument('post',  help='post number')
 argparser.add_argument('url_no',  help='url number')
 argparser.add_argument('dfrom',  help='date from')
@@ -310,11 +312,14 @@ args = argparser.parse_args()
 
 cfr = configResolver(args)
 
-config = cfr.configs.get((vars(args)['ctxt'], vars(args)['lang']))
-if  not config:
-    print("Sorry no matching configs:")
-    pprint.pprint(cfr.configs.keys())    
-else:
-    config.create_texts()
-    pprint.pprint(vars(config))
-    config.send_stuff()
+for lang in vars(args)['lang'].split(','):
+    print (f"publishing {lang}...")
+
+    config = cfr.configs.get((vars(args)['ctxt'], lang))
+    if  not config:
+        print(f"Sorry no matching config for <{lang}>. Available:")
+        pprint.pprint(cfr.configs.keys())    
+    else:
+        config.create_texts()
+        pprint.pprint(vars(config))
+        config.send_stuff()
