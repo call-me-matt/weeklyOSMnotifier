@@ -3,6 +3,7 @@
 #import mechanize => migrate to MechanicalSoup
 import mechanicalsoup
 import requests, time, tweepy, sys
+from mastodon import Mastodon # requires (pip3 install) Mastodon.py
 import smtplib
 import pprint
 import argparse
@@ -64,16 +65,15 @@ class osmSPAM(object):
         """ cmd Params: """
         self.post_nr  = '' # wochennotiznr or weeklyosm nr
         self.url_no  = '' # wochennotiznr or weeklyosm nr
-        self.year          = ''
-        self.month         = ''
         self.date_from     = ''
         self.date_to       = ''
         self.daterange_str = ''
         """ cmd which can be overriden in file """
-        self.do_forum    = False
-        self.do_twitter  = False
-        self.do_mail     = False
-        self.do_show_pic = False
+        self.do_forum     = False
+        self.do_mastodon  = False
+        self.do_twitter   = False
+        self.do_mail      = False
+        self.do_show_pic  = False
         """ values from config """
         self.runnable = False # set this variable if the config can actually be called
         self.url = ''  # url that we are sending or tweeting
@@ -81,12 +81,14 @@ class osmSPAM(object):
         self.forum_pw = ''
         self.forum_login_url = ''
         self.forum_urls = []
+        self.mastodon_INSTANCE = ''
+        self.mastodon_TOKEN = ''
         self.tw_CONSUMER_KEY = ''
         self.tw_CONSUMER_SECRET = ''
         self.tw_ACCESS_KEY = ''
         self.tw_ACCESS_SECRET = ''
         self.tw_text          = ''
-        self.tw_pic          = ''
+        self.pic          = ''
         self.mail_user = ''
         self.mail_pw   = ''
         self.mail_smtp_port = 0
@@ -100,13 +102,12 @@ class osmSPAM(object):
     def load_params(self,args):
         self.post_nr = vars(args)['post']
         self.url_nr = vars(args)['url_no']
-        self.year = vars(args)['year']
-        self.month = vars(args)['month']
         self.date_from = vars(args)['dfrom']
         self.date_to = vars(args)['dto']
-        self.tw_pic = vars(args)['twpic']
+        self.pic = vars(args)['pic']
         self.do_show_pic = vars(args)['showpic']
         self.do_mail = vars(args)['mail']
+        self.do_mastodon = vars(args)['mastodon']
         self.do_twitter = vars(args)['twitter']
 
     def assign_safe(self,name,conf):
@@ -120,6 +121,7 @@ class osmSPAM(object):
                                 'lang',
                                 'runnable',
                                 'do_forum',
+                                'do_mastodon',
                                 'do_twitter',
                                 'do_mail',
                                 'do_show_pic',
@@ -128,12 +130,14 @@ class osmSPAM(object):
                                 'forum_pw',
                                 'forum_login_url',
                                 'forum_urls',
+                                'mastodon_INSTANCE',
+                                'mastodon_TOKEN',
                                 'tw_CONSUMER_KEY',
                                 'tw_CONSUMER_SECRET',
                                 'tw_ACCESS_KEY',
                                 'tw_ACCESS_SECRET',
                                 'tw_text',
-                                'tw_pic',
+                                'pic',
                                 'mail_user',
                                 'mail_pw',
                                 'mail_smtp_port',
@@ -221,16 +225,16 @@ class osmSPAM(object):
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
         api = tweepy.API(auth)
         
-        if self.tw_pic:
-            if os.path.isfile(self.tw_pic):
-                img = Image.open(self.tw_pic)
+        if self.pic:
+            if os.path.isfile(self.pic):
+                img = Image.open(self.pic)
                 if self.do_show_pic:
                     img.show()
                     for i in range(10, 0, -1):
                         print('sending tweet with image in', i)
                         time.sleep(1)
                 print('sending tweet with image')
-                pic = api.media_upload(self.tw_pic)
+                pic = api.media_upload(self.pic)
                 api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )                
             else:
                 print('image not found!')
@@ -238,8 +242,34 @@ class osmSPAM(object):
         else:
             api.update_status(status=self.tw_text)
 
+        print(self.tw_text)
+
+    def toot(self):
+        if not self.do_mastodon:
+            return
+        print('...toot...')
+
+        mastodon = Mastodon(
+            access_token = self.mastodon_TOKEN,
+            api_base_url = self.mastodon_INSTANCE
+        )
         
-        
+        if self.pic:
+            if os.path.isfile(self.pic):
+                img = Image.open(self.pic)
+                if self.do_show_pic and not self.do_twitter:
+                    img.show()
+                    for i in range(10, 0, -1):
+                        print('sending toot with image in', i)
+                        time.sleep(1)
+                print('sending toot with image')
+                pic = mastodon.media_post(self.pic)
+                mastodon.status_post(self.tw_text, language=self.lang, media_ids=[pic.id]) 
+            else:
+                print('image not found!')
+                exit(1)
+        else:
+            mastodon.toot(self.tw_text)
 
         print(self.tw_text)
 
@@ -252,25 +282,25 @@ class osmSPAM(object):
 
         self.post_forum()
         self.tweet()
+        self.toot()
         for to in self.mail_to:
             self.send_email(to)
 
         return
 
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 2 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --twitter --mail "WEEKLY" "es" "311" "7831" "2016" "02" "23.02.2016" "29.02.2016"')
+argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --twitter --mastodon --pic ~/downloads/1.jpg --mail "WEEKLY" "es" "311" "7831" "23.02.2016" "29.02.2016"')
 
 
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
+argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
 argparser.add_argument('--mail',  action='store_true', help='send mail')
-argparser.add_argument('--twpic',  help='twitterpicture')
-argparser.add_argument('--showpic',  action='store_true', help='show twitter picture')
+argparser.add_argument('--pic',  help='picture for mastodon and twitter')
+argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
 argparser.add_argument('lang',  help='language of context' )
 argparser.add_argument('post',  help='post number')
 argparser.add_argument('url_no',  help='url number')
-argparser.add_argument('year',  help='year')
-argparser.add_argument('month',  help='month')
 argparser.add_argument('dfrom',  help='date from')
 argparser.add_argument('dto',  help='date to')
 

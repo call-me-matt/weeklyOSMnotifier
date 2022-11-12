@@ -3,3 +3,4 @@ tweepy
 Pillow
 mechanicalsoup
 pyyaml
+Mastodon.py

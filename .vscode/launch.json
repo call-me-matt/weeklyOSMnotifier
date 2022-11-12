@@ -28,7 +28,7 @@
             "args": [
                 "--showpic",
                 "--twitter", 
-                "--twpic", "/home/martinix/Schreibtisch/witzige_bilder/C3wrVxcWcAEhtrU.jpg",
+                "--pic", "/home/martinix/Schreibtisch/witzige_bilder/C3wrVxcWcAEhtrU.jpg",
                 "WEEKLYTWTEST",
                 "en", 
                 "401", 
@@ -131,7 +131,7 @@
             "name": "Python: All debug Options",
             "type": "python",
             "request": "launch",
-            "pythonPath": "${config:python.pythonPath}",
+            "python": "${command:python.interpreterPath}",
             "program": "${file}",
             "module": "module.name",
             "env": {

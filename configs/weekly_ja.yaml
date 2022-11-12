@@ -1,7 +1,8 @@
 lang: 'ja'
 runnable: True
-do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
+#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "週刊OSM issue {c.post_nr} が公開されています。世界の #OpenStreetMap 関連ニュースはこちらからhttps://weeklyosm.eu/ja/archives/{c.url_nr} … どうぞご覧ください！ #osmjp"

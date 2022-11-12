@@ -2,6 +2,7 @@ lang: 'id'
 runnable: True
 #do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
 #do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
+#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'OSM Mingguan #{c.post_nr} {c.daterange_str}'
 tw_text: "weeklyOSM edisi {c.post_nr} kini tersedia dalam Bahasa Indonesia kumpulan berita terkini mengenai #openstreetmap #osm dari seluruh penjuru dunia https://www.weeklyosm.eu/id/archives/{c.url_nr}"

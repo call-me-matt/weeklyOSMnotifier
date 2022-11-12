@@ -2,7 +2,7 @@
 
 # weeklyOSM "SPAM" Tool
 This is the OSM Weekly "SPAM" Tool for sending updates in different languages. It supports posting to a forum,
-sending emails via google and sending tweets via twitter. 
+sending emails via google and sending toots via mastodon and twitter. 
 Feel free to use it as a baseline for simmilar usecases.
 
 
@@ -20,6 +20,8 @@ You would need to create that file looking something like this:
 runnable: False
 mail_user: 'somegmailusername'
 mail_pw: somegmailssecretpasswort
+mastondon_INSTANCE: "yourinstance.social"
+mastodon_TOKEN: "yourMastodonDeveloperApplicationAccessToken"
 tw_CONSUMER_KEY: "yourTwitterConsumerKey"
 tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
 tw_ACCESS_KEY: "123456-YourTWAccessKeyNelsonMandela4Evaaaa"
@@ -50,12 +52,12 @@ It takes the same parameters as the python script but fixes PYTHONIOENCODING to 
 
 test call - for twitter
 ```
-./runenvweekly2all.sh --twitter --twpic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en" "401" "7831" "2016" "02" "23.02.2016" "29.02.2016"
+./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en" "401" "7831" "xxxx" "xx" "23.02.2016" "29.02.2016"
 ```
 
-how to call - mail and twitter
+how to call - mail, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --twitter --twpic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en" "420" "10586" "2018" "02" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en" "420" "10586" "xxxx" "xx" "2018-07-31" "2018-08-06"
 ```
 
 INTRODUCING a new language xx 
@@ -64,6 +66,6 @@ INTRODUCING a new language xx
     - mailto/weekly_xx.yaml
 2. in mailto 
     - create weekly_xx.yaml - content: email addresses
-3. create weekly_xx.yaml - content: Twitter and email text
+3. create weekly_xx.yaml - content: mastodon, twitter and email text
 
 If you copy from another language ... DON'T forget to change the language_header

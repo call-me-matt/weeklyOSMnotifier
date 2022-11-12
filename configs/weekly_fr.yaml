@@ -2,6 +2,7 @@ lang: 'fr' ### overwrite language
 runnable: True
 #do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
 #do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'hebdoOSM Nº {c.post_nr} {c.daterange_str}'
 mail_to: 
