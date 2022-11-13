@@ -57,7 +57,7 @@ test call - for twitter
 
 how to call - mail, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en,de,fr" "420" "10586" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --forum --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
 ```
 
 INTRODUCING a new language xx 

@@ -7,7 +7,8 @@ from mastodon import Mastodon
 import smtplib
 import pprint
 import argparse
-from email.mime.text import MIMEText 
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from copy import deepcopy
 from PIL import Image
 import time
@@ -98,6 +99,8 @@ class osmSPAM(object):
         self.mail_from     = ''
         self.mail_to    = []
         self.mail_body          = ''
+        self.forum_from     = ''
+        self.forum_to    = []
 
     def load_params(self,args):
         self.post_nr = vars(args)['post']
@@ -109,6 +112,7 @@ class osmSPAM(object):
         self.do_mail = vars(args)['mail']
         self.do_mastodon = vars(args)['mastodon']
         self.do_twitter = vars(args)['twitter']
+        self.do_forum = vars(args)['forum']
 
     def assign_safe(self,name,conf):
         if name in conf:
@@ -146,7 +150,9 @@ class osmSPAM(object):
                                 'mail_subject',
                                 'mail_from',
                                 'mail_to',
-                                'mail_body' ]:
+                                'mail_body',
+                                'forum_from',
+                                'forum_to' ]:
                     self.assign_safe(field,conf)
                     
     def set_date_str(self):
@@ -159,6 +165,7 @@ class osmSPAM(object):
         self.mail_subject = self.mail_subject.format(c=self)
         self.tw_text = self.tw_text.format(c=self)
         self.mail_from = self.mail_from.format(c=self)
+        self.forum_from = self.forum_from.format(c=self)
 
     def check_url_exists(self):
         r = requests.get(self.url)
@@ -187,39 +194,44 @@ class osmSPAM(object):
             print('successfully sent the mail to '+", ".join(TO))
         except:
             print("failed to send mail")
-            traceback.print_exc() 
+            traceback.print_exc()
             pprint.pprint((self.mail_user, self.mail_pw,self.mail_from))
             
         return
 
-    def post_forum(self):
+    def post_forum(self, recipient):
 
         if not self.do_forum:
             return
-        print('...einloggen forum.openstreetmap.org...')
-        browser = mechanicalsoup.StatefulBrowser()
-        browser.open(self.forum_login_url)
-        browser.select_form(nr = 0)
-        browser.form['req_username'] = self.forum_usr
-        browser.form['req_password'] = self.forum_pw
-        browser.submit_selected()
-        print(self.mail_subject)
-        print(self.mail_body)
-        for i, url in enumerate(self.forum_urls):
-            browser.open(url)
-            browser.select_form(nr = 0)
-            browser.form['req_subject'] = self.mail_subject
-            browser.form['req_message'] = self.mail_body
-            browser.submit_selected()
-            if i != len(self.forum_urls) - 1:
-                print('sleeping...')
-                time.sleep(130)
+        print('...community forum post...')
+
+        TO = recipient if type(recipient) is list else [recipient]
+
+        # Prepare actual message
+        msg = MIMEMultipart()
+
+        msg['From'] = self.forum_from
+        msg['To'] = ", ".join(TO)
+        msg['Subject'] = self.mail_subject
+        msg.attach(MIMEText(self.mail_body, 'plain'))
+
+        try:
+            server = smtplib.SMTP(self.mail_smtp_host, self.mail_smtp_port)
+            server.ehlo()
+            server.starttls()
+            server.login(self.mail_user, self.mail_pw)
+            server.sendmail(self.forum_from, TO, msg.as_string())
+            server.close()
+            print('published to '+", ".join(TO))
+        except:
+            print("failed to publish")
+            traceback.print_exc()
+            pprint.pprint((self.mail_user, self.mail_pw,self.forum_from))
 
     def tweet(self):
         if not self.do_twitter:
             return
         print('...tweet...')
-
 
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
@@ -282,21 +294,23 @@ class osmSPAM(object):
             print("URL " + self.url + " seems to be wrong")
             exit(1)
 
-        self.post_forum()
         self.tweet()
         self.toot()
         for to in self.mail_to:
             self.send_email(to)
+        for to in self.forum_to:
+            self.post_forum(to)
 
         return
 
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --twitter --mastodon --pic ~/downloads/1.jpg --mail "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
+argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
 
 
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
 argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
 argparser.add_argument('--mail',  action='store_true', help='send mail')
+argparser.add_argument('--forum',  action='store_true', help='send mail to forum threads')
 argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
