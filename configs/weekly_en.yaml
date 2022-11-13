@@ -13,11 +13,11 @@ mail_body: |
   The weekly round-up of OSM news, issue # {c.post_nr},
   is now available online in English, giving as always a summary of a lot of things happening in the openstreetmap world:
   
-   {c.url}
+  https://www.weeklyosm.eu/archives/{c.url_nr}
 
   Enjoy! 
 
-  Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+  Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
 
   weeklyOSM? 
   who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 

@@ -5,7 +5,7 @@ runnable: True
 #do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim! Najnowsze wieści ze świata #openstreetmap #osm weeklyosm.eu/pl/archives/{c.url_nr}"
+tw_text: "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim! Najnowsze wieści ze świata #openstreetmap #osm https://www.weeklyosm.eu/pl/archives/{c.url_nr}"
 mail_to: 
   - "you could enter emails directly here, but it can/will"
   - "be overwritten by content from mailto/weekly_en.yaml"
@@ -19,7 +19,7 @@ mail_body: |
 
   Miłej lektury! 
 
-  Czy wiesz, że możesz samodzielnie przesyłać wiadomości do zamieszczenia na łamach Tygodnika OSM? Zaloguj się do https://osmbc.openstreetmap.de/login przy użyciu swojego konta OSM. Aby dowiedzieć się więcej na temat tego jak napisać własny post, przeczytaj ten poradnik: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+  Czy wiesz, że możesz samodzielnie przesyłać wiadomości do zamieszczenia na łamach Tygodnika OSM? Zaloguj się do https://osmbc.openstreetmap.de/login przy użyciu swojego konta OSM. Aby dowiedzieć się więcej na temat tego jak napisać własny post, przeczytaj ten poradnik: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
 
   Tygodnik OSM? 
   Kto? https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
