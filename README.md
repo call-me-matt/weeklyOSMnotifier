@@ -26,6 +26,7 @@ tw_CONSUMER_KEY: "yourTwitterConsumerKey"
 tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
 tw_ACCESS_KEY: "123456-YourTWAccessKeyNelsonMandela4Evaaaa"
 tw_ACCESS_SECRET: "YourTWAccessSecretlsdkhjkahdkjahsrwqkjhqwkjhewqkjewqh"
+telegram_TOKEN: "YourTelegramBotToken123:456"
 ``` 
 
 Note that you have to enable sending e-mails via that account in your google-mail-account settings.
@@ -57,7 +58,7 @@ test call - for twitter
 
 how to call - mail, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --forum --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --forum --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
 ```
 
 INTRODUCING a new language xx 

@@ -1,21 +1,24 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #import mechanize => migrate to MechanicalSoup
-import mechanicalsoup
-import requests, time, tweepy
-from mastodon import Mastodon
-import smtplib
-import pprint
 import argparse
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from copy import deepcopy
-from PIL import Image
-import time
-import os
 import collections
-import yaml
+import os
+import pprint
+import smtplib
+import time
 import traceback
+from copy import deepcopy
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+import mechanicalsoup
+import requests
+import telepot
+import tweepy
+import yaml
+from mastodon import Mastodon
+from PIL import Image
 
 
 class configResolver(object):
@@ -71,6 +74,7 @@ class osmSPAM(object):
         self.daterange_str = ''
         """ cmd which can be overriden in file """
         self.do_forum     = False
+        self.do_telegram  = False
         self.do_mastodon  = False
         self.do_twitter   = False
         self.do_mail      = False
@@ -101,6 +105,8 @@ class osmSPAM(object):
         self.mail_body          = ''
         self.forum_from     = ''
         self.forum_to    = []
+        self.telegram_TOKEN     = ''
+        self.telegram_to    = []
 
     def load_params(self,args):
         self.post_nr = vars(args)['post']
@@ -113,6 +119,7 @@ class osmSPAM(object):
         self.do_mastodon = vars(args)['mastodon']
         self.do_twitter = vars(args)['twitter']
         self.do_forum = vars(args)['forum']
+        self.do_telegram = vars(args)['telegram']
 
     def assign_safe(self,name,conf):
         if name in conf:
@@ -125,6 +132,7 @@ class osmSPAM(object):
                                 'lang',
                                 'runnable',
                                 'do_forum',
+                                'do_telegram',
                                 'do_mastodon',
                                 'do_twitter',
                                 'do_mail',
@@ -136,6 +144,7 @@ class osmSPAM(object):
                                 'forum_urls',
                                 'mastodon_INSTANCE',
                                 'mastodon_TOKEN',
+                                'telegram_TOKEN',
                                 'tw_CONSUMER_KEY',
                                 'tw_CONSUMER_SECRET',
                                 'tw_ACCESS_KEY',
@@ -152,7 +161,8 @@ class osmSPAM(object):
                                 'mail_to',
                                 'mail_body',
                                 'forum_from',
-                                'forum_to' ]:
+                                'forum_to',
+                                'telegram_to']:
                     self.assign_safe(field,conf)
                     
     def set_date_str(self):
@@ -172,9 +182,6 @@ class osmSPAM(object):
         return r.status_code == 200
 
     def send_email(self, recipient):  # dunno why the loop at this call and the list-handling inside - just leaving it as a param for paranoids
-        if not self.do_mail:
-            return
-
         TO = recipient if type(recipient) is list else [recipient]
 
         # Prepare actual message
@@ -200,9 +207,6 @@ class osmSPAM(object):
         return
 
     def post_forum(self, recipient):
-
-        if not self.do_forum:
-            return
         print('...community forum post...')
 
         TO = recipient if type(recipient) is list else [recipient]
@@ -229,8 +233,6 @@ class osmSPAM(object):
             pprint.pprint((self.mail_user, self.mail_pw,self.forum_from))
 
     def tweet(self):
-        if not self.do_twitter:
-            return
         print('...tweet...')
 
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)
@@ -258,8 +260,6 @@ class osmSPAM(object):
         print(self.tw_text)
 
     def toot(self):
-        if not self.do_mastodon:
-            return
         print('...toot...')
 
         mastodon = Mastodon(
@@ -287,6 +287,19 @@ class osmSPAM(object):
 
         print(self.tw_text)
 
+    def telegram(self, bot, recipient):
+        print(f'...telegramming {recipient}...')
+        try:
+            resp = bot.sendMessage(int(recipient), self.tw_text)
+            print (resp)
+        except Exception as e:
+            print (f"ERROR: {e}")
+
+        # pin message:
+        # bot.unpinChatMessage(recipient) # unpins most recent chat message
+        # bot.pinChatMessage(recipient,resp['message_id'],True)
+
+
     def send_stuff(self):
         self.create_texts()
         print("Check if URL " + self.url + " exists before advertising...")
@@ -294,15 +307,22 @@ class osmSPAM(object):
             print("URL " + self.url + " seems to be wrong")
             exit(1)
 
-        self.tweet()
-        self.toot()
-        for to in self.mail_to:
-            self.send_email(to)
-        for to in self.forum_to:
-            self.post_forum(to)
+        if self.do_twitter:
+            self.tweet()
+        if self.do_mastodon:
+            self.toot()
+        if self.do_telegram:
+            bot = telepot.Bot(self.telegram_TOKEN)
+            for to in self.telegram_to:
+                self.telegram(bot, to)
+        if self.do_mail:
+            for to in self.mail_to:
+                self.send_email(to)
+        if self.do_forum:
+            for to in self.forum_to:
+                self.post_forum(to)
 
         return
-
 
 argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
 
@@ -311,6 +331,7 @@ argparser.add_argument('--twitter', action='store_true', help='send twitter noti
 argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
 argparser.add_argument('--mail',  action='store_true', help='send mail')
 argparser.add_argument('--forum',  action='store_true', help='send mail to forum threads')
+argparser.add_argument('--telegram',  action='store_true', help='send announcements to telegram channels and groups where the bot is admin')
 argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
