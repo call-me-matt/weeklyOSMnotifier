@@ -1,8 +1,8 @@
 lang: 'ru'
 runnable: True
-#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
-#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
-#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
+#do_mail: False    # uncomment in order to ignore "--mail" for this language
+#do_twitter: False # uncomment in order to ignore "--twitter" for this language
+do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "ЕженедельникOSM №{c.post_nr} теперь доступен на русском. Последние новости из мира #openstreetmap https://www.weeklyosm.eu/ru/archives/{c.url_nr}"
@@ -17,7 +17,7 @@ mail_body: |
 
   Enjoy! 
 
-  Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: http://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+  Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
 
   weeklyOSM? 
   who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 

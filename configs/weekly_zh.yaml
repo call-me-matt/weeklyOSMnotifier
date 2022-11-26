@@ -1,8 +1,8 @@
 lang: 'zh'
 runnable: True
-#do_mail: False " wenn dies auskommentiert wird, wird der parameter "--mail" ignoriert
-#do_twitter: False " wenn dies auskommentiert wird, wird der parameter "--twitter" ignoriert und es wird NICHT getwittert
-#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
+#do_mail: False    # uncomment in order to ignore "--mail" for this language
+#do_twitter: False # uncomment in order to ignore "--twitter" for this language
+do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is calledignoriert und NICHT getootet
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "weeklyOSM {c.post_nr} 期涵蓋 #開放街圖 #osm 世界大小事，已經發佈台灣華語版本 https://www.weeklyosm.eu/zh/archives/{c.url_nr}"

@@ -1,8 +1,8 @@
 lang: 'pt' ### overwrite language
 runnable: True
-#do_mail: False " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
-#do_twitter: False " wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
-#do_mastodon: False " wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
+#do_mail: False    # uncomment in order to ignore "--mail" for this language
+#do_twitter: False # uncomment in order to ignore "--twitter" for this language
+do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
 mail_to: 

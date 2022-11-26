@@ -9,6 +9,8 @@
 
 - secrets/weeklysecrets.yaml:
   - weekly_base.yaml:
+    - weekly_int.yaml:
+      - mailto/weekly_int.yaml
     - weekly_en.yaml:
       - mailto/weekly_en.yaml
     - weekly_de.yaml:
