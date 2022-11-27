@@ -20,6 +20,27 @@ import yaml
 from mastodon import Mastodon
 from PIL import Image
 
+import logging
+
+class CustomFormatter(logging.Formatter):
+    grey = "\x1b[38;20m"
+    yellow = "\x1b[33;20m"
+    red = "\x1b[31;20m"
+    bold_red = "\x1b[31;1m"
+    reset = "\x1b[0m"
+    format = "[%(levelname)s] %(message)s"
+    FORMATS = {
+        logging.DEBUG: grey + format + reset,
+        logging.INFO: grey + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: bold_red + format + reset
+    }
+
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
 
 class configResolver(object):
     def __init__(self, args):
@@ -55,10 +76,7 @@ class configResolver(object):
                     self.load_hierarchy(f[fkey])
                     self.stack.pop()
             else:
-                print("File not found:"+fname)
-        
-            
-
+                logger.error("File not found:"+fname)
 
 class osmSPAM(object):
 
@@ -199,16 +217,16 @@ class osmSPAM(object):
             server.login(self.mail_user, self.mail_pw)
             server.sendmail(self.mail_from, TO, msg.as_string())
             server.close()
-            print('successfully sent the mail to '+", ".join(TO))
+            logger.info('successfully sent the mail to '+", ".join(TO))
         except:
-            print("failed to send mail")
+            logger.error("failed to send mail")
             traceback.print_exc()
             pprint.pprint((self.mail_user, self.mail_pw,self.mail_from))
             
         return
 
     def post_forum(self, recipient):
-        print('...community forum post...')
+        logger.info('...community forum post...')
 
         TO = recipient if type(recipient) is list else [recipient]
 
@@ -227,14 +245,14 @@ class osmSPAM(object):
             server.login(self.mail_user, self.mail_pw)
             server.sendmail(self.forum_from, TO, msg.as_string())
             server.close()
-            print('published to '+", ".join(TO))
+            logger.info('published to '+", ".join(TO))
         except:
-            print("failed to publish")
+            logger.error("failed to publish")
             traceback.print_exc()
             pprint.pprint((self.mail_user, self.mail_pw,self.forum_from))
 
     def tweet(self):
-        print('...tweet...')
+        logger.info('...tweet...')
 
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
@@ -246,22 +264,22 @@ class osmSPAM(object):
                 if self.do_show_pic:
                     img.show()
                     for i in range(10, 0, -1):
-                        print('sending tweet with image in', i)
+                        logger.info(f'sending tweet with image in {i}')
                         time.sleep(1)
                         self.do_show_pic = False
-                print('sending tweet with image')
+                logger.debug('sending tweet with image')
                 pic = api.media_upload(self.pic)
                 api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )                
             else:
-                print('image not found!')
+                logger.error('image not found!')
                 exit(1)
         else:
             api.update_status(status=self.tw_text)
 
-        print(self.tw_text)
+        logger.debug(self.tw_text)
 
     def toot(self):
-        print('...toot...')
+        logger.info('...toot...')
 
         mastodon = Mastodon(
             access_token = self.mastodon_TOKEN,
@@ -274,27 +292,27 @@ class osmSPAM(object):
                 if self.do_show_pic:
                     img.show()
                     for i in range(10, 0, -1):
-                        print('sending toot with image in', i)
+                        logger.info(f'sending toot with image in {i}')
                         time.sleep(1)
                         self.do_show_pic = False
-                print('sending toot with image')
+                logger.debug('sending toot with image')
                 pic = mastodon.media_post(self.pic)
                 mastodon.status_post(self.tw_text, language=self.lang, media_ids=[pic.id]) 
             else:
-                print('image not found!')
+                logger.error('image not found!')
                 exit(1)
         else:
             mastodon.toot(self.tw_text)
 
-        print(self.tw_text)
+        logger.debug(self.tw_text)
 
     def telegram(self, bot, recipient):
-        print(f'...telegramming {recipient}...')
+        logger.info(f'...telegramming {recipient}...')
         try:
             resp = bot.sendMessage(int(recipient), self.tw_text)
-            print (resp)
+            logger.info (resp)
         except Exception as e:
-            print (f"ERROR: {e}")
+            logger.error (e)
 
         # pin message:
         # bot.unpinChatMessage(recipient) # unpins most recent chat message
@@ -303,9 +321,9 @@ class osmSPAM(object):
 
     def send_stuff(self):
         self.create_texts()
-        print("Check if URL " + self.url + " exists before advertising...")
+        logger.info("Check if URL " + self.url + " exists before advertising...")
         if not self.check_url_exists():
-            print("URL " + self.url + " seems to be wrong")
+            logger.error("URL " + self.url + " seems to be wrong")
             exit(1)
 
         if self.do_twitter:
@@ -325,8 +343,16 @@ class osmSPAM(object):
 
         return
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
+# create logger
+logger = logging.getLogger("weeklyNotifier")
+logger.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(CustomFormatter())
+logger.addHandler(ch)  
 
+argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
 
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
 argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
@@ -349,11 +375,11 @@ args = argparser.parse_args()
 cfr = configResolver(args)
 
 for i, lang in enumerate(vars(args)['lang'].split(',')):
-    print (f"publishing {lang}...")
+    logger.info (f"publishing {lang}...")
 
     config = cfr.configs.get((vars(args)['ctxt'], lang))
     if  not config:
-        print(f"Sorry no matching config for <{lang}>. Available:")
+        logger.error(f"Sorry no matching config for <{lang}>. Available:")
         pprint.pprint(cfr.configs.keys())    
     else:
         config.create_texts()
