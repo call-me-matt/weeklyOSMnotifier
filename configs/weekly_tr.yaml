@@ -6,9 +6,6 @@ do_mastodon: False # comment to send an additional toot in this language if "--m
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "weeklyOSM'in {c.post_nr}. hafta edisyonu, #openstreetmap #osm dünyasından haberlerle şimdi Türkçe https://www.weeklyosm.eu/tr/archives/{c.url_nr}"
-mail_to: 
-  - "you could enter emails directly here, but it can/will"
-  - "be overwritten by content from mailto/weekly_en.yaml"
 mail_body: | 
  OSM ile ilgili haberlerin derlendiği ve OpenStreetMap dünyasındaki pek çok gelişmelerin paylaşıldığı haftalık bülten, {c.post_nr}. bölümüyle çevrimiçi ve Türkçe olarak erişilebilir durumda:
   

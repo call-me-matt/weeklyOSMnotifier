@@ -6,9 +6,6 @@ do_mastodon: False # comment to send an additional toot in this language if "--m
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "weeklyOSM Ausgabe {c.post_nr} ist nun in *Deutsch* verfügbar. Die neuesten Nachrichten aus der #openstreetmap #osm Welt https://www.weeklyosm.eu/de/archives/{c.url_nr}"
-mail_to: 
-  - "you could enter emails directly here, but it can/will"
-  - "be overwritten by content from mailto/weekly_en.yaml"
 mail_body: | 
    Die Wochennotiz Ausgabe Nr. # {c.post_nr}, ist nun verfügbar - 
    wie immer mit vielen Nachrichten aus dem OSM-Universium:

@@ -5,9 +5,6 @@ runnable: True
 do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
-mail_to: 
-  - "you could enter emails directly here, but it can/will"
-  - "be overwritten by content from mailto/weekly_pb.yaml"
 tw_text: "O semanário nº {c.post_nr} está disponível em *português*. 
 Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/pt/archives/{c.url_nr}"
 mail_body: |

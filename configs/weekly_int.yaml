@@ -5,13 +5,10 @@ runnable: True
 do_twitter: False   # comment to send an additional tweet in this language if "--twitter" is called (attention: shorten text to <280 chars!)
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
 
-mail_from: "weeklyteam <{c.mail_user}>"
-mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "Issue {c.post_nr} of weeklyOSM is out 🚀 Lisez les dernières nouvelles de l'univers #openstreetmap 🗺️ Viele Neuigkeiten aus der #osm Welt 📰 新一期的OSM周刊已经发布 🌏 Se ha publicado un nuevo número delsemanarioOSM 🌐 最新の週刊OSMが発行されました。  💬 주간OSM 최신호가 나왔습니다 👉 https://www.weeklyosm.eu/archives/{c.url_nr}"
 
-mail_to: 
-  - "you could enter emails directly here, but it can/will"
-  - "be overwritten by content from mailto/weekly_en.yaml"
+mail_from: "weeklyteam <{c.mail_user}>"
+mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 mail_body: | 
   The weekly round-up of OSM news, issue # {c.post_nr},
   is now available online, giving as always a summary of a lot of things happening in the openstreetmap world:

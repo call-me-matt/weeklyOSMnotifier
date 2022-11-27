@@ -183,6 +183,7 @@ class osmSPAM(object):
 
     def send_email(self, recipient):  # dunno why the loop at this call and the list-handling inside - just leaving it as a param for paranoids
         TO = recipient if type(recipient) is list else [recipient]
+        if not TO: return
 
         # Prepare actual message
         msg = MIMEText(self.mail_body, 'plain', 'UTF-8')

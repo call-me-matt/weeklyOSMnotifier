@@ -7,9 +7,6 @@ do_mastodon: False # comment to send an additional toot in this language if "--m
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'OSMkilawiki #{c.post_nr} {c.daterange_str}'
 tw_text: "OSMkilawiki, suala {c.post_nr}, sasa linapatikana kwenye mtandao katika lugha ya *Kiswahili*, kutupa muhtasari wa mambo yote yanayotokea katika ulimwengu wa #OpenStreetMap #OSM https://www.weeklyosm.eu/sw/archives/{c.url_nr}"
-mail_to: 
-  - "you could enter emails directly here, but it can/will"
-  - "be overwritten by content from mailto/weekly_sw.yaml"
 mail_body: | 
   Habari za OpenStreetMap, swala {c.post_nr}, sasa linapatikana kwenye mtandao katika lugha ya Kiswahili, kutupa muhtasari wa mambo yote yanayotokea katika ulimwengu wa OpenStreetMap: 
   
