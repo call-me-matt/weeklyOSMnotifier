@@ -347,7 +347,7 @@ args = argparser.parse_args()
 
 cfr = configResolver(args)
 
-for lang in vars(args)['lang'].split(','):
+for i, lang in enumerate(vars(args)['lang'].split(',')):
     print (f"publishing {lang}...")
 
     config = cfr.configs.get((vars(args)['ctxt'], lang))
@@ -357,4 +357,6 @@ for lang in vars(args)['lang'].split(','):
     else:
         config.create_texts()
         pprint.pprint(vars(config))
+        # only show picture for first iteration:
+        if i: config.do_show_pic = False
         config.send_stuff()
