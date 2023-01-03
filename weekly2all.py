@@ -100,10 +100,6 @@ class osmSPAM(object):
         """ values from config """
         self.runnable = False # set this variable if the config can actually be called
         self.url = ''  # url that we are sending or tweeting
-        self.forum_usr = ''
-        self.forum_pw = ''
-        self.forum_login_url = ''
-        self.forum_urls = []
         self.mastodon_INSTANCE = ''
         self.mastodon_TOKEN = ''
         self.tw_CONSUMER_KEY = ''
@@ -121,7 +117,7 @@ class osmSPAM(object):
         self.mail_from     = ''
         self.mail_to    = []
         self.mail_body          = ''
-        self.forum_from     = ''
+        self.forum_KEY     = ''
         self.forum_to    = []
         self.telegram_TOKEN     = ''
         self.telegram_to    = []
@@ -156,10 +152,6 @@ class osmSPAM(object):
                                 'do_mail',
                                 'do_show_pic',
                                 'url',
-                                'forum_usr',
-                                'forum_pw',
-                                'forum_login_url',
-                                'forum_urls',
                                 'mastodon_INSTANCE',
                                 'mastodon_TOKEN',
                                 'telegram_TOKEN',
@@ -178,7 +170,7 @@ class osmSPAM(object):
                                 'mail_from',
                                 'mail_to',
                                 'mail_body',
-                                'forum_from',
+                                'forum_KEY',
                                 'forum_to',
                                 'telegram_to']:
                     self.assign_safe(field,conf)
@@ -193,7 +185,6 @@ class osmSPAM(object):
         self.mail_subject = self.mail_subject.format(c=self)
         self.tw_text = self.tw_text.format(c=self)
         self.mail_from = self.mail_from.format(c=self)
-        self.forum_from = self.forum_from.format(c=self)
 
     def check_url_exists(self):
         r = requests.get(self.url)
@@ -225,31 +216,39 @@ class osmSPAM(object):
             
         return
 
-    def post_forum(self, recipient):
-        logger.info('...community forum post...')
-
-        TO = recipient if type(recipient) is list else [recipient]
-
-        # Prepare actual message
-        msg = MIMEMultipart()
-
-        msg['From'] = self.forum_from
-        msg['To'] = ", ".join(TO)
-        msg['Subject'] = self.mail_subject
-        msg.attach(MIMEText(self.mail_body, 'plain'))
+    def post_forum(self, topicId):
+        logger.info(f'...community forum post to https://community.openstreetmap.org/t/-/{topicId}.')
 
         try:
-            server = smtplib.SMTP(self.mail_smtp_host, self.mail_smtp_port)
-            server.ehlo()
-            server.starttls()
-            server.login(self.mail_user, self.mail_pw)
-            server.sendmail(self.forum_from, TO, msg.as_string())
-            server.close()
-            logger.info('published to '+", ".join(TO))
+            FORUM_API = "https://community.openstreetmap.org/posts.json"
+
+            data = {
+                "title": self.mail_subject,
+                "raw": self.mail_body,
+                "topic_id": topicId,
+                "category": 0,
+                "target_recipients": "",
+                "target_usernames": "",
+                "archetype": "",
+                "created_at": "",
+                "embed_url": "",
+                "external_id": ""
+            }
+
+            headers = {
+                "Content-Type": "application/json",
+                "User-Api-Key": self.forum_KEY,
+                "Accept": "application/json"
+            }
+
+            response = requests.post(FORUM_API, json=data, headers=headers)
+
+            logger.info(f"Status Code {response.status_code}")
+            logger.info(f"JSON Response: {response.json()}")
+
         except:
             logger.error("failed to publish")
             traceback.print_exc()
-            pprint.pprint((self.mail_user, self.mail_pw,self.forum_from))
 
     def tweet(self):
         logger.info('...tweet...')
@@ -285,6 +284,7 @@ class osmSPAM(object):
             access_token = self.mastodon_TOKEN,
             api_base_url = self.mastodon_INSTANCE
         )
+        media = None
         
         if self.pic:
             if os.path.isfile(self.pic):
@@ -297,14 +297,13 @@ class osmSPAM(object):
                         self.do_show_pic = False
                 logger.debug('sending toot with image')
                 pic = mastodon.media_post(self.pic)
-                mastodon.status_post(self.tw_text, language=self.lang, media_ids=[pic.id]) 
+                media = [pic.id]
             else:
                 logger.error('image not found!')
                 exit(1)
-        else:
-            mastodon.toot(self.tw_text)
 
-        logger.debug(self.tw_text)
+        toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media)
+        logger.debug(f"{toot}")
 
     def telegram(self, bot, recipient):
         logger.info(f'...telegramming {recipient}...')
@@ -337,9 +336,9 @@ class osmSPAM(object):
         if self.do_mail:
             for to in self.mail_to:
                 self.send_email(to)
-        if self.do_forum:
-            for to in self.forum_to:
-                self.post_forum(to)
+        if self.do_forum and self.forum_to:
+            # only one message per language, as multiple posts with same text are rejected from forum
+            self.post_forum(self.forum_to)
 
         return
 
@@ -357,7 +356,7 @@ argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 scri
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
 argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
 argparser.add_argument('--mail',  action='store_true', help='send mail')
-argparser.add_argument('--forum',  action='store_true', help='send mail to forum threads')
+argparser.add_argument('--forum',  action='store_true', help='send post to forum threads')
 argparser.add_argument('--telegram',  action='store_true', help='send announcements to telegram channels and groups where the bot is admin')
 argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
