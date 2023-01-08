@@ -244,7 +244,7 @@ class osmSPAM(object):
             response = requests.post(FORUM_API, json=data, headers=headers)
 
             logger.info(f"Status Code {response.status_code}")
-            logger.info(f"JSON Response: {response.json()}")
+            logger.debug(f"JSON Response: {response.json()}")
 
         except:
             logger.error("failed to publish")
@@ -344,10 +344,10 @@ class osmSPAM(object):
 
 # create logger
 logger = logging.getLogger("weeklyNotifier")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 # create console handler with a higher log level
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)  
 
@@ -379,10 +379,11 @@ for i, lang in enumerate(vars(args)['lang'].split(',')):
     config = cfr.configs.get((vars(args)['ctxt'], lang))
     if  not config:
         logger.error(f"Sorry no matching config for <{lang}>. Available:")
-        pprint.pprint(cfr.configs.keys())    
+        logger.info(f"{cfr.configs.keys()}")
     else:
         config.create_texts()
-        pprint.pprint(vars(config))
+        #pprint.pprint(vars(config))
+        logger.debug(f"{config}")
         # only show picture for first iteration:
         if i: config.do_show_pic = False
         config.send_stuff()
