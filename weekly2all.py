@@ -94,6 +94,8 @@ class osmSPAM(object):
         self.do_forum     = False
         self.do_telegram  = False
         self.do_mastodon  = False
+        self.do_pin_mastodon   = False
+        self.do_unpin_mastodon = False
         self.do_twitter   = False
         self.do_mail      = False
         self.do_show_pic  = False
@@ -154,6 +156,8 @@ class osmSPAM(object):
                                 'url',
                                 'mastodon_INSTANCE',
                                 'mastodon_TOKEN',
+                                'do_pin_mastodon',
+                                'do_unpin_mastodon',
                                 'telegram_TOKEN',
                                 'tw_CONSUMER_KEY',
                                 'tw_CONSUMER_SECRET',
@@ -280,12 +284,14 @@ class osmSPAM(object):
     def toot(self):
         logger.info('...toot...')
 
+        # login
         mastodon = Mastodon(
             access_token = self.mastodon_TOKEN,
             api_base_url = self.mastodon_INSTANCE
         )
         media = None
         
+        # upload picture if applicable
         if self.pic:
             if os.path.isfile(self.pic):
                 img = Image.open(self.pic)
@@ -302,8 +308,24 @@ class osmSPAM(object):
                 logger.error('image not found!')
                 exit(1)
 
+        # toot!
         toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media)
         logger.debug(f"{toot}")
+
+        # pin status
+        if self.do_pin_mastodon:
+            try:
+                if self.do_unpin_mastodon:
+                    for pinned_toot in mastodon.account_statuses(mastodon.me().id, pinned=True):
+                        logger.info(f"unpinning previous toot {pinned_toot.id}")
+                        resp = mastodon.status_unpin(pinned_toot.id)
+                        logger.debug(f"{resp}")
+                resp = mastodon.status_pin(toot.id)
+                logger.info(f"pinned toot")
+                logger.debug(f"{resp}")
+            except Exception as e:
+                logger.error("failed to pin mastodon status:")
+                logger.error (e)
 
     def telegram(self, bot, recipient):
         logger.info(f'...telegramming {recipient}...')
