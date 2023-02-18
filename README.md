@@ -1,25 +1,27 @@
 
 
-# weeklyOSM "SPAM" Tool
-This is the OSM Weekly "SPAM" Tool for sending updates in different languages. It supports posting to a forum,
-sending emails via google and sending toots via mastodon and twitter. 
-Feel free to use it as a baseline for simmilar usecases.
+# weeklyOSM Notification Tool
+This is the OSM Weekly Notification Tool for sending updates in different languages. It supports posting to a forum,
+sending emails and toots and tweets. Feel free to use it as a baseline for simmilar usecases.
 
 
 > Disclaimer:
-> This script is _completely_ unsupported! It comes "as is" besides from request surrounding weeklyosm your issue-tickets or pull-requests will most likely be ignored.
 > This software is unlicensed! For more information, please refer to <http://unlicense.org>
+
+## installation
+
+Clone this repo with submodules: `git clone --recurse-submodules git@github.com:call-me-matt/weeklyOSMnotifier.git`
 
 On linux run setup.sh to get you started with all requirements for a python environment. 
 
-You should first edit configs/configs.yaml to your needs.
-Note that by default all weekly_*.yaml files inherit their secrets from the file configs/secrets/weeklysecrets.yaml.
+First you should insert your secrets into the file `configs/private/secrets/weeklysecrets.yaml`.
 You would need to create that file looking something like this:
 
 ```
 runnable: False
-mail_user: 'somegmailusername'
-mail_pw: somegmailssecretpasswort
+mail_user: "somegmailusername"
+mail_pw: "somegmailssecretpasswort"
+forum_KEY: "abcdef123456"
 mastondon_INSTANCE: "yourinstance.social"
 mastodon_TOKEN: "yourMastodonDeveloperApplicationAccessToken"
 tw_CONSUMER_KEY: "yourTwitterConsumerKey"
@@ -29,10 +31,7 @@ tw_ACCESS_SECRET: "YourTWAccessSecretlsdkhjkahdkjahsrwqkjhqwkjhewqkjewqh"
 telegram_TOKEN: "YourTelegramBotToken123:456"
 ``` 
 
-Note that you have to enable sending e-mails via that account in your google-mail-account settings.
-
-You can override the mail distribution lists with some private mail adress.
-I.E. configs/mailto/weekly.pb could be created with the following content:
+Next you should define the recipients for each language in a `weekly_*.yaml` as defined in your `configs/configs.yaml`
 
 ```
 mail_to: 
@@ -41,13 +40,30 @@ mail_to:
  - "another@one.com"
  - "talk-pt@openstreetmap.org"
  - "talk-br@openstreetmap.org"
+
+ forum_to: "123456" # posts into https://community.openstreetmap.org/t/some-title/123456/
+                    # only one thread possible per language due to forum's antispam
+
+ telegram_to: # send telegram messages to the following recipients (if group, bot must be admin)
+  - -123456789 # groups have negative identifiers
+  - -987654321
+
 ```
+## Adding a new language xx 
 
-That would replace the mail_to: property from the file config/weekly_pb.yaml
-leading to additional mail sent to the first three lines instead of only to the brasilian osm-lists.
+1. in your `configs.yaml` add two lines for the xx language
+```
+- weekly_xx.yaml:
+  - private/mailto/weekly_xx.yaml
+```
+2. create `weekly_xx.yaml` in the `configs`-folder. content: text bodies of notifications in xx
+3. in your `configs/private/mailto`-folder, create `weekly_xx.yaml`. content: notification recipients for xx
 
+If you copy from another language, don't forget to change the language_header
 
-For calling this from a script within the prepared environment call the shellscript runenvweekly2all.sh.
+## Utilization
+
+For calling this from a script within the prepared environment call the shellscript `runenvweekly2all.sh`.
 It takes the same parameters as the python script but fixes PYTHONIOENCODING to UTF-8 and LC_CTYPE to C.UFT-8 avoiding issues when called from node or other environments.
 
 
@@ -56,17 +72,7 @@ test call - for twitter
 ./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr" "401" "7831" "23.02.2016" "29.02.2016"
 ```
 
-how to call - mail, mastodon and twitter
+how to call - mail, forum, telegram, mastodon and twitter
 ```
 ./runenvweekly2all.sh --mail --forum --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "int,en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
 ```
-
-INTRODUCING a new language xx 
-1. in configs.yaml add two lines for the xx language
-    - weekly_xx.yaml:
-    - mailto/weekly_xx.yaml
-2. in mailto 
-    - create weekly_xx.yaml - content: email addresses
-3. create weekly_xx.yaml - content: mastodon, twitter and email text
-
-If you copy from another language ... DON'T forget to change the language_header

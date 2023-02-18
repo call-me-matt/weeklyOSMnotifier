@@ -57,9 +57,9 @@ docs/_build/
 # PyBuilder
 target/
 
-configs/secrets/
+# secrets and personal data:
+configs/private/
 
 spamenv/
 .vscode/tags
 
-configs/mailto/

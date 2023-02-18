@@ -9,7 +9,7 @@
 import telepot
 import yaml
 
-with open('configs/secrets/weeklysecrets.yaml') as f:
+with open('configs/private/secrets/weeklysecrets.yaml') as f:
     # use safe_load instead load
     secrets = yaml.safe_load(f)
 

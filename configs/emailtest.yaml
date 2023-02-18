@@ -11,7 +11,7 @@ do_forum: False
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'Python email test'
 mail_to:
- - "test@test.com" # this property gets overwritten in the file with the same name found in mailto/ folder
+ - "test@test.com" # this property gets overwritten in the file with the same name found in configs/private/mailto/ folder
 mail_body: | 
   This is test...
   This is _only_ a test! 
