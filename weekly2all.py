@@ -12,6 +12,9 @@ from copy import deepcopy
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from datetime import date
+import xmlrpc.client
+import re
 import mechanicalsoup
 import requests
 import telepot
@@ -93,6 +96,7 @@ class osmSPAM(object):
         """ cmd which can be overriden in file """
         self.do_forum     = False
         self.do_telegram  = False
+        self.do_josm      = False
         self.do_mastodon  = False
         self.do_pin_mastodon   = False
         self.do_unpin_mastodon = False
@@ -108,21 +112,26 @@ class osmSPAM(object):
         self.tw_CONSUMER_SECRET = ''
         self.tw_ACCESS_KEY = ''
         self.tw_ACCESS_SECRET = ''
-        self.tw_text          = ''
-        self.pic          = ''
+        self.tw_text = ''
+        self.pic = ''
         self.mail_user = ''
         self.mail_pw   = ''
         self.mail_smtp_port = 0
         self.mail_smtp_host = ''
         self.mail_subject = ''
-        self.mail_subject     = ''
-        self.mail_from     = ''
-        self.mail_to    = []
-        self.mail_body          = ''
-        self.forum_KEY     = ''
-        self.forum_to    = []
+        self.mail_subject = ''
+        self.mail_from  = ''
+        self.mail_to = []
+        self.mail_body = ''
+        self.forum_KEY = ''
+        self.forum_to = []
         self.telegram_TOKEN     = ''
         self.telegram_to    = []
+        self.josm_user = ''
+        self.josm_pw = ''
+        self.josm_body = ''
+        """ derrived values """
+        self.publishdate = []
 
     def load_params(self,args):
         self.post_nr = vars(args)['post']
@@ -136,6 +145,7 @@ class osmSPAM(object):
         self.do_twitter = vars(args)['twitter']
         self.do_forum = vars(args)['forum']
         self.do_telegram = vars(args)['telegram']
+        self.do_josm = vars(args)['josm']
 
     def assign_safe(self,name,conf):
         if name in conf:
@@ -149,6 +159,7 @@ class osmSPAM(object):
                                 'runnable',
                                 'do_forum',
                                 'do_telegram',
+                                'do_josm',
                                 'do_mastodon',
                                 'do_twitter',
                                 'do_mail',
@@ -159,6 +170,9 @@ class osmSPAM(object):
                                 'do_pin_mastodon',
                                 'do_unpin_mastodon',
                                 'telegram_TOKEN',
+                                'josm_user',
+                                'josm_pw',
+                                'josm_body',
                                 'tw_CONSUMER_KEY',
                                 'tw_CONSUMER_SECRET',
                                 'tw_ACCESS_KEY',
@@ -181,6 +195,11 @@ class osmSPAM(object):
                     
     def set_date_str(self):
         self.daterange_str = self.date_from + '-' + self.date_to
+        today = date.today()
+        self.publishdate_iso = today.strftime("%Y-%m-%d")
+        self.publishdate_slash = today.strftime("%d/%m/%Y")
+        self.publishdate_dot = today.strftime("%d.%m.%Y")
+        self.publishdate_dash = today.strftime("%d-%m-%Y")
 
     def create_texts(self):
         self.set_date_str()
@@ -189,6 +208,7 @@ class osmSPAM(object):
         self.mail_subject = self.mail_subject.format(c=self)
         self.tw_text = self.tw_text.format(c=self)
         self.mail_from = self.mail_from.format(c=self)
+        self.josm_body = self.josm_body.format(c=self)
 
     def check_url_exists(self):
         r = requests.get(self.url)
@@ -339,6 +359,56 @@ class osmSPAM(object):
         # bot.unpinChatMessage(recipient) # unpins most recent chat message
         # bot.pinChatMessage(recipient,resp['message_id'],True)
 
+    def post_josm(self):
+        logger.info(f'...posting to josm...')
+        with xmlrpc.client.ServerProxy(
+            f"https://{self.josm_user}:{self.josm_pw}@josm.openstreetmap.de/login/xmlrpc"
+        ) as server:
+            try:
+                wikipage = "StartupPageSource" # use "Sandbox" for testing
+                wikicontent = server.wiki.getPage(wikipage)
+
+                BEGINBLOCK = "# Begin weekly - leave at the top of the weeklyOSM section, automatically updated, do not edit manually"
+                ENDBLOCK = "# End weekly - leave at the bottom of the weeklyOSM section, automatically updated, do not edit manually"
+                BEGINNEWS = "# Begin news - leave at the top of the news section, do not edit or move this comment"
+
+                newblock = f"{BEGINBLOCK}\n{self.josm_body}{ENDBLOCK}"
+
+                logger.debug(newblock)
+
+                blockpattern = re.compile(f"{BEGINBLOCK}.*?{ENDBLOCK}\n", flags=re.DOTALL)
+                oldblock = blockpattern.search(wikicontent)
+                if oldblock is None:
+                    raise ValueError(
+                        "Old weeklyOSM block not found in the wiki page. Check for magic strings in the source."
+                    )
+                oldblock = oldblock.group()
+
+                if oldblock == newblock:
+                    raise ValueError("The page is already up to date. No changes needed.")
+
+                newcount = newblock.count("\n")
+                oldcount = oldblock.count("\n") - 1
+                if oldcount != newcount:
+                    raise ValueError(
+                        f"Number of old translations ({oldcount-3}) does not match new translation ({newcount-3}). Manually added translation? Manual edit?"
+                    )
+
+                # Drop the old weekly, insert new one at top
+                wikicontent = wikicontent.replace(oldblock, "").replace(BEGINNEWS, f"{BEGINNEWS}\n{newblock}")
+                server.wiki.putPage(
+                    wikipage,
+                    wikicontent,
+                    {"comment": "Semi-automatic weeklyOSM update"},
+                )
+                logger.info("Update successful")
+            except xmlrpc.client.ProtocolError as e:
+                logger.error(f"An XML-RPC error occurred: {e}")
+            except ValueError as e:
+                logger.error(f"A validation error occurred: {e}")
+            except Exception as e:
+                logger.error(f"An unexpected error occurred: {e}")
+
 
     def send_stuff(self):
         self.create_texts()
@@ -361,6 +431,8 @@ class osmSPAM(object):
         if self.do_forum and self.forum_to:
             # only one message per language, as multiple posts with same text are rejected from forum
             self.post_forum(self.forum_to)
+        if self.do_josm:
+            self.post_josm()
 
         return
 
@@ -380,6 +452,7 @@ argparser.add_argument('--mastodon', action='store_true', help='send mastodon no
 argparser.add_argument('--mail',  action='store_true', help='send mail')
 argparser.add_argument('--forum',  action='store_true', help='send post to forum threads')
 argparser.add_argument('--telegram',  action='store_true', help='send announcements to telegram channels and groups where the bot is admin')
+argparser.add_argument('--josm',  action='store_true', help='send announcements to josm wiki (shown at josm program start)')
 argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')

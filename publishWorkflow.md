@@ -33,13 +33,15 @@
 
 2.10 Publish
 
+
 3. Close Blog
 
 Back in OSMBC click on "more" at "Blogs to work on" and close the oldest one.
 
+
 4. Notify our readers
 
-Use our script to notify our community on mailing lists, mastodon, forum, telegram channels and alike: https://github.com/call-me-matt/weeklyOSMnotifier
+Use our script to notify our community on mailing lists, josm, mastodon, forum, telegram channels and alike: https://github.com/call-me-matt/weeklyOSMnotifier
 
 
 --

@@ -4,6 +4,7 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 do_twitter: False   # comment to send an additional tweet in this language if "--twitter" is called (attention: shorten text to <280 chars!)
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+#do_josm: False     # uncomment in order to ignore "--josm" for this language
 do_pin_mastodon: True
 do_unpin_mastodon: True
 
@@ -24,3 +25,22 @@ mail_body: |
   weeklyOSM? 
   who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
   where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+josm_body: | 
+  en: * {c.publishdate_iso} **weeklyOSM**: The weekly round-up of OSM news, issue [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], is now available.
+  ca: * {c.publishdate_slash} **setmanalOSM** : El resum setmanal de notícies d'OSM, ja està disponible número [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]
+  da: * {c.publishdate_dash} **weeklyOSM**: Den ugentlige opsummering af OSM-nyheder, nummer [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er nu tilgængelig
+  de: * {c.publishdate_dot} **Wochennotiz**: Die wöchentliche Ausgabe der OSM-News [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] ist nun verfügbar
+  es: * {c.publishdate_dash} **semanarioOSM** : El resumen semanario de noticias de OSM [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], ya está disponible
+  fr: * {c.publishdate_slash} **hebdoOSM**: Le résumé hebdomadaire [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] de l'actualité OpenStreetMap vient de paraître
+  hu: * {c.publishdate_iso} **weeklyOSM**: Az OSM heti hírösszefoglalójának [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr} része] már elérhető angolul.
+  it: * {c.publishdate_dot} **Notiziario Settimanale OSM**: Il riepilogo settimanale [https://www.weeklyosm.eu/archives/{c.url_nr} N. {c.post_nr}]delle notizie su OSM è adesso disponibile
+  ko: * {c.publishdate_iso} **주간OSM**: 이번 주의 오픈스트리트맵 관련 소식을 전해주는 주간OSM [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}호]가 올라왔습니다
+  lt: * {c.publishdate_iso} **weeklyOSM**: Savaitinė OSM naujienų santrauka [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] yra prieinama anglų kalba
+  nl: * {c.publishdate_iso} **weeklyOSM**: De wekelijkse verzameling nieuws over OSM, uitgave [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], is nu online beschikbaar in het Engels
+  pl: * {c.publishdate_dot} **Tygodnik OSM**: [https://www.weeklyosm.eu/archives/{c.url_nr} nr {c.post_nr}] cotygodniowego podsumowania wiadomości ze świata OSM jest już dostępny.
+  ru: * {c.publishdate_iso} **weeklyOSM**: еженедельный обзор новостей OSM, выпуск [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], доступен онлайн на английском и нескольких других языках
+  sk: * {c.publishdate_iso} **weeklyOSM**: Týždenný sumár noviniek v OSM, vydanie [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], je už dostupný online v angličtine.
+  sr@latin: * {c.publishdate_iso} **weeklyOSM**: Nedeljna tura vesti iz OSM sveta, problem zaveden pod brojem [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], od sada je dostupna na engleskom jeziku
+  uk: * {c.publishdate_dot} **weeklyOSM**: Щотижневий огляд новин OSM, випуск [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], доступний англійською та іншими мовами
+  zh_CN: * {c.publishdate_iso} **weeklyOSM**：一周一次的 OSM 消息汇报，[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]期中国华语版本已经上线。
+  zh_TW: * {c.publishdate_iso} **weeklyOSM**：一週一次的 OSM 消息彙報，[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]期台灣華語版本已經上線。

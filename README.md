@@ -29,6 +29,8 @@ tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
 tw_ACCESS_KEY: "123456-YourTWAccessKeyNelsonMandela4Evaaaa"
 tw_ACCESS_SECRET: "YourTWAccessSecretlsdkhjkahdkjahsrwqkjhqwkjhewqkjewqh"
 telegram_TOKEN: "YourTelegramBotToken123:456"
+josm_user: "yourJosmWikiUser"
+jsom_pw: "yourJosmWikiPass"
 ``` 
 
 Next you should define the recipients for each language in a `weekly_*.yaml` as defined in your `configs/configs.yaml`
@@ -72,7 +74,7 @@ test call - for twitter
 ./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr" "401" "7831" "23.02.2016" "29.02.2016"
 ```
 
-how to call - mail, forum, telegram, mastodon and twitter
+how to call - mail, forum, josm, telegram, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --forum --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "int,en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "int,en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
 ```

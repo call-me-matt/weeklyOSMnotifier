@@ -3,6 +3,7 @@ runnable: True
 #do_mail: False    # uncomment in order to ignore "--mail" for this language
 #do_twitter: False # uncomment in order to ignore "--twitter" for this language
 do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is called
+do_josm: False     # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'semanarioOSM Nº {c.post_nr} {c.daterange_str}'
 tw_text: "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del mundo #openstreetmap #osm - https://www.weeklyosm.eu/es/archives/{c.url_nr}"
