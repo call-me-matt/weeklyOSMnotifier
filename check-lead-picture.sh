@@ -19,6 +19,7 @@ else
 fi
 echo "checking for weekly https://weeklyosm.eu/archives/$article_id"
 
+exit_code=0
 for i in $lang
 do
   article_url="https://weeklyosm.eu/$i/archives/$article_id"
@@ -28,6 +29,9 @@ do
   if [ $no_of_leadpics -ge 2 ]
   then
     echo "more than one lead picture ($no_of_leadpics) found for language $i in $article_url"
+    exit_code=2
   fi
 done
+
+exit $exit_code
 
