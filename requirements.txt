@@ -5,3 +5,4 @@ mechanicalsoup
 pyyaml
 Mastodon.py
 telepot
+feedparser

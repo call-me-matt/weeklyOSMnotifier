@@ -71,10 +71,10 @@ It takes the same parameters as the python script but fixes PYTHONIOENCODING to 
 
 test call - for twitter
 ```
-./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr" "401" "7831" "23.02.2016" "29.02.2016"
+./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr"
 ```
 
 how to call - mail, forum, josm, telegram, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "int,en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de" "420" "10586" "2018-07-31" "2018-08-06"
+./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --twitter --pic ~/Downloads/420_T_EN.jpg --showpic  "WEEKLY" "int,en,ja,ko,zh,cn,id,ru,tr,uk,pl,it,pt,es,fr,de"
 ```

@@ -15,7 +15,7 @@ from email.mime.text import MIMEText
 from datetime import date
 import xmlrpc.client
 import re
-import mechanicalsoup
+import feedparser
 import requests
 import telepot
 import tweepy
@@ -53,6 +53,7 @@ class configResolver(object):
             self.args = args
             dummy_conf = osmSPAM()
             dummy_conf.load_params(args)
+            dummy_conf.crawl_latest_weekly()
             self.stack = list()
             self.stack.append(dummy_conf)
             self.load_hierarchy(self.hierarchy_conf)
@@ -87,12 +88,6 @@ class osmSPAM(object):
         """ key: """
         self.context  = ''  # context we are using (passed in as cli-parameter)
         self.lang     = ''  # language or list of languages
-        """ cmd Params: """
-        self.post_nr  = '' # wochennotiznr or weeklyosm nr
-        self.url_no  = '' # wochennotiznr or weeklyosm nr
-        self.date_from     = ''
-        self.date_to       = ''
-        self.daterange_str = ''
         """ cmd which can be overriden in file """
         self.do_forum     = False
         self.do_telegram  = False
@@ -134,10 +129,6 @@ class osmSPAM(object):
         self.publishdate = []
 
     def load_params(self,args):
-        self.post_nr = vars(args)['post']
-        self.url_nr = vars(args)['url_no']
-        self.date_from = vars(args)['dfrom']
-        self.date_to = vars(args)['dto']
         self.pic = vars(args)['pic']
         self.do_show_pic = vars(args)['showpic']
         self.do_mail = vars(args)['mail']
@@ -146,6 +137,41 @@ class osmSPAM(object):
         self.do_forum = vars(args)['forum']
         self.do_telegram = vars(args)['telegram']
         self.do_josm = vars(args)['josm']
+
+    def crawl_latest_weekly(self):
+        self.post_nr  = '' # wochennotiznr or weeklyosm nr
+        self.url_no  = '' # wochennotiznr or weeklyosm nr
+        self.date_from     = ''
+        self.date_to       = ''
+        self.daterange_str = ''
+
+        feed_url = 'https://weeklyosm.eu/feed/'
+        blog_feed = feedparser.parse(feed_url)
+
+        blog_title = blog_feed.entries[0].title
+        self.post_nr = re.search('weeklyOSM ([0-9]+)', blog_title).group(1)
+
+        blog_link = blog_feed.entries[0].link
+        self.url_no = blog_link.rsplit('/', 1)[1]
+
+        blog_description = blog_feed.entries[0].description
+        blogdate_fromto = re.search('([0-9]+/[0-9]+/[0-9]+)\-([0-9]+/[0-9]+/[0-9]+)', blog_description)
+        self.date_from = blogdate_fromto.group(1)
+        self.date_to = blogdate_fromto.group(2)
+
+        while True:
+            print(f"* weeklyOSM post number: {self.post_nr}")
+            print(f"* wordpress url number: {self.url_no}")
+            print(f"* date from: {self.date_from}")
+            print(f"* date to: {self.date_to}")
+            user_input = input('Confirm? [Y/n] ')
+            if not user_input or user_input in ('Y','y'):
+                break
+            logger.warning ("Values not confirmed, please input manually")
+            self.post_nr = input('weeklyOSM post number ')
+            self.url_no = input('wordpress url number ')
+            self.date_from = input('date from ')
+            self.date_to = input('date to ')
 
     def assign_safe(self,name,conf):
         if name in conf:
@@ -445,7 +471,7 @@ ch.setLevel(logging.INFO)
 ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)  
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de" "311" "7831" "23.02.2016" "29.02.2016"')
+argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de"')
 
 argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
 argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
@@ -457,10 +483,6 @@ argparser.add_argument('--pic',  help='picture for mastodon and twitter')
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
 argparser.add_argument('lang',  help='list of languages of context' )
-argparser.add_argument('post',  help='post number')
-argparser.add_argument('url_no',  help='url number')
-argparser.add_argument('dfrom',  help='date from')
-argparser.add_argument('dto',  help='date to')
 
 args = argparser.parse_args()
 #argparser.print_help();
