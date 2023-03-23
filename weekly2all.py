@@ -22,6 +22,7 @@ import tweepy
 import yaml
 from mastodon import Mastodon
 from PIL import Image
+import urllib.request
 
 import logging
 
@@ -54,6 +55,7 @@ class configResolver(object):
             dummy_conf = osmSPAM()
             dummy_conf.load_params(args)
             dummy_conf.crawl_latest_weekly()
+            dummy_conf.load_image()
             self.stack = list()
             self.stack.append(dummy_conf)
             self.load_hierarchy(self.hierarchy_conf)
@@ -109,6 +111,7 @@ class osmSPAM(object):
         self.tw_ACCESS_SECRET = ''
         self.tw_text = ''
         self.pic = ''
+        self.image = ''
         self.mail_user = ''
         self.mail_pw   = ''
         self.mail_smtp_port = 0
@@ -159,19 +162,25 @@ class osmSPAM(object):
         self.date_from = blogdate_fromto.group(1)
         self.date_to = blogdate_fromto.group(2)
 
+        if self.pic == 'auto':
+            blog_content = blog_feed.entries[0].content
+            self.pic = re.search('<img[^>]+src="(https://weeklyosm.eu/wp-content/uploads/[^"]+)', str(blog_content)).group(1)
+
         while True:
             print(f"* weeklyOSM post number: {self.post_nr}")
             print(f"* wordpress url number: {self.url_no}")
             print(f"* date from: {self.date_from}")
             print(f"* date to: {self.date_to}")
+            print(f"* image path: {self.pic}")
             user_input = input('Confirm? [Y/n] ')
             if not user_input or user_input in ('Y','y'):
                 break
             logger.warning ("Values not confirmed, please input manually")
-            self.post_nr = input('weeklyOSM post number ')
-            self.url_no = input('wordpress url number ')
-            self.date_from = input('date from ')
-            self.date_to = input('date to ')
+            self.post_nr = input('weeklyOSM post number? ')
+            self.url_no = input('wordpress url number? ')
+            self.date_from = input('date from? ')
+            self.date_to = input('date to? ')
+            self.pic = input('image path? ')
 
     def assign_safe(self,name,conf):
         if name in conf:
@@ -205,6 +214,7 @@ class osmSPAM(object):
                                 'tw_ACCESS_SECRET',
                                 'tw_text',
                                 'pic',
+                                'image',
                                 'mail_user',
                                 'mail_pw',
                                 'mail_smtp_port',
@@ -218,7 +228,29 @@ class osmSPAM(object):
                                 'forum_to',
                                 'telegram_to']:
                     self.assign_safe(field,conf)
-                    
+
+    def load_image(self):
+        self.image = None
+        if self.pic:
+            try:
+                if self.pic.startswith('http'):
+                    img_download = urllib.request.urlretrieve(self.pic)
+                    self.image = Image.open(img_download[0])
+                elif os.path.isfile(self.pic):
+                    self.image = Image.open(self.pic)
+                else:
+                    raise ValueError("image not found")
+            except Exception as e:
+                logger.error(e)
+                exit(1)
+            if self.do_show_pic:
+                self.image.show()
+                user_input = input('Confirm image? [Y/n] ')
+                if user_input and user_input not in ('Y','y'):
+                    logger.warning("User aborted for wrong image.")
+                    exit()
+                self.do_show_pic = False
+
     def set_date_str(self):
         self.daterange_str = self.date_from + '-' + self.date_to
         today = date.today()
@@ -306,22 +338,12 @@ class osmSPAM(object):
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
         api = tweepy.API(auth)
-        
+
+        # update twitter status
         if self.pic:
-            if os.path.isfile(self.pic):
-                img = Image.open(self.pic)
-                if self.do_show_pic:
-                    img.show()
-                    for i in range(10, 0, -1):
-                        logger.info(f'sending tweet with image in {i}')
-                        time.sleep(1)
-                        self.do_show_pic = False
-                logger.debug('sending tweet with image')
-                pic = api.media_upload(self.pic)
-                api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )                
-            else:
-                logger.error('image not found!')
-                exit(1)
+            logger.debug('sending tweet with image')
+            pic = api.media_upload(self.image)
+            api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )
         else:
             api.update_status(status=self.tw_text)
 
@@ -339,20 +361,9 @@ class osmSPAM(object):
         
         # upload picture if applicable
         if self.pic:
-            if os.path.isfile(self.pic):
-                img = Image.open(self.pic)
-                if self.do_show_pic:
-                    img.show()
-                    for i in range(10, 0, -1):
-                        logger.info(f'sending toot with image in {i}')
-                        time.sleep(1)
-                        self.do_show_pic = False
-                logger.debug('sending toot with image')
-                pic = mastodon.media_post(self.pic)
-                media = [pic.id]
-            else:
-                logger.error('image not found!')
-                exit(1)
+            logger.debug('sending toot with image')
+            pic = mastodon.media_post(self.image)
+            media = [pic.id]
 
         # toot!
         toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media)
@@ -479,12 +490,16 @@ argparser.add_argument('--mail',  action='store_true', help='send mail')
 argparser.add_argument('--forum',  action='store_true', help='send post to forum threads')
 argparser.add_argument('--telegram',  action='store_true', help='send announcements to telegram channels and groups where the bot is admin')
 argparser.add_argument('--josm',  action='store_true', help='send announcements to josm wiki (shown at josm program start)')
-argparser.add_argument('--pic',  help='picture for mastodon and twitter')
+argparser.add_argument('--pic', help='picture for mastodon and twitter, use auto to retrieve from latest weekly')
+#argparser.add_argument('--pic', nargs='?', default=None, const='auto', help='picture for mastodon and twitter, use without filename to retrieve from latest weekly') # not working, https://github.com/python/cpython/issues/53584
 argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
 argparser.add_argument('ctxt',  help='context for sending')
 argparser.add_argument('lang',  help='list of languages of context' )
 
 args = argparser.parse_args()
+
+logger.debug(args)
+
 #argparser.print_help();
 #pprint.pprint(vars(args))
 
