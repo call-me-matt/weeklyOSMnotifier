@@ -11,13 +11,7 @@
             "program": "${file}",
             "args": [ 
                 "EMAILTEST",
-                "en", 
-                "401", 
-                "7831", 
-                "2016", 
-                "02",
-                "23.02.2016",
-                "29.02.2016" 
+                "en"
             ]
         },
         {
@@ -30,13 +24,7 @@
                 "--twitter", 
                 "--pic", "/home/martinix/Schreibtisch/witzige_bilder/C3wrVxcWcAEhtrU.jpg",
                 "WEEKLYTWTEST",
-                "en", 
-                "401", 
-                "7831", 
-                "2016", 
-                "02",
-                "23.02.2016",
-                "29.02.2016" 
+                "en"
             ], 
         },
         {
