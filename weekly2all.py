@@ -230,26 +230,27 @@ class osmSPAM(object):
                     self.assign_safe(field,conf)
 
     def load_image(self):
-        self.image = None
+        image = None
         if self.pic:
             try:
                 if self.pic.startswith('http'):
                     img_download = urllib.request.urlretrieve(self.pic)
-                    self.image = Image.open(img_download[0])
+                    image = Image.open(img_download[0])
                 elif os.path.isfile(self.pic):
-                    self.image = Image.open(self.pic)
+                    image = Image.open(self.pic)
                 else:
                     raise ValueError("image not found")
             except Exception as e:
                 logger.error(e)
                 exit(1)
             if self.do_show_pic:
-                self.image.show()
+                image.show()
                 user_input = input('Confirm image? [Y/n] ')
                 if user_input and user_input not in ('Y','y'):
                     logger.warning("User aborted for wrong image.")
                     exit()
                 self.do_show_pic = False
+            self.image = image.copy()
 
     def set_date_str(self):
         self.daterange_str = self.date_from + '-' + self.date_to
@@ -358,7 +359,7 @@ class osmSPAM(object):
             api_base_url = self.mastodon_INSTANCE
         )
         media = None
-        
+
         # upload picture if applicable
         if self.pic:
             logger.debug('sending toot with image')
