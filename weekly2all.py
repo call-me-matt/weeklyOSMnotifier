@@ -143,7 +143,7 @@ class osmSPAM(object):
 
     def crawl_latest_weekly(self):
         self.post_nr  = '' # wochennotiznr or weeklyosm nr
-        self.url_no  = '' # wochennotiznr or weeklyosm nr
+        self.url_nr  = '' # wochennotiznr or weeklyosm nr
         self.date_from     = ''
         self.date_to       = ''
         self.daterange_str = ''
@@ -155,7 +155,7 @@ class osmSPAM(object):
         self.post_nr = re.search('weeklyOSM ([0-9]+)', blog_title).group(1)
 
         blog_link = blog_feed.entries[0].link
-        self.url_no = blog_link.rsplit('/', 1)[1]
+        self.url_nr = blog_link.rsplit('/', 1)[1]
 
         blog_description = blog_feed.entries[0].description
         blogdate_fromto = re.search('([0-9]+/[0-9]+/[0-9]+)\-([0-9]+/[0-9]+/[0-9]+)', blog_description)
@@ -168,7 +168,7 @@ class osmSPAM(object):
 
         while True:
             print(f"* weeklyOSM post number: {self.post_nr}")
-            print(f"* wordpress url number: {self.url_no}")
+            print(f"* wordpress url number: {self.url_nr}")
             print(f"* date from: {self.date_from}")
             print(f"* date to: {self.date_to}")
             print(f"* image path: {self.pic}")
@@ -177,7 +177,7 @@ class osmSPAM(object):
                 break
             logger.warning ("Values not confirmed, please input manually")
             self.post_nr = input('weeklyOSM post number? ')
-            self.url_no = input('wordpress url number? ')
+            self.url_nr = input('wordpress url number? ')
             self.date_from = input('date from? ')
             self.date_to = input('date to? ')
             self.pic = input('image path? ')
