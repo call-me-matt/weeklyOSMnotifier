@@ -111,7 +111,6 @@ class osmSPAM(object):
         self.tw_ACCESS_SECRET = ''
         self.tw_text = ''
         self.pic = ''
-        self.image = ''
         self.mail_user = ''
         self.mail_pw   = ''
         self.mail_smtp_port = 0
@@ -235,6 +234,7 @@ class osmSPAM(object):
             try:
                 if self.pic.startswith('http'):
                     img_download = urllib.request.urlretrieve(self.pic)
+                    self.pic = img_download[0]
                     image = Image.open(img_download[0])
                 elif os.path.isfile(self.pic):
                     image = Image.open(self.pic)
@@ -250,7 +250,6 @@ class osmSPAM(object):
                     logger.warning("User aborted for wrong image.")
                     exit()
                 self.do_show_pic = False
-            self.image = image.copy()
 
     def set_date_str(self):
         self.daterange_str = self.date_from + '-' + self.date_to
@@ -343,7 +342,7 @@ class osmSPAM(object):
         # update twitter status
         if self.pic:
             logger.debug('sending tweet with image')
-            pic = api.media_upload(self.image)
+            pic = api.media_upload(self.pic)
             api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )
         else:
             api.update_status(status=self.tw_text)
@@ -363,7 +362,7 @@ class osmSPAM(object):
         # upload picture if applicable
         if self.pic:
             logger.debug('sending toot with image')
-            pic = mastodon.media_post(self.image)
+            pic = mastodon.media_post(self.pic)
             media = [pic.id]
 
         # toot!
