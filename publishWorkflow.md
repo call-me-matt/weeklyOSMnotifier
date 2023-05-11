@@ -50,7 +50,5 @@ Use our script to notify our community on mailing lists, josm, mastodon, forum, 
  *   KO - ok with one reviwer, we only have one contributor
  *   JP - ok if muramototomoya has reviewed
  *   PL - ok if conradoos has reviewed
- *   IT - ok if isoipsa has reviewed
- *   ES - ok if one reviewer
  *   CZ - not to be published via this workflow
 
