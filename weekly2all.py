@@ -339,13 +339,18 @@ class osmSPAM(object):
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
         api = tweepy.API(auth)
 
+        twitterclient = tweepy.Client(
+            consumer_key=self.tw_CONSUMER_KEY, consumer_secret=self.tw_CONSUMER_SECRET,
+            access_token=self.tw_ACCESS_KEY, access_token_secret=self.tw_ACCESS_SECRET
+        )
+
         # update twitter status
         if self.pic:
             logger.debug('sending tweet with image')
             pic = api.media_upload(self.pic)
-            api.update_status(status=self.tw_text, media_ids = [pic.media_id_string] )
+            twitterclient.create_tweet(text=self.tw_text, media_ids = [pic.media_id_string] )
         else:
-            api.update_status(status=self.tw_text)
+            twitterclient.create_tweet(text=self.tw_text)
 
         logger.debug(self.tw_text)
 
