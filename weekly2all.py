@@ -124,6 +124,7 @@ class osmSPAM(object):
         self.forum_to = []
         self.telegram_TOKEN     = ''
         self.telegram_to    = []
+        self.mastodon_to    = []
         self.josm_user = ''
         self.josm_pw = ''
         self.josm_body = ''
@@ -225,7 +226,8 @@ class osmSPAM(object):
                                 'mail_body',
                                 'forum_KEY',
                                 'forum_to',
-                                'telegram_to']:
+                                'telegram_to',
+                                'mastodon_to']:
                     self.assign_safe(field,conf)
 
     def load_image(self):
@@ -354,16 +356,10 @@ class osmSPAM(object):
 
         logger.debug(self.tw_text)
 
-    def toot(self):
-        logger.info('...toot...')
-
-        # login
-        mastodon = Mastodon(
-            access_token = self.mastodon_TOKEN,
-            api_base_url = self.mastodon_INSTANCE
-        )
+    def toot(self, mastodon, recipient):
+        logger.info(f'...toot to {recipient}...')
+        
         media = None
-
         # upload picture if applicable
         if self.pic:
             logger.debug('sending toot with image')
@@ -371,23 +367,27 @@ class osmSPAM(object):
             media = [pic.id]
 
         # toot!
-        toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media)
-        logger.debug(f"{toot}")
-
-        # pin status
-        if self.do_pin_mastodon:
-            try:
-                if self.do_unpin_mastodon:
-                    for pinned_toot in mastodon.account_statuses(mastodon.me().id, pinned=True):
-                        logger.info(f"unpinning previous toot {pinned_toot.id}")
-                        resp = mastodon.status_unpin(pinned_toot.id)
-                        logger.debug(f"{resp}")
-                resp = mastodon.status_pin(toot.id)
-                logger.info(f"pinned toot")
-                logger.debug(f"{resp}")
-            except Exception as e:
-                logger.error("failed to pin mastodon status:")
-                logger.error (e)
+        if self.lang == "int":
+            # this is the public post (no receipients will be considered for 'int' language)
+            toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media, visibility="public")
+            logger.debug(f"{toot}")
+            # pin status
+            if self.do_pin_mastodon:
+                try:
+                    if self.do_unpin_mastodon:
+                        for pinned_toot in mastodon.account_statuses(mastodon.me().id, pinned=True):
+                            logger.info(f"unpinning previous toot {pinned_toot.id}")
+                            resp = mastodon.status_unpin(pinned_toot.id)
+                            logger.debug(f"{resp}")
+                    resp = mastodon.status_pin(toot.id)
+                    logger.info(f"pinned toot")
+                    logger.debug(f"{resp}")
+                except Exception as e:
+                    logger.error("failed to pin mastodon status:")
+                    logger.error (e)
+        else:
+            # send direct messages
+            toot = mastodon.status_post(self.tw_text + " " + recipient, language=self.lang, media_ids=media, visibility="direct")
 
     def telegram(self, bot, recipient):
         logger.info(f'...telegramming {recipient}...')
@@ -462,7 +462,9 @@ class osmSPAM(object):
         if self.do_twitter:
             self.tweet()
         if self.do_mastodon:
-            self.toot()
+            mastodon = Mastodon(access_token = self.mastodon_TOKEN, api_base_url = self.mastodon_INSTANCE)
+            for to in self.mastodon_to:
+                self.toot(mastodon, to)
         if self.do_telegram:
             bot = telepot.Bot(self.telegram_TOKEN)
             for to in self.telegram_to:
