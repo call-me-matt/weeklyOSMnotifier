@@ -49,6 +49,10 @@ mail_to:
  telegram_to: # send telegram messages to the following recipients (if group, bot must be admin)
   - -123456789 # groups have negative identifiers
   - -987654321
+ 
+ mastodon_to:  # send mastodon direct toots to the following recipients
+  - "@user@instance"
+  - "@other@instance"
 
 ```
 ## Adding a new language xx 

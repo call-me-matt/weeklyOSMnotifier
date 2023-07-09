@@ -1,12 +1,12 @@
 lang: 'en'
 runnable: True
-#do_mail: False    # uncomment in order to ignore "--mail" for this language
-#do_twitter: False # uncomment in order to ignore "--twitter" for this language
-do_mastodon: False # comment to send an additional toot in this language if "--mastodon" is called
-do_josm: False     # comment to send an additional josm wiki post in this language if "--josm" is called
+#do_mail: False     # uncomment in order to ignore "--mail" for this language
+#do_twitter: False  # uncomment in order to ignore "--twitter" for this language
+#do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "weeklyOSM issue {c.post_nr}  now available in *English* the news from the #openstreetmap #osm world https://www.weeklyosm.eu/archives/{c.url_nr}"
+tw_text: "weeklyOSM issue {c.post_nr} is now available in *English* the news from the #openstreetmap #osm world https://www.weeklyosm.eu/archives/{c.url_nr}"
 mail_body: | 
   The weekly round-up of OSM news, issue # {c.post_nr},
   is now available online in English, giving as always a summary of a lot of things happening in the openstreetmap world:
