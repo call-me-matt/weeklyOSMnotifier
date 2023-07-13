@@ -8,7 +8,7 @@ do_twitter: False   # comment to send an additional tweet in this language if "-
 do_pin_mastodon: True
 do_unpin_mastodon: True
 
-tw_text: "👉 https://www.weeklyosm.eu/archives/{c.url_nr} 👈  Issue {c.post_nr} of weeklyOSM is out. 🌏 涵蓋 #開放街圖 #osm 世界大小事的新一期 weeklyOSM 已經發佈 🚀 Lisez les dernières nouvelles de l'univers #openstreetmap 🗺️ Viele Neuigkeiten aus der #osm Welt 📰 新一期的OSM周刊已经发布 🌏 Se ha publicado un nuevo número del semanarioOSM 🌐 最新の週刊OSMが発行されました。⛩️  주간OSM 최신호가 나왔습니다  💬 Тижневик OSM тепер доступний Українською 📲 👉 https://www.weeklyosm.eu/archives/{c.url_nr} 👈 "
+tw_text: "👉 https://www.weeklyosm.eu/archives/{c.url_nr} 👈  Issue {c.post_nr} of weeklyOSM is out. 🌏 涵蓋 #開放街圖 #osm 世界大小事的新一期 weeklyOSM 已經發佈 🚀 Lisez les dernières nouvelles de l'univers #openstreetmap 🗺️ Viele Neuigkeiten aus der #osm Welt 📰 新一期的OSM周刊已经发布 🌏 Se ha publicado un nuevo número del semanarioOSM 🌐 最新の週刊OSMが発行されました。⛩️  주간OSM 최신호가 나왔습니다  💬 Тижневик OSM тепер доступний Українською 📲 @OpenStreetMap@a.gup.pe @openstreetmap@lemmy.ml"
 
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
