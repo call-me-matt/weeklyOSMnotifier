@@ -80,5 +80,5 @@ test call - for twitter
 
 how to call - mail, forum, josm, telegram, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --twitter --pic auto --showpic  "WEEKLY" "int,en,ja,ko,zh,id,ru,tr,uk,pl,it,pt,es,fr,de"
+./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --pic auto --showpic  "WEEKLY" "int,en,ja,ko,zh,id,cn,ru,tr,uk,pl,it,pt,es,fr,de"
 ```
