@@ -410,8 +410,8 @@ class osmSPAM(object):
                 wikipage = "StartupPageSource" # use "Sandbox" for testing
                 wikicontent = server.wiki.getPage(wikipage)
 
-                BEGINBLOCK = "# Begin weekly - leave at the top of the weeklyOSM section, automatically updated, do not edit manually"
-                ENDBLOCK = "# End weekly - leave at the bottom of the weeklyOSM section, automatically updated, do not edit manually"
+                BEGINBLOCK = "# Begin weekly - leave at the top of the weeklyOSM section, automatically updated, do not edit manually. Request changes at info@weeklyosm.eu."
+                ENDBLOCK = "# End weekly - leave at the bottom of the weeklyOSM section, automatically updated, do not edit manually. Request changes at info@weeklyosm.eu."
                 BEGINNEWS = "# Begin news - leave at the top of the news section, do not edit or move this comment"
 
                 newblock = f"{BEGINBLOCK}\n{self.josm_body}{ENDBLOCK}"
@@ -433,7 +433,7 @@ class osmSPAM(object):
                 oldcount = oldblock.count("\n") - 1
                 if oldcount != newcount:
                     raise ValueError(
-                        f"Number of old translations ({oldcount-3}) does not match new translation ({newcount-3}). Manually added translation? Manual edit?"
+                        f"Number of online translations at https://josm.openstreetmap.de/wiki/StartupPageSource?action=edit ({oldcount-3}) does not match your translations ({newcount-3}). Manually added translation? Manual edit?"
                     )
 
                 # Drop the old weekly, insert new one at top
