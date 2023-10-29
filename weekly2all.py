@@ -259,6 +259,7 @@ class osmSPAM(object):
         self.publishdate_iso = today.strftime("%Y-%m-%d")
         self.publishdate_slash = today.strftime("%d/%m/%Y")
         self.publishdate_dot = today.strftime("%d.%m.%Y")
+        self.publishdate_dotspace = today.strftime("%Y. %m. %d.")
         self.publishdate_dash = today.strftime("%d-%m-%Y")
 
     def create_texts(self):
