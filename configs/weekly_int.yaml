@@ -27,6 +27,7 @@ mail_body: |
   where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
 josm_body: | 
   en: * {c.publishdate_iso} **weeklyOSM**: The weekly round-up of OSM news, issue [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], is now available.
+  ar: * {c.publishdate_iso} **أسبوعيOSM**: يتوفر الآن الملخص الأسبوعي لأخبار OSM، العدد [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}].
   ca: * {c.publishdate_slash} **setmanalOSM** : El resum setmanal de notícies d'OSM, ja està disponible número [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]
   da: * {c.publishdate_dash} **weeklyOSM**: Den ugentlige opsummering af OSM-nyheder, nummer [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er nu tilgængelig
   de: * {c.publishdate_dot} **Wochennotiz**: Die wöchentliche Ausgabe der OSM-News [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] ist nun verfügbar
