@@ -148,7 +148,7 @@ class osmSPAM(object):
         self.date_to       = ''
         self.daterange_str = ''
 
-        feed_url = 'https://weeklyosm.eu/feed/'
+        feed_url = 'https://weeklyosm.eu/en/feed/'
         blog_feed = feedparser.parse(feed_url)
 
         blog_title = blog_feed.entries[0].title
