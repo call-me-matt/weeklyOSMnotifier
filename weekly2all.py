@@ -158,7 +158,7 @@ class osmSPAM(object):
         self.url_nr = blog_link.rsplit('/', 1)[1]
 
         blog_description = blog_feed.entries[0].description
-        blogdate_fromto = re.search('([0-9]+/[0-9]+/[0-9]+)\-([0-9]+/[0-9]+/[0-9]+)', blog_description)
+        blogdate_fromto = re.search('([0-9]+/[0-9]+/[0-9]+)-([0-9]+/[0-9]+/[0-9]+)', blog_description)
         self.date_from = blogdate_fromto.group(1)
         self.date_to = blogdate_fromto.group(2)
 
