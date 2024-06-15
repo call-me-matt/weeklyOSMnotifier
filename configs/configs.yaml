@@ -19,6 +19,8 @@
       - private/mailto/weekly_es.yaml
     - weekly_pt.yaml:
       - private/mailto/weekly_pt.yaml
+    - weekly_br.yaml:
+      - private/mailto/weekly_br.yaml
     - weekly_fr.yaml:
       - private/mailto/weekly_fr.yaml
     - weekly_sw.yaml:
