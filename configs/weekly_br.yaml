@@ -1,4 +1,4 @@
-lang: 'pb' ### overwrite language
+lang: 'br' ### overwrite language
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
@@ -7,7 +7,7 @@ do_josm: False      # comment to send an additional josm wiki post in this langu
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
 tw_text: "O semanário nº {c.post_nr} está disponível em *Português do Brasil*. 
-Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/pb/archives/{c.url_nr}"
+Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/br/archives/{c.url_nr}"
 mail_body: |
   Bom dia,
 
