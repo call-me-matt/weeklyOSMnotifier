@@ -18,7 +18,7 @@ Se ha publicado un nuevo número del semanarioOSM 🌐 \n
 最新の週刊OSMが発行されました。⛩️  \n
 주간OSM 최신호가 나왔습니다  💬 \n
 Тижневик OSM тепер доступний Українською 📲 \n
-@OpenStreetMap@a.gup.pe @openstreetmap@lemmy.ml"
+@OpenStreetMap@a.gup.pe"
 
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
