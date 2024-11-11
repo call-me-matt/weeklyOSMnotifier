@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#import mechanize => migrate to MechanicalSoup
 import argparse
 import collections
 import os
@@ -26,6 +25,7 @@ import urllib.request
 
 import logging
 
+
 class CustomFormatter(logging.Formatter):
     grey = "\x1b[38;20m"
     yellow = "\x1b[33;20m"
@@ -38,7 +38,7 @@ class CustomFormatter(logging.Formatter):
         logging.INFO: grey + format + reset,
         logging.WARNING: yellow + format + reset,
         logging.ERROR: red + format + reset,
-        logging.CRITICAL: bold_red + format + reset
+        logging.CRITICAL: bold_red + format + reset,
     }
 
     def format(self, record):
@@ -46,9 +46,10 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
+
 class configResolver(object):
     def __init__(self, args):
-        with open(os.path.join('configs','configs.yaml'),"r") as hiryaml:
+        with open(os.path.join("configs", "configs.yaml"), "r") as hiryaml:
             self.hierarchy_conf = yaml.full_load(hiryaml)
             self.configs = collections.OrderedDict()
             self.args = args
@@ -60,111 +61,117 @@ class configResolver(object):
             self.stack.append(dummy_conf)
             self.load_hierarchy(self.hierarchy_conf)
 
-    def load_hierarchy(self,processlist):
+    def load_hierarchy(self, processlist):
         for f in processlist:
-            has_children = isinstance(f,dict) 
+            has_children = isinstance(f, dict)
             if has_children:
                 fkey = list(f.keys())[0]
-                fname = os.path.join('configs',fkey)
+                fname = os.path.join("configs", fkey)
             else:
-                fname = os.path.join('configs',f)
+                fname = os.path.join("configs", f)
 
             if os.path.isfile(fname) == True:
                 conf = deepcopy(self.stack[-1:][0])
-                with open(fname,"r") as fstr:
+                with open(fname, "r") as fstr:
                     data = yaml.full_load(fstr)
                     if data is not None:
                         conf.load_from_config(data)
                 if conf.runnable == True:
-                        self.configs[(conf.context, conf.lang)] = conf
+                    self.configs[(conf.context, conf.lang)] = conf
                 if has_children:
                     self.stack.append(conf)
                     self.load_hierarchy(f[fkey])
                     self.stack.pop()
             else:
-                logger.error("File not found:"+fname)
+                logger.error("File not found:" + fname)
+
 
 class osmSPAM(object):
 
     def __init__(self):
-        """ key: """
-        self.context  = ''  # context we are using (passed in as cli-parameter)
-        self.lang     = ''  # language or list of languages
+        """key:"""
+        self.context = ""  # context we are using (passed in as cli-parameter)
+        self.lang = ""  # language or list of languages
         """ cmd which can be overriden in file """
-        self.do_forum     = False
-        self.do_telegram  = False
-        self.do_josm      = False
-        self.do_mastodon  = False
-        self.do_pin_mastodon   = False
+        self.do_forum = False
+        self.do_telegram = False
+        self.do_josm = False
+        self.do_mastodon = False
+        self.do_pin_mastodon = False
         self.do_unpin_mastodon = False
-        self.do_twitter   = False
-        self.do_mail      = False
-        self.do_show_pic  = False
+        self.do_twitter = False
+        self.do_mail = False
+        self.do_show_pic = False
         """ values from config """
-        self.runnable = False # set this variable if the config can actually be called
-        self.url = ''  # url that we are sending or tweeting
-        self.mastodon_INSTANCE = ''
-        self.mastodon_TOKEN = ''
-        self.tw_CONSUMER_KEY = ''
-        self.tw_CONSUMER_SECRET = ''
-        self.tw_ACCESS_KEY = ''
-        self.tw_ACCESS_SECRET = ''
-        self.tw_text = ''
-        self.pic = ''
-        self.mail_user = ''
-        self.mail_pw   = ''
+        self.runnable = False  # set this variable if the config can actually be called
+        self.url = ""  # url that we are sending or tweeting
+        self.mastodon_INSTANCE = ""
+        self.mastodon_TOKEN = ""
+        self.tw_CONSUMER_KEY = ""
+        self.tw_CONSUMER_SECRET = ""
+        self.tw_ACCESS_KEY = ""
+        self.tw_ACCESS_SECRET = ""
+        self.tw_text = ""
+        self.pic = ""
+        self.mail_user = ""
+        self.mail_pw = ""
         self.mail_smtp_port = 0
-        self.mail_smtp_host = ''
-        self.mail_subject = ''
-        self.mail_subject = ''
-        self.mail_from  = ''
+        self.mail_smtp_host = ""
+        self.mail_subject = ""
+        self.mail_subject = ""
+        self.mail_from = ""
         self.mail_to = []
-        self.mail_body = ''
-        self.forum_KEY = ''
+        self.mail_body = ""
+        self.forum_KEY = ""
         self.forum_to = []
-        self.telegram_TOKEN     = ''
-        self.telegram_to    = []
-        self.mastodon_to    = []
-        self.josm_user = ''
-        self.josm_pw = ''
-        self.josm_body = ''
+        self.telegram_TOKEN = ""
+        self.telegram_to = []
+        self.mastodon_to = []
+        self.josm_user = ""
+        self.josm_pw = ""
+        self.josm_body = ""
         """ derrived values """
         self.publishdate = []
 
-    def load_params(self,args):
-        self.pic = vars(args)['pic']
-        self.do_show_pic = vars(args)['showpic']
-        self.do_mail = vars(args)['mail']
-        self.do_mastodon = vars(args)['mastodon']
-        self.do_twitter = vars(args)['twitter']
-        self.do_forum = vars(args)['forum']
-        self.do_telegram = vars(args)['telegram']
-        self.do_josm = vars(args)['josm']
+    def load_params(self, args):
+        self.pic = vars(args)["pic"]
+        self.do_show_pic = vars(args)["showpic"]
+        self.do_mail = vars(args)["mail"]
+        self.do_mastodon = vars(args)["mastodon"]
+        self.do_twitter = vars(args)["twitter"]
+        self.do_forum = vars(args)["forum"]
+        self.do_telegram = vars(args)["telegram"]
+        self.do_josm = vars(args)["josm"]
 
     def crawl_latest_weekly(self):
-        self.post_nr  = '' # wochennotiznr or weeklyosm nr
-        self.url_nr  = '' # wochennotiznr or weeklyosm nr
-        self.date_from     = ''
-        self.date_to       = ''
-        self.daterange_str = ''
+        self.post_nr = ""  # wochennotiznr or weeklyosm nr
+        self.url_nr = ""  # wochennotiznr or weeklyosm nr
+        self.date_from = ""
+        self.date_to = ""
+        self.daterange_str = ""
 
-        feed_url = 'https://weeklyosm.eu/en/feed/'
+        feed_url = "https://weeklyosm.eu/en/feed/"
         blog_feed = feedparser.parse(feed_url)
 
         blog_title = blog_feed.entries[0].title
-        self.post_nr = re.search('weeklyOSM ([0-9]+)', blog_title).group(1)
+        self.post_nr = re.search("weeklyOSM ([0-9]+)", blog_title).group(1)
 
         blog_link = blog_feed.entries[0].link
-        self.url_nr = blog_link.rsplit('/', 1)[1]
+        self.url_nr = blog_link.rsplit("/", 1)[1]
 
         blog_description = blog_feed.entries[0].description
-        blogdate_fromto = re.search('([0-9]+/[0-9]+/[0-9]+)-([0-9]+/[0-9]+/[0-9]+)', blog_description)
+        blogdate_fromto = re.search(
+            "([0-9]+/[0-9]+/[0-9]+)-([0-9]+/[0-9]+/[0-9]+)", blog_description
+        )
         self.date_from = blogdate_fromto.group(1)
         self.date_to = blogdate_fromto.group(2)
 
-        if self.pic == 'auto':
+        if self.pic == "auto":
             blog_content = blog_feed.entries[0].content
-            self.pic = re.search('<img[^>]+src="(https://weeklyosm.eu/wp-content/uploads/[^"]+)', str(blog_content)).group(1)
+            self.pic = re.search(
+                '<img[^>]+src="(https://weeklyosm.eu/wp-content/uploads/[^"]+)',
+                str(blog_content),
+            ).group(1)
 
         while True:
             print(f"* weeklyOSM post number: {self.post_nr}")
@@ -172,72 +179,74 @@ class osmSPAM(object):
             print(f"* date from: {self.date_from}")
             print(f"* date to: {self.date_to}")
             print(f"* image path: {self.pic}")
-            user_input = input('Confirm? [Y/n] ')
-            if not user_input or user_input in ('Y','y'):
+            user_input = input("Confirm? [Y/n] ")
+            if not user_input or user_input in ("Y", "y"):
                 break
-            logger.warning ("Values not confirmed, please input manually")
-            self.post_nr = input('weeklyOSM post number? ')
-            self.url_nr = input('wordpress url number? ')
-            self.date_from = input('date from? ')
-            self.date_to = input('date to? ')
-            self.pic = input('image path? ')
+            logger.warning("Values not confirmed, please input manually")
+            self.post_nr = input("weeklyOSM post number? ")
+            self.url_nr = input("wordpress url number? ")
+            self.date_from = input("date from? ")
+            self.date_to = input("date to? ")
+            self.pic = input("image path? ")
 
-    def assign_safe(self,name,conf):
+    def assign_safe(self, name, conf):
         if name in conf:
-            setattr(self,name,conf[name])
+            setattr(self, name, conf[name])
 
-    def load_from_config(self,conf):
+    def load_from_config(self, conf):
         if conf is not None:
             if isinstance(conf, dict):
-                for field in  [ 'context',
-                                'lang',
-                                'runnable',
-                                'do_forum',
-                                'do_telegram',
-                                'do_josm',
-                                'do_mastodon',
-                                'do_twitter',
-                                'do_mail',
-                                'do_show_pic',
-                                'url',
-                                'mastodon_INSTANCE',
-                                'mastodon_TOKEN',
-                                'do_pin_mastodon',
-                                'do_unpin_mastodon',
-                                'telegram_TOKEN',
-                                'josm_user',
-                                'josm_pw',
-                                'josm_body',
-                                'tw_CONSUMER_KEY',
-                                'tw_CONSUMER_SECRET',
-                                'tw_ACCESS_KEY',
-                                'tw_ACCESS_SECRET',
-                                'tw_text',
-                                'pic',
-                                'image',
-                                'mail_user',
-                                'mail_pw',
-                                'mail_smtp_port',
-                                'mail_smtp_host',
-                                'mail_subject',
-                                'mail_subject',
-                                'mail_from',
-                                'mail_to',
-                                'mail_body',
-                                'forum_KEY',
-                                'forum_to',
-                                'telegram_to',
-                                'mastodon_to']:
-                    self.assign_safe(field,conf)
+                for field in [
+                    "context",
+                    "lang",
+                    "runnable",
+                    "do_forum",
+                    "do_telegram",
+                    "do_josm",
+                    "do_mastodon",
+                    "do_twitter",
+                    "do_mail",
+                    "do_show_pic",
+                    "url",
+                    "mastodon_INSTANCE",
+                    "mastodon_TOKEN",
+                    "do_pin_mastodon",
+                    "do_unpin_mastodon",
+                    "telegram_TOKEN",
+                    "josm_user",
+                    "josm_pw",
+                    "josm_body",
+                    "tw_CONSUMER_KEY",
+                    "tw_CONSUMER_SECRET",
+                    "tw_ACCESS_KEY",
+                    "tw_ACCESS_SECRET",
+                    "tw_text",
+                    "pic",
+                    "image",
+                    "mail_user",
+                    "mail_pw",
+                    "mail_smtp_port",
+                    "mail_smtp_host",
+                    "mail_subject",
+                    "mail_subject",
+                    "mail_from",
+                    "mail_to",
+                    "mail_body",
+                    "forum_KEY",
+                    "forum_to",
+                    "telegram_to",
+                    "mastodon_to",
+                ]:
+                    self.assign_safe(field, conf)
 
     def load_image(self):
         image = None
         if self.pic:
             try:
-                if self.pic.startswith('http'):
+                if self.pic.startswith("http"):
                     img_download = urllib.request.urlretrieve(self.pic)
                     self.pic = img_download[0]
-                    image = Image.open(img_download[0])
+                    image = Image.open(img_download[0], mode="r")
                 elif os.path.isfile(self.pic):
                     image = Image.open(self.pic)
                 else:
@@ -247,14 +256,14 @@ class osmSPAM(object):
                 exit(1)
             if self.do_show_pic:
                 image.show()
-                user_input = input('Confirm image? [Y/n] ')
-                if user_input and user_input not in ('Y','y'):
+                user_input = input("Confirm image? [Y/n] ")
+                if user_input and user_input not in ("Y", "y"):
                     logger.warning("User aborted for wrong image.")
                     exit()
                 self.do_show_pic = False
 
     def set_date_str(self):
-        self.daterange_str = self.date_from + '-' + self.date_to
+        self.daterange_str = self.date_from + "-" + self.date_to
         today = date.today()
         self.publishdate_iso = today.strftime("%Y-%m-%d")
         self.publishdate_slash = today.strftime("%d/%m/%Y")
@@ -275,16 +284,19 @@ class osmSPAM(object):
         r = requests.get(self.url)
         return r.status_code == 200
 
-    def send_email(self, recipient):  # dunno why the loop at this call and the list-handling inside - just leaving it as a param for paranoids
+    def send_email(
+        self, recipient
+    ):  # dunno why the loop at this call and the list-handling inside - just leaving it as a param for paranoids
         TO = recipient if type(recipient) is list else [recipient]
-        if not TO: return
+        if not TO:
+            return
 
         # Prepare actual message
-        msg = MIMEText(self.mail_body, 'plain', 'UTF-8')
-        msg['From'] = self.mail_from
-        msg['To'] = ", ".join(TO)
-        msg['Subject'] = self.mail_subject
-        #pprint.pprint((self.mail_user, self.mail_pw,self.mail_from, TO, msg.as_string()))
+        msg = MIMEText(self.mail_body, "plain", "UTF-8")
+        msg["From"] = self.mail_from
+        msg["To"] = ", ".join(TO)
+        msg["Subject"] = self.mail_subject
+        # pprint.pprint((self.mail_user, self.mail_pw,self.mail_from, TO, msg.as_string()))
 
         try:
             server = smtplib.SMTP(self.mail_smtp_host, self.mail_smtp_port)
@@ -293,16 +305,18 @@ class osmSPAM(object):
             server.login(self.mail_user, self.mail_pw)
             server.sendmail(self.mail_from, TO, msg.as_string())
             server.close()
-            logger.info('successfully sent the mail to '+", ".join(TO))
+            logger.info("successfully sent the mail to " + ", ".join(TO))
         except:
             logger.error("failed to send mail")
             traceback.print_exc()
-            pprint.pprint((self.mail_user, self.mail_pw,self.mail_from))
-            
+            pprint.pprint((self.mail_user, self.mail_pw, self.mail_from))
+
         return
 
     def post_forum(self, topicId):
-        logger.info(f'...community forum post to https://community.openstreetmap.org/t/-/{topicId}.')
+        logger.info(
+            f"...community forum post to https://community.openstreetmap.org/t/-/{topicId}."
+        )
 
         try:
             FORUM_API = "https://community.openstreetmap.org/posts.json"
@@ -317,13 +331,13 @@ class osmSPAM(object):
                 "archetype": "",
                 "created_at": "",
                 "embed_url": "",
-                "external_id": ""
+                "external_id": "",
             }
 
             headers = {
                 "Content-Type": "application/json",
                 "User-Api-Key": self.forum_KEY,
-                "Accept": "application/json"
+                "Accept": "application/json",
             }
 
             response = requests.post(FORUM_API, json=data, headers=headers)
@@ -336,47 +350,55 @@ class osmSPAM(object):
             traceback.print_exc()
 
     def tweet(self):
-        logger.info('...tweet...')
+        logger.info("...tweet...")
 
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)
         auth.set_access_token(self.tw_ACCESS_KEY, self.tw_ACCESS_SECRET)
         api = tweepy.API(auth)
 
         twitterclient = tweepy.Client(
-            consumer_key=self.tw_CONSUMER_KEY, consumer_secret=self.tw_CONSUMER_SECRET,
-            access_token=self.tw_ACCESS_KEY, access_token_secret=self.tw_ACCESS_SECRET
+            consumer_key=self.tw_CONSUMER_KEY,
+            consumer_secret=self.tw_CONSUMER_SECRET,
+            access_token=self.tw_ACCESS_KEY,
+            access_token_secret=self.tw_ACCESS_SECRET,
         )
 
         # update twitter status
         if self.pic:
-            logger.debug('sending tweet with image')
+            logger.debug("sending tweet with image")
             pic = api.media_upload(self.pic)
-            twitterclient.create_tweet(text=self.tw_text, media_ids = [pic.media_id_string] )
+            twitterclient.create_tweet(
+                text=self.tw_text, media_ids=[pic.media_id_string]
+            )
         else:
             twitterclient.create_tweet(text=self.tw_text)
 
         logger.debug(self.tw_text)
 
     def toot(self, mastodon, recipient):
-        logger.info(f'...toot to {recipient}...')
-        
+        logger.info(f"...toot to {recipient}...")
+
         media = None
         # upload picture if applicable
         if self.pic:
-            logger.debug('sending toot with image')
+            logger.debug("sending toot with image")
             pic = mastodon.media_post(self.pic)
             media = [pic.id]
 
         # toot!
         if self.lang == "int":
             # this is the public post (no receipients will be considered for 'int' language)
-            toot = mastodon.status_post(self.tw_text, language=self.lang, media_ids=media, visibility="public")
+            toot = mastodon.status_post(
+                self.tw_text, language=self.lang, media_ids=media, visibility="public"
+            )
             logger.debug(f"{toot}")
             # pin status
             if self.do_pin_mastodon:
                 try:
                     if self.do_unpin_mastodon:
-                        for pinned_toot in mastodon.account_statuses(mastodon.me().id, pinned=True):
+                        for pinned_toot in mastodon.account_statuses(
+                            mastodon.me().id, pinned=True
+                        ):
                             logger.info(f"unpinning previous toot {pinned_toot.id}")
                             resp = mastodon.status_unpin(pinned_toot.id)
                             logger.debug(f"{resp}")
@@ -385,30 +407,35 @@ class osmSPAM(object):
                     logger.debug(f"{resp}")
                 except Exception as e:
                     logger.error("failed to pin mastodon status:")
-                    logger.error (e)
+                    logger.error(e)
         else:
             # send direct messages
-            toot = mastodon.status_post(self.tw_text + " " + recipient, language=self.lang, media_ids=media, visibility="direct")
+            toot = mastodon.status_post(
+                self.tw_text + " " + recipient,
+                language=self.lang,
+                media_ids=media,
+                visibility="direct",
+            )
 
     def telegram(self, bot, recipient):
-        logger.info(f'...telegramming {recipient}...')
+        logger.info(f"...telegramming {recipient}...")
         try:
             resp = bot.sendMessage(int(recipient), self.tw_text)
-            logger.info (resp)
+            logger.info(resp)
         except Exception as e:
-            logger.error (e)
+            logger.error(e)
 
         # pin message:
         # bot.unpinChatMessage(recipient) # unpins most recent chat message
         # bot.pinChatMessage(recipient,resp['message_id'],True)
 
     def post_josm(self):
-        logger.info(f'...posting to josm...')
+        logger.info(f"...posting to josm...")
         with xmlrpc.client.ServerProxy(
             f"https://{self.josm_user}:{self.josm_pw}@josm.openstreetmap.de/login/xmlrpc"
         ) as server:
             try:
-                wikipage = "StartupPageSource" # use "Sandbox" for testing
+                wikipage = "StartupPageSource"  # use "Sandbox" for testing
                 wikicontent = server.wiki.getPage(wikipage)
 
                 BEGINBLOCK = "# Begin weekly - leave at the top of the weeklyOSM section, automatically updated, do not edit manually. Request changes at info@weeklyosm.eu."
@@ -419,7 +446,9 @@ class osmSPAM(object):
 
                 logger.debug(newblock)
 
-                blockpattern = re.compile(f"{BEGINBLOCK}.*?{ENDBLOCK}\n", flags=re.DOTALL)
+                blockpattern = re.compile(
+                    f"{BEGINBLOCK}.*?{ENDBLOCK}\n", flags=re.DOTALL
+                )
                 oldblock = blockpattern.search(wikicontent)
                 if oldblock is None:
                     raise ValueError(
@@ -428,7 +457,9 @@ class osmSPAM(object):
                 oldblock = oldblock.group()
 
                 if oldblock == newblock:
-                    raise ValueError("The page is already up to date. No changes needed.")
+                    raise ValueError(
+                        "The page is already up to date. No changes needed."
+                    )
 
                 newcount = newblock.count("\n")
                 oldcount = oldblock.count("\n") - 1
@@ -438,7 +469,9 @@ class osmSPAM(object):
                     )
 
                 # Drop the old weekly, insert new one at top
-                wikicontent = wikicontent.replace(oldblock, "").replace(BEGINNEWS, f"{BEGINNEWS}\n{newblock}")
+                wikicontent = wikicontent.replace(oldblock, "").replace(
+                    BEGINNEWS, f"{BEGINNEWS}\n{newblock}"
+                )
                 server.wiki.putPage(
                     wikipage,
                     wikicontent,
@@ -452,18 +485,21 @@ class osmSPAM(object):
             except Exception as e:
                 logger.error(f"An unexpected error occurred: {e}")
 
-
     def send_stuff(self):
         self.create_texts()
         logger.info("Check if URL " + self.url + " exists before advertising...")
         if not self.check_url_exists():
-            logger.error("URL " + self.url + " seems to be wrong")
-            exit(1)
+            logger.error(
+                "URL " + self.url + " seems to be wrong. Skipping " + self.lang
+            )
+            return False
 
         if self.do_twitter:
             self.tweet()
         if self.do_mastodon:
-            mastodon = Mastodon(access_token = self.mastodon_TOKEN, api_base_url = self.mastodon_INSTANCE)
+            mastodon = Mastodon(
+                access_token=self.mastodon_TOKEN, api_base_url=self.mastodon_INSTANCE
+            )
             for to in self.mastodon_to:
                 self.toot(mastodon, to)
         if self.do_telegram:
@@ -479,7 +515,8 @@ class osmSPAM(object):
         if self.do_josm:
             self.post_josm()
 
-        return
+        return True
+
 
 # create logger
 logger = logging.getLogger("weeklyNotifier")
@@ -488,42 +525,70 @@ logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
 ch.setFormatter(CustomFormatter())
-logger.addHandler(ch)  
+logger.addHandler(ch)
 
-argparser = argparse.ArgumentParser(prog='weekly2all',description='Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.', epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de"')
+argparser = argparse.ArgumentParser(
+    prog="weekly2all",
+    description="Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.",
+    epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de"',
+)
 
-argparser.add_argument('--twitter', action='store_true', help='send twitter notification')
-argparser.add_argument('--mastodon', action='store_true', help='send mastodon notification')
-argparser.add_argument('--mail',  action='store_true', help='send mail')
-argparser.add_argument('--forum',  action='store_true', help='send post to forum threads')
-argparser.add_argument('--telegram',  action='store_true', help='send announcements to telegram channels and groups where the bot is admin')
-argparser.add_argument('--josm',  action='store_true', help='send announcements to josm wiki (shown at josm program start)')
-argparser.add_argument('--pic', help='picture for mastodon and twitter, use auto to retrieve from latest weekly')
-#argparser.add_argument('--pic', nargs='?', default=None, const='auto', help='picture for mastodon and twitter, use without filename to retrieve from latest weekly') # not working, https://github.com/python/cpython/issues/53584
-argparser.add_argument('--showpic',  action='store_true', help='show picture before sending tweet/toot')
-argparser.add_argument('ctxt',  help='context for sending')
-argparser.add_argument('lang',  help='list of languages of context' )
+argparser.add_argument(
+    "--twitter", action="store_true", help="send twitter notification"
+)
+argparser.add_argument(
+    "--mastodon", action="store_true", help="send mastodon notification"
+)
+argparser.add_argument("--mail", action="store_true", help="send mail")
+argparser.add_argument(
+    "--forum", action="store_true", help="send post to forum threads"
+)
+argparser.add_argument(
+    "--telegram",
+    action="store_true",
+    help="send announcements to telegram channels and groups where the bot is admin",
+)
+argparser.add_argument(
+    "--josm",
+    action="store_true",
+    help="send announcements to josm wiki (shown at josm program start)",
+)
+argparser.add_argument(
+    "--pic",
+    help="picture for mastodon and twitter, use auto to retrieve from latest weekly",
+)
+# argparser.add_argument('--pic', nargs='?', default=None, const='auto', help='picture for mastodon and twitter, use without filename to retrieve from latest weekly') # not working, https://github.com/python/cpython/issues/53584
+argparser.add_argument(
+    "--showpic", action="store_true", help="show picture before sending tweet/toot"
+)
+argparser.add_argument("ctxt", help="context for sending")
+argparser.add_argument("lang", help="list of languages of context")
 
 args = argparser.parse_args()
 
 logger.debug(args)
 
-#argparser.print_help();
-#pprint.pprint(vars(args))
+# argparser.print_help();
+# pprint.pprint(vars(args))
 
 cfr = configResolver(args)
+error_log = []
 
-for i, lang in enumerate(vars(args)['lang'].split(',')):
-    logger.info (f"publishing {lang}...")
+for i, lang in enumerate(vars(args)["lang"].split(",")):
+    logger.info(f"publishing {lang}...")
 
-    config = cfr.configs.get((vars(args)['ctxt'], lang))
-    if  not config:
+    config = cfr.configs.get((vars(args)["ctxt"], lang))
+    if not config:
         logger.error(f"Sorry no matching config for <{lang}>. Available:")
         logger.info(f"{cfr.configs.keys()}")
     else:
         config.create_texts()
-        #pprint.pprint(vars(config))
+        # pprint.pprint(vars(config))
         logger.debug(f"{config}")
         # only show picture for first iteration:
-        if i: config.do_show_pic = False
-        config.send_stuff()
+        if i:
+            config.do_show_pic = False
+        if not config.send_stuff():
+            error_log.append("failed to publish " + lang)
+    for error in error_log:
+        logger.critical(error)
