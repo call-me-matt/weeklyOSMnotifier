@@ -52,7 +52,8 @@ josm_body: |
   pl: * {c.publishdate_dot} **Tygodnik OSM**: [https://www.weeklyosm.eu/archives/{c.url_nr} nr {c.post_nr}] cotygodniowego podsumowania wiadomości ze świata OSM jest już dostępny.
   pt: * {c.publishdate_slash} **semanárioOSM**: A edição [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] do resumo semanal de notícias do OSM está disponível.
   pt_BR: * {c.publishdate_slash} **semanárioOSM**: A edição [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] do resumo semanal de notícias do OSM está disponível.
-  ru: * {c.publishdate_dot} **weeklyOSM**: еженедельный обзор новостей OSM, выпуск [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], доступен онлайн на английском и нескольких других языках
+  ru: * {c.publishdate_dot} **weeklyOSM**: еженедельный обзор новостей OSM, выпуск [https://www.weeklyosm.eu/archives/{c.url_nr} №{c.post_nr}], доступен онлайн на английском и нескольких других языках
+  be: * {c.publishdate_dot} **weeklyOSM**: Штотыднёвы агляд навін OSM, выпуск [https://www.weeklyosm.eu/archives/{c.url_nr} №{c.url_nr}], даступны онлайн на англійскай і некалькіх іншых мовах
   sk: * {c.publishdate_dot} **weeklyOSM**: Týždenný sumár noviniek v OSM, vydanie [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], je už dostupný online v angličtine.
   sr@latin: * {c.publishdate_dot} **weeklyOSM**: Nedeljna tura vesti iz OSM sveta, problem zaveden pod brojem [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], od sada je dostupna na engleskom jeziku
   uk: * {c.publishdate_dot} **weeklyOSM**: Щотижневий огляд новин OSM, випуск [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], доступний англійською та іншими мовами
