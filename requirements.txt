@@ -6,3 +6,4 @@ pyyaml
 Mastodon.py
 telepot
 feedparser
+atproto

@@ -3,10 +3,12 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
 do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'OSM Mingguan #{c.post_nr} {c.daterange_str}'
 tw_text: "weeklyOSM edisi {c.post_nr} kini tersedia dalam Bahasa Indonesia kumpulan berita terkini mengenai #openstreetmap #osm dari seluruh penjuru dunia https://www.weeklyosm.eu/id/archives/{c.url_nr}"
+bluesky_text: "{c.tw_text}"
 mail_body: | 
   Kabar mingguan OSM edisi # {c.post_nr} sudah terbit dalam Bahasa Indonesia, menyajikan rangkuman berita mengenai hal-hal yang terjadi di dunia OpenStreetMap dalam minggu ini :
 

@@ -26,3 +26,11 @@ for update in resp:
             print(info)
     except KeyError:
         continue
+
+# recipient = -1001064379468
+# message = "Hello from weeklyteam. We will notify you here about new issues of https://weeklyosm.eu from now on. Feedback welcome at info@weeklyosm.eu"
+# try:
+#     resp = bot.sendMessage(int(recipient), message)
+#     print (resp)
+# except Exception as e:
+#     print (e)

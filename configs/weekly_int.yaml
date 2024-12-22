@@ -4,6 +4,7 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 do_twitter: False   # comment to send an additional tweet in this language if "--twitter" is called (attention: shorten text to <280 chars!)
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+do_bluesky: True    # comment to send an additional post in this language if "--bluesky" is called
 #do_josm: False     # uncomment in order to ignore "--josm" for this language
 do_pin_mastodon: True
 do_unpin_mastodon: True
@@ -19,6 +20,13 @@ Se ha publicado un nuevo número del semanarioOSM 🌐 \n
 주간OSM 최신호가 나왔습니다  💬 \n
 Тижневик OSM тепер доступний Українською 📲 \n
 @OpenStreetMap@a.gup.pe"
+
+bluesky_text: "👉 https://www.weeklyosm.eu/archives/{c.url_nr} 👈 \n
+Issue {c.post_nr} of #weeklyOSM is out. 🌏 \n
+涵蓋 #開放街圖 #osm 世界大小事的新一期 weeklyOSM 已經發佈 🚀 \n
+Lisez les dernières nouvelles de l'univers #openstreetmap 🗺️ \n
+Viele Neuigkeiten aus der #osm Welt 📰 \n
+新一期的OSM周刊已经发布 🌏"
 
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
