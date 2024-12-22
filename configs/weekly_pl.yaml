@@ -3,10 +3,12 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
 do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim! Najnowsze wieści ze świata #openstreetmap #osm https://www.weeklyosm.eu/pl/archives/{c.url_nr}"
+bluesky_text: "{c.tw_text}"
 mail_body: | 
   Wydanie #{c.post_nr} cotygodniowego przeglądu wiadomości 
   OSM, zawierające podsumowanie wielu rzeczy, które dzieją 

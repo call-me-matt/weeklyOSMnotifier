@@ -5,7 +5,6 @@ import collections
 import os
 import pprint
 import smtplib
-import time
 import traceback
 from copy import deepcopy
 from email.mime.multipart import MIMEMultipart
@@ -20,6 +19,10 @@ import telepot
 import tweepy
 import yaml
 from mastodon import Mastodon
+from atproto import (
+    Client as blueskyclient,
+    models as bluesky_models,
+)
 from PIL import Image
 import urllib.request
 
@@ -100,6 +103,7 @@ class osmSPAM(object):
         self.do_pin_mastodon = False
         self.do_unpin_mastodon = False
         self.do_twitter = False
+        self.do_bluesky = False
         self.do_mail = False
         self.do_show_pic = False
         """ values from config """
@@ -107,6 +111,9 @@ class osmSPAM(object):
         self.url = ""  # url that we are sending or tweeting
         self.mastodon_INSTANCE = ""
         self.mastodon_TOKEN = ""
+        self.bluesky_USER = ""
+        self.bluesky_TOKEN = ""
+        self.bluesky_text = ""
         self.tw_CONSUMER_KEY = ""
         self.tw_CONSUMER_SECRET = ""
         self.tw_ACCESS_KEY = ""
@@ -138,6 +145,7 @@ class osmSPAM(object):
         self.do_show_pic = vars(args)["showpic"]
         self.do_mail = vars(args)["mail"]
         self.do_mastodon = vars(args)["mastodon"]
+        self.do_bluesky = vars(args)["bluesky"]
         self.do_twitter = vars(args)["twitter"]
         self.do_forum = vars(args)["forum"]
         self.do_telegram = vars(args)["telegram"]
@@ -204,12 +212,16 @@ class osmSPAM(object):
                     "do_telegram",
                     "do_josm",
                     "do_mastodon",
+                    "do_bluesky",
                     "do_twitter",
                     "do_mail",
                     "do_show_pic",
                     "url",
                     "mastodon_INSTANCE",
                     "mastodon_TOKEN",
+                    "bluesky_USER",
+                    "bluesky_TOKEN",
+                    "bluesky_text",
                     "do_pin_mastodon",
                     "do_unpin_mastodon",
                     "telegram_TOKEN",
@@ -277,6 +289,7 @@ class osmSPAM(object):
         self.mail_body = self.mail_body.format(c=self)
         self.mail_subject = self.mail_subject.format(c=self)
         self.tw_text = self.tw_text.format(c=self)
+        self.bluesky_text = self.bluesky_text.format(c=self)
         self.mail_from = self.mail_from.format(c=self)
         self.josm_body = self.josm_body.format(c=self)
 
@@ -417,6 +430,69 @@ class osmSPAM(object):
                 visibility="direct",
             )
 
+    def post_bluesky(self, user, token):
+        logger.info(f"...posting on bluesky...")
+        # log in to bluesky.social
+        try:
+            client = blueskyclient()
+            client.login(user, token)
+        except Exception as e:
+            logger.error("cannot log in to bluesky.")
+            logger.error(e)
+            return False
+
+        # load picture
+        try:
+            if self.pic:
+                logger.debug("sending post with image")
+                with open(self.pic, "rb") as f:
+                    media = f.read()
+        except Exception as e:
+            logger.error("cannot read picture")
+            logger.error(e)
+            return False
+
+        # detect any links beginning with http to make them clickable
+        try:
+            pattern = rb"https?://[^ \n\r\t]*"
+            matches = re.finditer(pattern, self.bluesky_text.encode("UTF-8"))
+            url_positions = []
+            for match in matches:
+                url_bytes = match.group(0)
+                url = url_bytes.decode("UTF-8")
+                url_positions.append((url, match.start(), match.end()))
+            facets = []
+            for link_data in url_positions:
+                uri, byte_start, byte_end = link_data
+                facets.append(
+                    bluesky_models.AppBskyRichtextFacet.Main(
+                        features=[bluesky_models.AppBskyRichtextFacet.Link(uri=uri)],
+                        index=bluesky_models.AppBskyRichtextFacet.ByteSlice(
+                            byte_start=byte_start, byte_end=byte_end
+                        ),
+                    )
+                )
+        except Exception as e:
+            logger.warning("error detecting links, cannot make them clickable")
+            logger.error(e)
+            facets = []
+
+        # send post
+        try:
+            if self.pic:
+                client.send_image(
+                    text=self.bluesky_text,
+                    image=media,
+                    image_alt="weeklyOSM title image",
+                    facets=facets,
+                )
+            else:
+                client.send_post(self.bluesky_text, facets=facets)
+        except Exception as e:
+            logger.error("could not post to bluesky")
+            logger.error(e)
+            return False
+
     def telegram(self, bot, recipient):
         logger.info(f"...telegramming {recipient}...")
         try:
@@ -502,6 +578,8 @@ class osmSPAM(object):
             )
             for to in self.mastodon_to:
                 self.toot(mastodon, to)
+        if self.do_bluesky:
+            self.post_bluesky(user=self.bluesky_USER, token=self.bluesky_TOKEN)
         if self.do_telegram:
             bot = telepot.Bot(self.telegram_TOKEN)
             for to in self.telegram_to:
@@ -539,6 +617,9 @@ argparser.add_argument(
 argparser.add_argument(
     "--mastodon", action="store_true", help="send mastodon notification"
 )
+argparser.add_argument(
+    "--bluesky", action="store_true", help="send bluesky.social notification"
+)
 argparser.add_argument("--mail", action="store_true", help="send mail")
 argparser.add_argument(
     "--forum", action="store_true", help="send post to forum threads"
@@ -555,7 +636,7 @@ argparser.add_argument(
 )
 argparser.add_argument(
     "--pic",
-    help="picture for mastodon and twitter, use auto to retrieve from latest weekly",
+    help="picture for mastodon, bluesky and twitter, use auto to retrieve from latest weekly",
 )
 # argparser.add_argument('--pic', nargs='?', default=None, const='auto', help='picture for mastodon and twitter, use without filename to retrieve from latest weekly') # not working, https://github.com/python/cpython/issues/53584
 argparser.add_argument(

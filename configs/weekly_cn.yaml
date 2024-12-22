@@ -3,10 +3,12 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
+do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
 do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_user}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "OSM周刊第{c.post_nr}期简体中文版现已发布！ 点击此处本周了解#openstreetmap #osm 社区的最新动态：https://www.weeklyosm.eu/cn/archives/{c.url_nr}"
+bluesky_text: "{c.tw_text}"
 mail_body: | 
    OSM周刊第{c.post_nr}期简体中文版现已发布！点击下面的链接，了解本周OpenStreetMap社区最新动态：
   
