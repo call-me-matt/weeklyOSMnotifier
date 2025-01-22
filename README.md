@@ -24,6 +24,9 @@ mail_pw: "somegmailssecretpasswort"
 forum_KEY: "abcdef123456"
 mastondon_INSTANCE: "yourinstance.social"
 mastodon_TOKEN: "yourMastodonDeveloperApplicationAccessToken"
+matrix_USER: "@youruser:matrix.org"
+matrix_BASE: "https://matrix.org"
+matrix_TOKEN: "syt_tokentoken_tokentoken_token"
 tw_CONSUMER_KEY: "yourTwitterConsumerKey"
 tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
 tw_ACCESS_KEY: "123456-YourTWAccessKeyNelsonMandela4Evaaaa"
@@ -80,5 +83,5 @@ test call - for twitter
 
 how to call - mail, forum, josm, telegram, mastodon and twitter
 ```
-./runenvweekly2all.sh --mail --forum --josm --telegram --mastodon --bluesky --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,tr,ru,ja,fr,it,ko,br,zh,pl,uk"
+./runenvweekly2all.sh --bluesky --forum --josm --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,tr,ru,ja,fr,it,ko,br,zh,pl,uk"
 ```

@@ -16,6 +16,8 @@ import re
 import feedparser
 import requests
 import telepot
+from mautrix.client import ClientAPI
+import asyncio
 import tweepy
 import yaml
 from mastodon import Mastodon
@@ -102,6 +104,7 @@ class osmSPAM(object):
         self.do_mastodon = False
         self.do_pin_mastodon = False
         self.do_unpin_mastodon = False
+        self.do_matrix = False
         self.do_twitter = False
         self.do_bluesky = False
         self.do_mail = False
@@ -111,6 +114,9 @@ class osmSPAM(object):
         self.url = ""  # url that we are sending or tweeting
         self.mastodon_INSTANCE = ""
         self.mastodon_TOKEN = ""
+        self.matrix_USER = ""
+        self.matrix_BASE = ""
+        self.matrix_TOKEN = ""
         self.bluesky_USER = ""
         self.bluesky_TOKEN = ""
         self.bluesky_text = ""
@@ -134,6 +140,7 @@ class osmSPAM(object):
         self.telegram_TOKEN = ""
         self.telegram_to = []
         self.mastodon_to = []
+        self.matrix_to = []
         self.josm_user = ""
         self.josm_pw = ""
         self.josm_body = ""
@@ -145,6 +152,7 @@ class osmSPAM(object):
         self.do_show_pic = vars(args)["showpic"]
         self.do_mail = vars(args)["mail"]
         self.do_mastodon = vars(args)["mastodon"]
+        self.do_matrix = vars(args)["matrix"]
         self.do_bluesky = vars(args)["bluesky"]
         self.do_twitter = vars(args)["twitter"]
         self.do_forum = vars(args)["forum"]
@@ -212,6 +220,7 @@ class osmSPAM(object):
                     "do_telegram",
                     "do_josm",
                     "do_mastodon",
+                    "do_matrix",
                     "do_bluesky",
                     "do_twitter",
                     "do_mail",
@@ -219,6 +228,9 @@ class osmSPAM(object):
                     "url",
                     "mastodon_INSTANCE",
                     "mastodon_TOKEN",
+                    "matrix_USER",
+                    "matrix_BASE",
+                    "matrix_TOKEN",
                     "bluesky_USER",
                     "bluesky_TOKEN",
                     "bluesky_text",
@@ -248,6 +260,7 @@ class osmSPAM(object):
                     "forum_to",
                     "telegram_to",
                     "mastodon_to",
+                    "matrix_to",
                 ]:
                     self.assign_safe(field, conf)
 
@@ -505,6 +518,23 @@ class osmSPAM(object):
         # bot.unpinChatMessage(recipient) # unpins most recent chat message
         # bot.pinChatMessage(recipient,resp['message_id'],True)
 
+    async def post_matrix(self, recipients):
+        logger.info("...posting to matrix...")
+        try:
+            client = ClientAPI(
+                self.matrix_USER, base_url=self.matrix_BASE, token=self.matrix_TOKEN
+            )
+        except Exception as e:
+            logger.error(f"could not connect to matrix chat - {e}")
+            return
+        for recipient in recipients:
+            logger.info(recipient)
+            try:
+                await client.send_text(recipient, self.tw_text)
+            except Exception as e:
+                logger.error(f"could not send matrix chat message- {e}")
+        await client.api.session.close()
+
     def post_josm(self):
         logger.info(f"...posting to josm...")
         with xmlrpc.client.ServerProxy(
@@ -584,6 +614,8 @@ class osmSPAM(object):
             bot = telepot.Bot(self.telegram_TOKEN)
             for to in self.telegram_to:
                 self.telegram(bot, to)
+        if self.do_matrix:
+            asyncio.run(self.post_matrix(self.matrix_to))
         if self.do_mail:
             for to in self.mail_to:
                 self.send_email(to)
@@ -608,19 +640,12 @@ logger.addHandler(ch)
 argparser = argparse.ArgumentParser(
     prog="weekly2all",
     description="Python 3 script to notify about a new issue of Wochennotiz/weeklyOSM.",
-    epilog='example: python weekly2all.py --mail --forum --twitter --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de"',
+    epilog='example: python weekly2all.py --mail --forum --mastodon --pic ~/downloads/1.jpg "WEEKLY" "en,de"',
 )
 
 argparser.add_argument(
-    "--twitter", action="store_true", help="send twitter notification"
-)
-argparser.add_argument(
-    "--mastodon", action="store_true", help="send mastodon notification"
-)
-argparser.add_argument(
     "--bluesky", action="store_true", help="send bluesky.social notification"
 )
-argparser.add_argument("--mail", action="store_true", help="send mail")
 argparser.add_argument(
     "--forum", action="store_true", help="send post to forum threads"
 )
@@ -630,9 +655,19 @@ argparser.add_argument(
     help="send announcements to telegram channels and groups where the bot is admin",
 )
 argparser.add_argument(
+    "--twitter", action="store_true", help="send twitter notification"
+)
+argparser.add_argument(
     "--josm",
     action="store_true",
     help="send announcements to josm wiki (shown at josm program start)",
+)
+argparser.add_argument("--mail", action="store_true", help="send e-mail notification")
+argparser.add_argument(
+    "--mastodon", action="store_true", help="send mastodon notification"
+)
+argparser.add_argument(
+    "--matrix", action="store_true", help="send matrix chat notification"
 )
 argparser.add_argument(
     "--pic",
