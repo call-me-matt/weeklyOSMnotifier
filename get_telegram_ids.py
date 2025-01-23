@@ -9,7 +9,7 @@
 import telepot
 import yaml
 
-with open('configs/private/secrets/weeklysecrets.yaml') as f:
+with open("configs/private/secrets/weekly.yaml") as f:
     # use safe_load instead load
     secrets = yaml.safe_load(f)
 
@@ -20,7 +20,7 @@ chats = []
 
 for update in resp:
     try:
-        info = update['message']['chat']
+        info = update["message"]["chat"]
         if not info in chats:
             chats.append(info)
             print(info)

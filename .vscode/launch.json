@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": [ 
+            "args": [
                 "EMAILTEST",
                 "en"
             ]
@@ -21,11 +21,12 @@
             "program": "${file}",
             "args": [
                 "--showpic",
-                "--twitter", 
-                "--pic", "/home/martinix/Schreibtisch/witzige_bilder/C3wrVxcWcAEhtrU.jpg",
-                "WEEKLYTWTEST",
+                "--twitter",
+                "--pic",
+                "/home/martinix/Schreibtisch/witzige_bilder/C3wrVxcWcAEhtrU.jpg",
+                "WEEKLYTEST",
                 "en"
-            ], 
+            ],
         },
         {
             "name": "Python: Current File",

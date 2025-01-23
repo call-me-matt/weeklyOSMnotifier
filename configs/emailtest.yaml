@@ -8,7 +8,7 @@ do_mail: True # " wenn dieses auskommentiert wird, wird der paramterer "--mail" 
 do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
 do_mastodon: False #" wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 do_forum: False
-mail_from: "weeklyteam <{c.mail_user}>"
+mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: 'Python email test'
 mail_to:
  - "test@test.com" # this property gets overwritten in the file with the same name found in configs/private/mailto/ folder

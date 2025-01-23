@@ -5,7 +5,7 @@ runnable: True
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
 do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
 do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
-mail_from: "weeklyteam <{c.mail_user}>"
+mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 tw_text: "ЕженедельникOSM №{c.post_nr} теперь доступен на русском. Последние новости из мира #openstreetmap https://www.weeklyosm.eu/ru/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
