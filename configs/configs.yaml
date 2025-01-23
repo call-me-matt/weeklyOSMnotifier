@@ -7,7 +7,7 @@
 # the child might overwrite any other existing configuration with the same context name and language
 # - in some cases this might be wanted behaviour - like keeping e-mail adresses secret
 
-- private/secrets/weeklysecrets.yaml:
+- private/secrets/weekly.yaml:
   - weekly_base.yaml:
     - weekly_int.yaml:
       - private/mailto/weekly_int.yaml
@@ -47,5 +47,5 @@
       - private/mailto/weekly_uk.yaml
     - emailtest.yaml:
       - private/mailto/emailtest.yaml
-    - private/secrets/weeklytwtest_secrets.yaml:
-      - weeklytwtest_en.yaml
+    - private/secrets/weeklytest.yaml:
+      - weeklytest_en.yaml

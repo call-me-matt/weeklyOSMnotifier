@@ -4,7 +4,7 @@ runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 do_twitter: False   # comment to send an additional tweet in this language if "--twitter" is called (attention: shorten text to <280 chars!)
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: True    # comment to send an additional post in this language if "--bluesky" is called
+#do_bluesky: True   # uncomment in order to ignore "--bluesky" for this language
 #do_josm: False     # uncomment in order to ignore "--josm" for this language
 do_pin_mastodon: True
 do_unpin_mastodon: True
@@ -28,7 +28,7 @@ Lisez les dernières nouvelles de l'univers #openstreetmap 🗺️ \n
 Viele Neuigkeiten aus der #osm Welt 📰 \n
 新一期的OSM周刊已经发布 🌏"
 
-mail_from: "weeklyteam <{c.mail_user}>"
+mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
 mail_body: | 
   The weekly round-up of OSM news, issue # {c.post_nr},

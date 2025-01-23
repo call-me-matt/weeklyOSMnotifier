@@ -1,4 +1,4 @@
-context: 'WEEKLYTWTEST'
+context: 'WEEKLYTEST'
 lang: 'ko'
 runnable: True
 url: "https://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"

@@ -14,27 +14,33 @@ Clone this repo with submodules: `git clone --recurse-submodules git@github.com:
 
 On linux run setup.sh to get you started with all requirements for a python environment. 
 
-First you should insert your secrets into the file `configs/private/secrets/weeklysecrets.yaml`.
+First you should insert your secrets into the file `configs/private/secrets/weekly.yaml`.
 You would need to create that file looking something like this:
 
 ```
 runnable: False
-mail_user: "somegmailusername"
-mail_pw: "somegmailssecretpasswort"
+bluesky_TOKEN: "x3xx-xyz-xyz-abcd"
+bluesky_USER: "your@user.org"
 forum_KEY: "abcdef123456"
-mastondon_INSTANCE: "yourinstance.social"
+josm_PW: "yourJosmWikiPass"
+josm_USER: "yourJosmWikiUser"
+mail_PW: "somegmailssecretpasswort"
+mail_USER: "somegmailusername"
+mastodon_INSTANCE: "yourinstance.social"
 mastodon_TOKEN: "yourMastodonDeveloperApplicationAccessToken"
-matrix_USER: "@youruser:matrix.org"
 matrix_BASE: "https://matrix.org"
 matrix_TOKEN: "syt_tokentoken_tokentoken_token"
-tw_CONSUMER_KEY: "yourTwitterConsumerKey"
-tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
+matrix_USER: "@youruser:matrix.org"
+telegram_TOKEN: "YourTelegramBotToken123:456"
 tw_ACCESS_KEY: "123456-YourTWAccessKeyNelsonMandela4Evaaaa"
 tw_ACCESS_SECRET: "YourTWAccessSecretlsdkhjkahdkjahsrwqkjhqwkjhewqkjewqh"
-telegram_TOKEN: "YourTelegramBotToken123:456"
-josm_user: "yourJosmWikiUser"
-jsom_pw: "yourJosmWikiPass"
-``` 
+tw_BEARER_TOKEN: "AAAAAAAAAAabcdefg"
+tw_CLIENT_ID: "abcdef123456xyz"
+tw_CLIENT_SECRET: "123456abcdef789"
+tw_CONSUMER_KEY: "0123456consumerkeyABC"
+tw_CONSUMER_KEY: "yourTwitterConsumerKey"
+tw_CONSUMER_SECRET: "yourTwitterConsumerSecretFrdsfor09512kljda98324iu21as"
+```
 
 Next you should define the recipients for each language in a `weekly_*.yaml` as defined in your `configs/configs.yaml`
 
@@ -78,10 +84,10 @@ It takes the same parameters as the python script but fixes PYTHONIOENCODING to 
 
 test call - for twitter
 ```
-./runenvweekly2all.sh --twitter --pic ~/downloads/C3wrVxcWcAEhtrU.jpg --showpic  "WEEKLYTWTEST" "en,de,fr"
+./runenvweekly2all.sh --twitter --pic ~/downloads/abc.jpg --showpic  "WEEKLYTEST" "en"
 ```
 
-how to call - mail, forum, josm, telegram, mastodon and twitter
+how weeklyOSM is announced:
 ```
 ./runenvweekly2all.sh --bluesky --forum --josm --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,tr,ru,ja,fr,it,ko,br,zh,pl,uk"
 ```
