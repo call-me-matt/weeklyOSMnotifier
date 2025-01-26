@@ -11,6 +11,7 @@ from connectors import (
     bluesky,
     forum,
     josm,
+    lemmy,
     mail,
     mastodon,
     matrix,
@@ -30,6 +31,7 @@ class osmSPAM(object):
         self.do_bluesky = False
         self.do_forum = False
         self.do_josm = False
+        self.do_lemmy = False
         self.do_mail = False
         self.do_mastodon = False
         self.do_matrix = False
@@ -51,6 +53,8 @@ class osmSPAM(object):
         self.josm_body = ""
         self.josm_PW = ""
         self.josm_USER = ""
+        self.lemmy_PW = ""
+        self.lemmy_USER = ""
         self.mail_body = ""
         self.mail_from = ""
         self.mail_PW = ""
@@ -84,6 +88,7 @@ class osmSPAM(object):
         self.do_bluesky = vars(args)["bluesky"]
         self.do_forum = vars(args)["forum"]
         self.do_josm = vars(args)["josm"]
+        self.do_lemmy = vars(args)["lemmy"]
         self.do_mail = vars(args)["mail"]
         self.do_mastodon = vars(args)["mastodon"]
         self.do_matrix = vars(args)["matrix"]
@@ -151,6 +156,7 @@ class osmSPAM(object):
                     "do_bluesky",
                     "do_forum",
                     "do_josm",
+                    "do_lemmy",
                     "do_mail",
                     "do_mastodon",
                     "do_matrix",
@@ -166,6 +172,8 @@ class osmSPAM(object):
                     "josm_PW",
                     "josm_USER",
                     "lang",
+                    "lemmy_PW",
+                    "lemmy_USER",
                     "mail_body",
                     "mail_from",
                     "mail_PW",
@@ -256,6 +264,8 @@ class osmSPAM(object):
             forum.post(self)
         if self.do_josm:
             josm.post(self)
+        if self.do_lemmy:
+            lemmy.post(self)
         if self.do_mail:
             mail.post(self)
         if self.do_mastodon:

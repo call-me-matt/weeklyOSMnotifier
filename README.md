@@ -24,6 +24,8 @@ bluesky_USER: "your@user.org"
 forum_KEY: "abcdef123456"
 josm_PW: "yourJosmWikiPass"
 josm_USER: "yourJosmWikiUser"
+lemmy_PW: "yourlemmypassword"
+lemmy_USER: "yourlemmyuser"
 mail_PW: "somegmailssecretpasswort"
 mail_USER: "somegmailusername"
 mastodon_INSTANCE: "yourinstance.social"
@@ -89,5 +91,5 @@ test call - for twitter
 
 how weeklyOSM is announced:
 ```
-./runenvweekly2all.sh --bluesky --forum --josm --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,tr,ru,ja,fr,it,ko,br,zh,pl,uk"
+./runenvweekly2all.sh --bluesky --forum --josm --lemmy --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,tr,ru,ja,fr,it,ko,br,zh,pl,uk"
 ```

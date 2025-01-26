@@ -39,6 +39,11 @@ def main():
         help="send announcements to josm wiki (shown at josm program start)",
     )
     connector_group.add_argument(
+        "--lemmy",
+        action="store_true",
+        help="send post to lemmy community",
+    )
+    connector_group.add_argument(
         "--mail", action="store_true", help="send e-mail notification"
     )
     connector_group.add_argument(
