@@ -7,7 +7,7 @@ do_bluesky: False   # comment to send an additional post in this language if "--
 do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "weeklyOSM issue {c.post_nr} is now available in *English* the news from the #openstreetmap #osm world https://www.weeklyosm.eu/archives/{c.url_nr}"
+tw_text: "The new weeklyOSM #{c.post_nr} is out — read this week’s articles in English and catch up on the latest news from the #OpenStreetMap community: https://www.weeklyosm.eu/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
 mail_body: | 
   The weekly round-up of OSM news, issue # {c.post_nr},
