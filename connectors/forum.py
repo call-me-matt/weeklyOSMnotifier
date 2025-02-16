@@ -7,7 +7,7 @@ def post(self):
     # only one message per language, as multiple posts with same text are rejected from forum
 
     self.logger.info(
-        f"...community forum post to https://community.openstreetmap.org/t/-/{self.forum_to}."
+        f"...community forum post to https://community.openstreetmap.org/t/-/{self.forum_to}"
     )
 
     try:
@@ -34,9 +34,9 @@ def post(self):
 
         response = requests.post(FORUM_API, json=data, headers=headers)
 
-        self.logger.info(f"Status Code {response.status_code}")
+        self.logger.info(f"...status code {response.status_code}")
         self.logger.debug(f"JSON Response: {response.json()}")
 
-    except:
-        self.logger.error("failed to publish")
+    except Exception as e:
+        self.logger.error(f"failed to publish - {e}")
         traceback.print_exc()

@@ -12,7 +12,7 @@ def post(self):
 
     for recipient in self.mastodon_to:
 
-        self.logger.info(f"...toot to {recipient}...")
+        self.logger.info(f"...toot to {recipient}")
 
         media = None
         # upload picture if applicable
@@ -36,12 +36,12 @@ def post(self):
                             mastodon.me().id, pinned=True
                         ):
                             self.logger.info(
-                                f"unpinning previous toot {pinned_toot.id}"
+                                f"...unpinning previous toot {pinned_toot.id}"
                             )
                             resp = mastodon.status_unpin(pinned_toot.id)
                             self.logger.debug(f"{resp}")
                     resp = mastodon.status_pin(toot.id)
-                    self.logger.info(f"pinned toot")
+                    self.logger.info(f"...pinned toot")
                     self.logger.debug(f"{resp}")
                 except Exception as e:
                     self.logger.error("failed to pin mastodon status:")

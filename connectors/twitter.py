@@ -2,7 +2,7 @@ import tweepy
 
 
 def post(self):
-    self.logger.info("...tweet...")
+    self.logger.info("...tweet")
 
     try:
         auth = tweepy.OAuthHandler(self.tw_CONSUMER_KEY, self.tw_CONSUMER_SECRET)

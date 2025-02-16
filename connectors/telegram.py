@@ -10,7 +10,7 @@ def post(self):
         return
 
     for recipient in self.telegram_to:
-        self.logger.info(f"...telegramming {recipient}...")
+        self.logger.info(f"...telegramming {recipient}")
 
         try:
             resp = bot.sendMessage(int(recipient), self.tw_text)

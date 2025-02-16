@@ -7,7 +7,7 @@ from atproto import (
 
 
 def post(self):
-    self.logger.info(f"...posting on bluesky...")
+    self.logger.info(f"...posting on bluesky")
 
     # log in to bluesky.social
     try:

@@ -26,7 +26,7 @@ def post(self):
             server.login(self.mail_USER, self.mail_PW)
             server.sendmail(self.mail_from, TO, msg.as_string())
             server.close()
-            self.logger.info("successfully sent the mail to " + ", ".join(TO))
+            self.logger.info("...sent mail to " + ", ".join(TO))
         except:
             self.logger.error("failed to send mail")
             traceback.print_exc()

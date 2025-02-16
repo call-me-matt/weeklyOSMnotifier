@@ -3,7 +3,7 @@ import re
 
 
 def post(self):
-    self.logger.info(f"...posting to josm...")
+    self.logger.info(f"...posting to josm")
 
     with xmlrpc.client.ServerProxy(
         f"https://{self.josm_USER}:{self.josm_PW}@josm.openstreetmap.de/login/xmlrpc"
