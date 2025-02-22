@@ -66,6 +66,7 @@ josm_body: |
   be: * {c.publishdate_dot} **weeklyOSM**: Штотыднёвы агляд навін OSM, выпуск [https://www.weeklyosm.eu/archives/{c.url_nr} №{c.url_nr}], даступны онлайн на англійскай і некалькіх іншых мовах
   sk: * {c.publishdate_dot} **weeklyOSM**: Týždenný sumár noviniek v OSM, vydanie [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], je už dostupný online v angličtine.
   sr@latin: * {c.publishdate_dot} **weeklyOSM**: Nedeljna tura vesti iz OSM sveta, problem zaveden pod brojem [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], od sada je dostupna na engleskom jeziku
+  sv: * {c.publishdate_iso} **weeklyOSM**: Veckosammanfattningen av OSM-nyheter, nummer [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], är nu tillgänglig.
   uk: * {c.publishdate_dot} **weeklyOSM**: Щотижневий огляд новин OSM, випуск [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], доступний англійською та іншими мовами
   zh_CN: * {c.publishdate_iso} **weeklyOSM**：一周一次的 OSM 消息汇报，[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]期中国华语版本已经上线。
   zh_TW: * {c.publishdate_iso} **weeklyOSM**：一週一次的 OSM 消息彙報，[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]期台灣華語版本已經上線。
