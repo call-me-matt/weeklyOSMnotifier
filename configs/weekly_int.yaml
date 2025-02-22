@@ -57,6 +57,7 @@ josm_body: |
   ja: * {c.publishdate_iso} **週刊OSM**: OSMニュースの1週間総まとめ。[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]が公開されています。
   ko: * {c.publishdate_iso} **주간OSM**: 이번 주의 오픈스트리트맵 관련 소식을 전해주는 주간OSM [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}호]가 올라왔습니다
   lt: * {c.publishdate_iso} **weeklyOSM**: Savaitinė OSM naujienų santrauka [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] yra prieinama anglų kalba
+  nb: * {c.publishdate_dot} **weeklyOSM**: Den ukentlige oppsummeringen av OSM-nyheter, utgave [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er nå tilgjengelig.
   nl: * {c.publishdate_dash} **weeklyOSM**: De wekelijkse verzameling nieuws over OSM, uitgave [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], is nu online beschikbaar in het Engels
   pl: * {c.publishdate_dot} **Tygodnik OSM**: [https://www.weeklyosm.eu/archives/{c.url_nr} nr {c.post_nr}] cotygodniowego podsumowania wiadomości ze świata OSM jest już dostępny.
   pt: * {c.publishdate_slash} **semanárioOSM**: A edição [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] do resumo semanal de notícias do OSM está disponível.
