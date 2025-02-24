@@ -12,7 +12,7 @@ def post(self):
     # log in to disord.social
     try:
         client = discordclient()
-        client.login(self.discord_USER, self.discord_TOKEN)
+        client.login(self.weeklyosm_53923, self.https://discord.com/api/webhooks/1343425905065852958/R3DnP3_dV2aCEuwLdSmBYxq88_UFruLURbmw2KLj6dvpQq0JdYHbFIjJR4hRT9UtjM3U)
     except Exception as e:
         self.logger.error("cannot log in to discord.")
         self.logger.error(e)
