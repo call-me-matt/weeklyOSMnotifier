@@ -1,5 +1,6 @@
 import traceback
 import requests
+import time
 
 
 def post(self):
@@ -32,10 +33,30 @@ def post(self):
             "Accept": "application/json",
         }
 
-        response = requests.post(FORUM_API, json=data, headers=headers)
+        retries = 3
+        while retries > 0:
+            retries = retries - 1
+            response = requests.post(FORUM_API, json=data, headers=headers)
+            self.logger.debug(f"...json response: {response.json()}")
+            if response.status_code == 200:
+                break
+            elif response.status_code == 429:
+                # try again after a short wait time
+                self.logger.warning(
+                    "...abgelehnt (zu viele Posts). Probiere es in 30s erneut, bitte warten."
+                )
+                time.sleep(30)
+            else:
+                self.logger.error(
+                    f"...fehlgeschlagen mit status code {response.status_code}"
+                )
+                break
 
-        self.logger.info(f"...status code {response.status_code}")
-        self.logger.debug(f"JSON Response: {response.json()}")
+        if response.status_code == 429:
+            # error persists after last retry, show error and guidance:
+            self.logger.error(
+                f'...abgelehnt (zu viele Posts)! Probiere es später noch einmal mit dem Befehl: ./runenvweekly2all.sh --forum "WEEKLY" "{self.lang}"'
+            )
 
     except Exception as e:
         self.logger.error(f"failed to publish - {e}")
