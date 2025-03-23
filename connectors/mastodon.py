@@ -1,4 +1,5 @@
 from mastodon import Mastodon
+from PIL import Image
 
 
 def post(self):
@@ -17,16 +18,42 @@ def post(self):
         media = None
         # upload picture if applicable
         if self.pic:
-            self.logger.debug("sending toot with image")
-            pic = mastodon.media_post(self.pic)
-            media = [pic.id]
+            try:
+                self.logger.debug("sending toot with image")
+                pic = mastodon.media_post(self.pic)
+                media = [pic.id]
+            except Exception as e:
+                self.logger.error(f"failed to upload picture to Mastodon: {e}")
+                media = None
+                # check if it is an animated gif (not supported by mastodon)
+                try:
+                    image = Image.open(self.pic)
+                    if image.is_animated:
+                        self.logger.info("animated gif not supported, extracting frame")
+                        image.seek(0)
+                        image.save(self.pic + ".png", type="png")
+                        pic = mastodon.media_post(self.pic + ".png")
+                        media = [pic.id]
+                except:
+                    self.logger.error(
+                        f"failed to extract frame from animated gif. continuing without image. {e}"
+                    )
+                    media = None
 
         # toot!
         if self.lang == "int":
             # this is the public post (no receipients will be considered for 'int' language)
-            toot = mastodon.status_post(
-                self.tw_text, language=self.lang, media_ids=media, visibility="public"
-            )
+            try:
+                toot = mastodon.status_post(
+                    self.tw_text,
+                    language=self.lang,
+                    media_ids=media,
+                    visibility="public",
+                )
+            except Exception as e:
+                self.logger.error(f"failed to post to Mastodon, aborting. {e}")
+                return False
+
             self.logger.debug(f"{toot}")
             # pin status
             if self.do_pin_mastodon:
@@ -44,13 +71,17 @@ def post(self):
                     self.logger.info(f"...pinned toot")
                     self.logger.debug(f"{resp}")
                 except Exception as e:
-                    self.logger.error("failed to pin mastodon status:")
-                    self.logger.error(e)
+                    self.logger.error(f"failed to pin mastodon status: {e}")
         else:
             # send direct messages
-            toot = mastodon.status_post(
-                self.tw_text + " " + recipient,
-                language=self.lang,
-                media_ids=media,
-                visibility="direct",
-            )
+            try:
+                toot = mastodon.status_post(
+                    self.tw_text + " " + recipient,
+                    language=self.lang,
+                    media_ids=media,
+                    visibility="direct",
+                )
+            except Exception as e:
+                self.logger.error(
+                    f"failed to post direct message on Mastodon to {recipient}"
+                )
