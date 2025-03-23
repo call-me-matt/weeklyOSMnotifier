@@ -32,20 +32,18 @@ def upload_pic(self, mastodon):
                 self.logger.info("image upload successful!")
                 return [pic.id]
         except Exception as e:
-            self.logger.error(
-                f"failed to extract frame from animated gif. continuing without image. {e}"
-            )
+            self.logger.error(f"failed to recover. continuing without image. {e}")
         return None
 
 
-def pin_post(self, mastodon):
+def pin_post(self, mastodon, tootid):
     try:
         if self.do_unpin_mastodon:
             for pinned_toot in mastodon.account_statuses(mastodon.me().id, pinned=True):
                 self.logger.info(f"...unpinning previous toot {pinned_toot.id}")
                 resp = mastodon.status_unpin(pinned_toot.id)
                 self.logger.debug(f"{resp}")
-        resp = mastodon.status_pin(toot.id)
+        resp = mastodon.status_pin(tootid)
         self.logger.info(f"...pinned toot")
         self.logger.debug(f"{resp}")
     except Exception as e:
@@ -83,7 +81,7 @@ def post(self):
             self.logger.debug(f"{toot}")
             # pin status
             if self.do_pin_mastodon:
-                self.pin_post(mastodon)
+                self.pin_post(mastodon, toot.id)
         else:
             # send direct messages
             try:
