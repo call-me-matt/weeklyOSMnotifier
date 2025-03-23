@@ -20,7 +20,7 @@ def upload_pic(self, mastodon):
             image = Image.open(self.pic)
             if image.is_animated:
                 self.logger.info("animated gif not supported, extracting frame")
-                image.seek(0)
+                image.seek(image.n_frames - 1)
                 image.save(self.pic + ".png", type="png")
                 pic = mastodon.media_post(self.pic + ".png")
                 return [pic.id]
