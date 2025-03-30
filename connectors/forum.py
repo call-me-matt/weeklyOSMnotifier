@@ -33,12 +33,14 @@ def post(self):
             "Accept": "application/json",
         }
 
-        retries = 3
-        while retries > 0:
-            retries = retries - 1
+        retries = 0
+        while retries < 3:
+            retries = retries + 1
             response = requests.post(FORUM_API, json=data, headers=headers)
             self.logger.debug(f"...json response: {response.json()}")
             if response.status_code == 200:
+                if retries > 1:
+                    self.logger.info("...erfolgreich!")
                 break
             elif response.status_code == 429:
                 # try again after a short wait time
@@ -55,7 +57,7 @@ def post(self):
         if response.status_code == 429:
             # error persists after last retry, show error and guidance:
             self.logger.error(
-                f'...abgelehnt (zu viele Posts)! Probiere es später noch einmal mit dem Befehl: ./runenvweekly2all.sh --forum "WEEKLY" "{self.lang}"'
+                f'...abgelehnt (zu viele Posts)! Probiere du es später noch einmal mit dem Befehl: ./runenvweekly2all.sh --forum "WEEKLY" "{self.lang}"'
             )
 
     except Exception as e:
