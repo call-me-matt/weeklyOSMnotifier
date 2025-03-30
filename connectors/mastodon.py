@@ -52,7 +52,7 @@ def pin_post(self, mastodon, tootid):
 
 def post(self):
     try:
-        mastodon = self.login()
+        mastodon = login(self)
     except Exception as e:
         self.logger.error(f"could not connect to mastodon - {e}")
         return
@@ -62,7 +62,7 @@ def post(self):
         media = None
         # upload picture if applicable
         if self.pic:
-            media = self.upload_pic(mastodon)
+            media = upload_pic(self, mastodon)
 
         # toot!
         if self.lang == "int":
@@ -81,7 +81,7 @@ def post(self):
             self.logger.debug(f"{toot}")
             # pin status
             if self.do_pin_mastodon:
-                self.pin_post(mastodon, toot.id)
+                pin_post(self, mastodon, toot.id)
         else:
             # send direct messages
             try:
