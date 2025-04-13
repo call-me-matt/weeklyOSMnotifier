@@ -16,23 +16,6 @@ def upload_pic(self, mastodon):
         return [pic.id]
     except Exception as e:
         self.logger.error(f"failed to upload picture to Mastodon: {e}")
-        try:
-            image = Image.open(self.pic)
-            # extract frame if animated:
-            if image.is_animated:
-                self.logger.info("extracting frame from animation")
-                image.seek(image.n_frames - 1)
-                image.save(self.pic + ".png", type="png")
-            if max(image.size) > 500:
-                self.logger.info("reducing image size")
-                image.thumbnail((500, 500), Image.Resampling.LANCZOS)
-                image.save(self.pic + ".png", type="png")
-            if os.path.isfile(self.pic + ".png"):
-                pic = mastodon.media_post(self.pic + ".png")
-                self.logger.info("image upload successful!")
-                return [pic.id]
-        except Exception as e:
-            self.logger.error(f"failed to recover. continuing without image. {e}")
         return None
 
 
