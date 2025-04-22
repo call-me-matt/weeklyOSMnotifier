@@ -55,6 +55,7 @@ josm_body: |
   es: * {c.publishdate_dash} **semanarioOSM** : El resumen semanario de noticias de OSM [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], ya está disponible
   fr: * {c.publishdate_slash} **hebdoOSM**: Le résumé hebdomadaire [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] de l'actualité OpenStreetMap vient de paraître
   hu: * {c.publishdate_dotspace} **weeklyOSM**: Az OSM heti hírösszefoglalójának [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr} része] már elérhető angolul.
+  is: * {c.publishdate_iso} **weeklyOSM**: Vikanleg yfirferð yfir OSM fréttir, útgáfa [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er nú í boði.
   it: * {c.publishdate_dot} **Notiziario Settimanale OSM**: Il riepilogo settimanale [https://www.weeklyosm.eu/archives/{c.url_nr} N. {c.post_nr}] delle notizie su OSM è adesso disponibile
   ja: * {c.publishdate_iso} **週刊OSM**: OSMニュースの1週間総まとめ。[https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}]が公開されています。
   ko: * {c.publishdate_iso} **주간OSM**: 이번 주의 오픈스트리트맵 관련 소식을 전해주는 주간OSM [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}호]가 올라왔습니다
