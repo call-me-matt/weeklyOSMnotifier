@@ -5,7 +5,7 @@ import feedparser
 import requests
 import asyncio
 from PIL import Image
-import urllib.request
+from tempfile import mkstemp
 
 from connectors import (
     bluesky,
@@ -200,9 +200,12 @@ class osmSPAM(object):
         if self.pic:
             try:
                 if self.pic.startswith("http"):
-                    img_download = urllib.request.urlretrieve(self.pic)
-                    self.pic = img_download[0]
-                    image = Image.open(img_download[0], mode="r")
+                    _, picext = os.path.splitext(self.pic)
+                    _, tmpfile = mkstemp(suffix=picext)
+                    if not self.download_file(self.pic, tmpfile):
+                        raise Exception("error downloading image")
+                    self.pic = tmpfile
+                    image = Image.open(self.pic, mode="r")
                 elif os.path.isfile(self.pic):
                     image = Image.open(self.pic)
                 else:
@@ -210,6 +213,27 @@ class osmSPAM(object):
             except Exception as e:
                 self.logger.error(e)
                 exit(1)
+            # remove animations:
+            if image.is_animated:
+                try:
+                    self.do_show_pic = True  # force review
+                    self.logger.info("extracting frame from animation")
+                    image.seek(image.n_frames - 1)
+                    image.save(self.pic + ".png", type="png")
+                    self.pic = self.pic + ".png"
+                    image = Image.open(self.pic)
+                except Exception as e:
+                    self.logger.warning(f"failed to extract frame from animation: {e}")
+            # resize
+            if max(image.size) > 500:
+                try:
+                    self.logger.info("reducing image size")
+                    image.thumbnail((500, 500), Image.Resampling.LANCZOS)
+                    image.save(self.pic + ".png", type="png")
+                    self.pic = self.pic + ".png"
+                    image = Image.open(self.pic)
+                except Exception as e:
+                    self.logger.warning(f"failed to resize image: {e}")
             if self.do_show_pic:
                 image.show()
                 user_input = input("Confirm image? [Y/n] ")
@@ -240,6 +264,20 @@ class osmSPAM(object):
     def check_url_exists(self):
         r = requests.get(self.url)
         return r.status_code == 200
+
+    def download_file(self, url, filename):
+        try:
+            self.logger.debug(f"retrieving {url}, storing as {filename}")
+            response = requests.get(url, stream=True)
+            response.raise_for_status()  # Raises an HTTPError for bad responses
+            # Open the local file to write the downloaded content
+            with open(filename, "wb") as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
+            return True
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f"Error downloading file: {e}")
+            return False
 
     def send_stuff(self):
         self.create_texts()
