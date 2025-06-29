@@ -1,0 +1,11 @@
+asyncio
+atproto
+feedparser
+Mastodon.py
+mautrix
+MechanicalSoup
+pillow
+PyYAML
+requests
+telepot
+tweepy
