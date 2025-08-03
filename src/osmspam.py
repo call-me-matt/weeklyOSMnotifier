@@ -214,7 +214,8 @@ class osmSPAM(object):
                 self.logger.error(e)
                 exit(1)
             # remove animations:
-            if image.is_animated:
+            can_animate = ["GIF", "PNG", "WEBP"]
+            if image.format in can_animate and image.is_animated:
                 try:
                     self.do_show_pic = True  # force review
                     self.logger.info("extracting frame from animation")
