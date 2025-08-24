@@ -22,6 +22,5 @@
 
 *) exceptions:
  *   KO - ok with one reviewer, we only have one contributor
- *   PL - ok if conradoos has reviewed
  *   CZ - not to be published via this workflow
 
