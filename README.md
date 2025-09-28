@@ -89,5 +89,5 @@ test call - for twitter
 
 how weeklyOSM is announced:
 ```
-./runenvweekly2all.sh --bluesky --forum --josm --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,es,pt,ru,ja,fr,it,ko,br,zh,uk"
+./runenvweekly2all.sh --bluesky --forum --josm --mail --mastodon --matrix --telegram --pic auto --showpic  "WEEKLY" "int,de,en,pt,ru,ja,fr,it,ko,br,zh,uk"
 ```
