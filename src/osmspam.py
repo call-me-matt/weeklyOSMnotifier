@@ -3,6 +3,7 @@ from datetime import date
 import re
 import feedparser
 import requests
+import mechanicalsoup
 import asyncio
 from PIL import Image
 from tempfile import mkstemp
@@ -263,8 +264,19 @@ class osmSPAM(object):
         self.josm_body = self.josm_body.format(c=self)
 
     def check_url_exists(self):
-        r = requests.get(self.url)
-        return r.status_code == 200
+        browser = mechanicalsoup.StatefulBrowser()
+        resp = browser.open(self.url, timeout=10)
+        if resp.status_code != 200:
+            return False
+        # check if only fallback language is shown
+        soup = browser.get_current_page()
+        shows_unavailable_msg = (
+            soup.find("p", class_="qtranxs-available-languages-message") is not None
+        )
+        if shows_unavailable_msg:
+            self.logger.warning("Seems to refer to backup language. Skipping.")
+            return False
+        return True
 
     def download_file(self, url, filename):
         try:
@@ -285,7 +297,7 @@ class osmSPAM(object):
         self.logger.info("Check if URL " + self.url + " exists before advertising...")
         if not self.check_url_exists():
             self.logger.error(
-                "URL " + self.url + " seems to be wrong. Skipping " + self.lang
+                "URL " + self.url + " seems not available. Skipping " + self.lang
             )
             return False
 

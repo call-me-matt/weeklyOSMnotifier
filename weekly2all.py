@@ -92,8 +92,8 @@ def main():
                 config.do_show_pic = False
             if not config.send_stuff():
                 error_log.append("failed to publish " + lang)
-        for error in error_log:
-            logger.critical(error)
+    for error in error_log:
+        logger.critical(error)
 
 
 if __name__ == "__main__":
