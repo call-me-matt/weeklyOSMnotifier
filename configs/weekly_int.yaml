@@ -64,6 +64,7 @@ josm_body: |
   lt: * {c.publishdate_iso} **weeklyOSM**: Savaitinė OSM naujienų santrauka [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] yra prieinama anglų kalba
   nb: * {c.publishdate_dot} **weeklyOSM**: Den ukentlige oppsummeringen av OSM-nyheter, utgave [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er nå tilgjengelig.
   nl: * {c.publishdate_dash} **weeklyOSM**: De wekelijkse verzameling nieuws over OSM, uitgave [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], is nu online beschikbaar in het Engels
+  nn: * {c.publishdate_dot} **weeklyOSM**: Den vekelege oppsummeringa av OSM-nyhende, utgåve [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}], er no tilgjengeleg.
   pl: * {c.publishdate_dot} **Tygodnik OSM**: [https://www.weeklyosm.eu/archives/{c.url_nr} nr {c.post_nr}] cotygodniowego podsumowania wiadomości ze świata OSM jest już dostępny.
   pt: * {c.publishdate_slash} **semanárioOSM**: A edição [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] do resumo semanal de notícias do OSM está disponível.
   pt_BR: * {c.publishdate_slash} **semanárioOSM**: A edição [https://www.weeklyosm.eu/archives/{c.url_nr} #{c.post_nr}] do resumo semanal de notícias do OSM está disponível.
