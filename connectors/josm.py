@@ -35,7 +35,7 @@ def post(self):
             oldcount = oldblock.count("\n") - 1
             if oldcount != newcount:
                 raise ValueError(
-                    f"Number of online translations at https://josm.openstreetmap.de/wiki/StartupPageSource?action=edit ({oldcount-3}) does not match your translations ({newcount-3}). Manually added translation? Manual edit?"
+                    f"Number of online translations at https://josm.openstreetmap.de/wiki/StartupPageSource?action=history ({oldcount-3}) does not match your translations ({newcount-3}). Manually added translation? Manual edit?"
                 )
 
             # Drop the old weekly, insert new one at top
