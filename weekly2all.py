@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 import argparse
 import logging
+import warnings
+
+# Suppress Pydantic warning from atproto library
+warnings.filterwarnings(
+    "ignore", category=Warning, module="pydantic._internal._generate_schema"
+)
 
 from utils import customformatter, configresolver
 

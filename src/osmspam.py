@@ -1,12 +1,18 @@
 import os
 from datetime import date
 import re
+import warnings
 import feedparser
 import requests
 import mechanicalsoup
 import asyncio
 from PIL import Image
 from tempfile import mkstemp
+
+# Suppress Pydantic warning from atproto library
+warnings.filterwarnings(
+    "ignore", category=Warning, module="pydantic._internal._generate_schema"
+)
 
 from connectors import (
     bluesky,
