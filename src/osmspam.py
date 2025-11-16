@@ -128,20 +128,24 @@ class osmSPAM(object):
             ).group(1)
 
         while True:
-            print(f"* weeklyOSM post number: {self.post_nr}")
-            print(f"* wordpress url number: {self.url_nr}")
-            print(f"* date from: {self.date_from}")
-            print(f"* date to: {self.date_to}")
-            print(f"* image path: {self.pic}")
-            user_input = input("Confirm? [Y/n] ")
-            if not user_input or user_input in ("Y", "y"):
-                break
-            self.logger.warning("Values not confirmed, please input manually")
-            self.post_nr = input("weeklyOSM post number? ")
-            self.url_nr = input("wordpress url number? ")
-            self.date_from = input("date from? ")
-            self.date_to = input("date to? ")
-            self.pic = input("image path? ")
+            try:
+                print(f"* weeklyOSM post number: {self.post_nr}")
+                print(f"* wordpress url number: {self.url_nr}")
+                print(f"* date from: {self.date_from}")
+                print(f"* date to: {self.date_to}")
+                print(f"* image path: {self.pic}")
+                user_input = input("Confirm? [Y/n] ")
+                if not user_input or user_input in ("Y", "y"):
+                    break
+                self.logger.warning("Values not confirmed, please input manually")
+                self.post_nr = input("weeklyOSM post number? ")
+                self.url_nr = input("wordpress url number? ")
+                self.date_from = input("date from? ")
+                self.date_to = input("date to? ")
+                self.pic = input("image path? ")
+            except KeyboardInterrupt:
+                self.logger.info("\nAborted by user.")
+                exit(0)
 
     def assign_safe(self, name, conf):
         if name in conf:
@@ -244,10 +248,14 @@ class osmSPAM(object):
                     self.logger.warning(f"failed to resize image: {e}")
             if self.do_show_pic:
                 image.show()
-                user_input = input("Confirm image? [Y/n] ")
+                try:
+                    user_input = input("Confirm image? [Y/n] ")
+                except KeyboardInterrupt:
+                    self.logger.info("\nAborted by user.")
+                    exit(0)
                 if user_input and user_input not in ("Y", "y"):
                     self.logger.warning("User aborted for wrong image.")
-                    exit()
+                    exit(1)
                 self.do_show_pic = False
 
     def set_date_str(self):
