@@ -47,7 +47,7 @@ def post(self):
                 wikicontent,
                 {"comment": "Semi-automatic weeklyOSM update"},
             )
-            self.logger.info("Update successful")
+            self.logger.debug("Update successful")
         except xmlrpc.client.ProtocolError as e:
             self.logger.error(f"An XML-RPC error occurred: {e}")
         except ValueError as e:
