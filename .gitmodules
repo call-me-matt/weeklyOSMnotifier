@@ -1,3 +1,0 @@
-[submodule "configs/private"]
-	path = configs/private
-	url = git@github.com:call-me-matt/weeklyOSMnotifier-secrets.git
