@@ -98,6 +98,7 @@ class osmSPAM(object):
         self.do_twitter = vars(args)["twitter"]
 
     def crawl_latest_weekly(self):
+        self.logger.info("Retrieving latest weeklyOSM post...")
         self.post_nr = ""  # wochennotiznr or weeklyosm nr
         self.url_nr = ""  # wochennotiznr or weeklyosm nr
         self.date_from = ""

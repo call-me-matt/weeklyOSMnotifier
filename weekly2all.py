@@ -9,7 +9,7 @@ warnings.filterwarnings(
     "ignore", category=Warning, module="pydantic._internal._generate_schema"
 )
 
-from utils import customformatter, configresolver
+from utils import customformatter, configresolver, gitchecker
 
 
 def main():
@@ -79,6 +79,9 @@ def main():
     args = argparser.parse_args()
 
     logger.debug(args)
+
+    # Check for git updates before proceeding
+    gitchecker.check_git_updates(logger)
 
     cfr = configresolver.configResolver(logger, args)
     error_log = []
