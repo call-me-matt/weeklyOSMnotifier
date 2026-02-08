@@ -1,0 +1,37 @@
+name: YAML Check
+
+on: [push]
+
+jobs:
+  check-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install GPG, git-crypt, and yamllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg git-crypt yamllint
+
+      - name: Import GPG Key and Unlock git-crypt
+        run: |
+          # Import the github-action repo GPG key added in commit 8fa8c44
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch --yes
+          # Unlock git-crypt using the GPG key
+          git-crypt unlock
+          # Clean up: Remove the imported GPG key
+          # gpg --delete-secret-key D43C9F2F3FC4F227688408F24FA97A5E760D5852 # needs confirmation / tty
+
+      - name: Lint YAML Files (No Content in Logs)
+        run: |
+          # Find and lint YAML files in specified directories
+          find configs -type f \( -name "*.yaml" -o -name "*.yml" \) -print0 | \
+          while IFS= read -r -d '' file; do
+            echo "Linting file: $file"
+            yamllint --strict "$file" || exit 1
+          done
+
+      - name: Re-lock git-crypt (Optional)
+        if: always() # also runs in case of previous errors
+        run: git-crypt lock
