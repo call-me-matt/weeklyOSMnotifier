@@ -13,17 +13,17 @@ tw_text:
     https://www.weeklyosm.eu/pl/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
 mail_body: |
-    Wydanie #{c.post_nr} cotygodniowego przeglądu wiadomości 
-    OSM, zawierające podsumowanie wielu rzeczy, które dzieją 
-    się w świecie OpenStreetMap, jest już dostępne w języku 
+    Wydanie #{c.post_nr} cotygodniowego przeglądu wiadomości
+    OSM, zawierające podsumowanie wielu rzeczy, które dzieją
+    się w świecie OpenStreetMap, jest już dostępne w języku
     polskim:
 
      {c.url}
 
-    Miłej lektury! 
+    Miłej lektury!
 
     Czy wiesz, że możesz samodzielnie przesyłać wiadomości do zamieszczenia na łamach Tygodnika OSM? Zaloguj się do https://osmbc.openstreetmap.de/login przy użyciu swojego konta OSM. Aby dowiedzieć się więcej na temat tego jak napisać własny post, przeczytaj ten poradnik: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
 
-    Tygodnik OSM? 
-    Kto? https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    Tygodnik OSM?
+    Kto? https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages
     Gdzie? https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

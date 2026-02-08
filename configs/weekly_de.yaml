@@ -13,19 +13,19 @@ tw_text:
     https://www.weeklyosm.eu/de/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
 mail_body: |
-    Die Wochennotiz Ausgabe Nr. # {c.post_nr}, ist nun verfügbar - 
+    Die Wochennotiz Ausgabe Nr. # {c.post_nr}, ist nun verfügbar -
     wie immer mit vielen Nachrichten aus dem OSM-Universium:
 
     {c.url}
 
-    Viel Spaß beim Lesen.  
+    Viel Spaß beim Lesen.
 
     Euer Wochennotizteam
 
     Wusstet ihr, dass ihr auch selbst Meldungen für die Wochennotiz
-    einreichen könnt? Einfach auf https://osmbc.openstreetmap.de/ 
-    mit eurem OSM-Benutzerkonto anmelden und dann den Gastzugang benutzen. 
+    einreichen könnt? Einfach auf https://osmbc.openstreetmap.de/
+    mit eurem OSM-Benutzerkonto anmelden und dann den Gastzugang benutzen.
 
-    weeklyOSM? 
-    who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    weeklyOSM?
+    who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages
     where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

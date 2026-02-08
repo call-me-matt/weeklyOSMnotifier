@@ -13,13 +13,13 @@ tw_text:
 bluesky_text: "{c.tw_text}"
 mail_body: |
     OSM ile ilgili haberlerin derlendiği ve OpenStreetMap dünyasındaki pek çok gelişmelerin paylaşıldığı haftalık bülten, {c.post_nr}. bölümüyle çevrimiçi ve Türkçe olarak erişilebilir durumda:
-     
+
     {c.url}
 
-    İyi okumalar! 
+    İyi okumalar!
 
-    weeklyOSM'e sizin de ekleme yapabileceğinizi biliyor muydunuz? Sadece https://osmbc.openstreetmap.de/login adresine OSM hesabınızla giriş yapın. Yeni bir haber yüklemek için yapmanız gerekenleri buradan öğrenebilirsiniz: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+    weeklyOSM'e sizin de ekleme yapabileceğinizi biliyor muydunuz? Sadece https://osmbc.openstreetmap.de/login adresine OSM hesabınızla giriş yapın. Yeni bir haber yüklemek için yapmanız gerekenleri buradan öğrenebilirsiniz: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
 
-    weeklyOSM? 
-    Kim?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    weeklyOSM?
+    Kim?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages
     Nerede?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

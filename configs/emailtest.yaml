@@ -14,7 +14,7 @@ mail_to:
     - "test@test.com" # this property gets overwritten in the file with the same name found in configs/private/mailto/ folder
 mail_body: |
     This is test...
-    This is _only_ a test! 
+    This is _only_ a test!
     With a link: {c.url}
 
 
