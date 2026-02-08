@@ -1,24 +1,27 @@
-lang: 'en'
+lang: "en"
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "The new weeklyOSM #{c.post_nr} is out — read this week’s articles in English and catch up on the latest news from the #OpenStreetMap community: https://www.weeklyosm.eu/archives/{c.url_nr}"
+mail_subject: "weeklyOSM #{c.post_nr} {c.daterange_str}"
+tw_text:
+    "The new weeklyOSM #{c.post_nr} is out — read this week’s articles in
+    English and catch up on the latest news from the #OpenStreetMap community:
+    https://www.weeklyosm.eu/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
-mail_body: | 
-  The weekly round-up of OSM news, issue # {c.post_nr},
-  is now available online in English, giving as always a summary of a lot of things happening in the openstreetmap world:
-  
-  https://www.weeklyosm.eu/archives/{c.url_nr}
+mail_body: |
+    The weekly round-up of OSM news, issue # {c.post_nr},
+    is now available online in English, giving as always a summary of a lot of things happening in the openstreetmap world:
 
-  Enjoy! 
+    https://www.weeklyosm.eu/archives/{c.url_nr}
 
-  Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+    Enjoy! 
 
-  weeklyOSM? 
-  who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    Did you know that you can also submit messages for the weeklyOSM? Just log in to https://osmbc.openstreetmap.de/login with your OSM account. Read more about how to write a post here: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm 
+
+    weeklyOSM? 
+    who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

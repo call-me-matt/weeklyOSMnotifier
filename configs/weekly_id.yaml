@@ -1,23 +1,26 @@
-lang: 'id'
+lang: "id"
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'OSM Mingguan #{c.post_nr} {c.daterange_str}'
-tw_text: "weeklyOSM edisi {c.post_nr} kini tersedia dalam Bahasa Indonesia kumpulan berita terkini mengenai #openstreetmap #osm dari seluruh penjuru dunia https://www.weeklyosm.eu/id/archives/{c.url_nr}"
+mail_subject: "OSM Mingguan #{c.post_nr} {c.daterange_str}"
+tw_text:
+    "weeklyOSM edisi {c.post_nr} kini tersedia dalam Bahasa Indonesia kumpulan
+    berita terkini mengenai #openstreetmap #osm dari seluruh penjuru dunia
+    https://www.weeklyosm.eu/id/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
-mail_body: | 
-  Kabar mingguan OSM edisi # {c.post_nr} sudah terbit dalam Bahasa Indonesia, menyajikan rangkuman berita mengenai hal-hal yang terjadi di dunia OpenStreetMap dalam minggu ini :
+mail_body: |
+    Kabar mingguan OSM edisi # {c.post_nr} sudah terbit dalam Bahasa Indonesia, menyajikan rangkuman berita mengenai hal-hal yang terjadi di dunia OpenStreetMap dalam minggu ini :
 
-  {c.url}
+    {c.url}
 
-  Selamat membaca!
+    Selamat membaca!
 
-  Anda juga dapat berkontribusi dengan mengirimkan artikel untuk diterbitkan dalam edisi selanjutnya. Kunjungi https://osmbc.openstreetmap.de/login menggunakan akun OpenStreetMap Anda. Untuk informasi lebih lanjut, silahkan simak panduan berikut : https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+    Anda juga dapat berkontribusi dengan mengirimkan artikel untuk diterbitkan dalam edisi selanjutnya. Kunjungi https://osmbc.openstreetmap.de/login menggunakan akun OpenStreetMap Anda. Untuk informasi lebih lanjut, silahkan simak panduan berikut : https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
 
-  weeklyOSM? 
-  who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    weeklyOSM? 
+    who: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    where?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

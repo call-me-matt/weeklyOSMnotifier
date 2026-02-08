@@ -1,26 +1,29 @@
-lang: 'pl'
+lang: "pl"
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim! Najnowsze wieści ze świata #openstreetmap #osm https://www.weeklyosm.eu/pl/archives/{c.url_nr}"
+mail_subject: "weeklyOSM #{c.post_nr} {c.daterange_str}"
+tw_text:
+    "Wydanie {c.post_nr} Tygodnika OSM już teraz dostępne w języku polskim!
+    Najnowsze wieści ze świata #openstreetmap #osm
+    https://www.weeklyosm.eu/pl/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
-mail_body: | 
-  Wydanie #{c.post_nr} cotygodniowego przeglądu wiadomości 
-  OSM, zawierające podsumowanie wielu rzeczy, które dzieją 
-  się w świecie OpenStreetMap, jest już dostępne w języku 
-  polskim:
-  
-   {c.url}
+mail_body: |
+    Wydanie #{c.post_nr} cotygodniowego przeglądu wiadomości 
+    OSM, zawierające podsumowanie wielu rzeczy, które dzieją 
+    się w świecie OpenStreetMap, jest już dostępne w języku 
+    polskim:
 
-  Miłej lektury! 
+     {c.url}
 
-  Czy wiesz, że możesz samodzielnie przesyłać wiadomości do zamieszczenia na łamach Tygodnika OSM? Zaloguj się do https://osmbc.openstreetmap.de/login przy użyciu swojego konta OSM. Aby dowiedzieć się więcej na temat tego jak napisać własny post, przeczytaj ten poradnik: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+    Miłej lektury! 
 
-  Tygodnik OSM? 
-  Kto? https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  Gdzie? https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    Czy wiesz, że możesz samodzielnie przesyłać wiadomości do zamieszczenia na łamach Tygodnika OSM? Zaloguj się do https://osmbc.openstreetmap.de/login przy użyciu swojego konta OSM. Aby dowiedzieć się więcej na temat tego jak napisać własny post, przeczytaj ten poradnik: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+
+    Tygodnik OSM? 
+    Kto? https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    Gdzie? https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

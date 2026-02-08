@@ -1,26 +1,27 @@
-lang: 'br' ### overwrite language
+lang: "br" ### overwrite language
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'semanárioOSM Nº {c.post_nr} {c.daterange_str}'
-tw_text: "O semanário nº {c.post_nr} está disponível em *Português do Brasil*. 
-Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/br/archives/{c.url_nr}"
+mail_subject: "semanárioOSM Nº {c.post_nr} {c.daterange_str}"
+tw_text: |
+    O semanário nº {c.post_nr} está disponível em *Português do Brasil*.
+    Conheça as novidades do mundo #openstreetmap https://www.weeklyosm.eu/br/archives/{c.url_nr}
 bluesky_text: "{c.tw_text}"
 mail_body: |
-  Bom dia,
+    Bom dia,
 
-  O semanárioOSM Nº {c.post_nr}, o resumo de tudo o que acontece no mundo OpenStreetMap, está publicado em *Português do Brasil* : 
-  
-  {c.url}
+    O semanárioOSM Nº {c.post_nr}, o resumo de tudo o que acontece no mundo OpenStreetMap, está publicado em *Português do Brasil* :
 
-  Aproveite!
+    {c.url}
 
-  Você sabia que também pode enviar mensagens para o OSM semanal/semanárioOSMſ sem ser membro? Basta fazer login em https://osmbc.openstreetmap.de/login com sua conta OSM e usar a conta de convidado. Leia mais sobre como escrever um post aqui: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+    Aproveite!
 
-  semanarioOSM? 
-  Quem?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  Onde?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    Você sabia que também pode enviar mensagens para o OSM semanal/semanárioOSMſ sem ser membro? Basta fazer login em https://osmbc.openstreetmap.de/login com sua conta OSM e usar a conta de convidado. Leia mais sobre como escrever um post aqui: https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm
+
+    semanarioOSM?
+    Quem?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages
+    Onde?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

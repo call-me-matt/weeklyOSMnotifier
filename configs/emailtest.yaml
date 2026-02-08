@@ -1,5 +1,5 @@
-context: 'EMAILTEST'
-lang: 'en'
+context: "EMAILTEST"
+lang: "en"
 runnable: False
 mail_smtp_host: "www.weeklyosm.eu"
 mail_smtp_port: 587
@@ -9,18 +9,18 @@ do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twi
 do_mastodon: False #" wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
 do_forum: False
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'Python email test'
+mail_subject: "Python email test"
 mail_to:
- - "test@test.com" # this property gets overwritten in the file with the same name found in configs/private/mailto/ folder
-mail_body: | 
-  This is test...
-  This is _only_ a test! 
-  With a link: {c.url}
+    - "test@test.com" # this property gets overwritten in the file with the same name found in configs/private/mailto/ folder
+mail_body: |
+    This is test...
+    This is _only_ a test! 
+    With a link: {c.url}
 
 
-  and empty lines:
+    and empty lines:
 
 
-  lots!
+    lots!
 
-  If you can read this be happy! the spamtool is now available with yaml-config files!
+    If you can read this be happy! the spamtool is now available with yaml-config files!

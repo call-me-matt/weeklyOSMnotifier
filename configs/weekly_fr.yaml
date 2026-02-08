@@ -1,25 +1,27 @@
-lang: 'fr' ### overwrite language
+lang: "fr" ### overwrite language
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'hebdoOSM Nº {c.post_nr} {c.daterange_str}'
-tw_text: "Une semaine d'actualité #OpenStreetMap : hebdoOSM n°{c.post_nr} à lire *en français* sur https://www.weeklyosm.eu/fr/archives/{c.url_nr}"
+mail_subject: "hebdoOSM Nº {c.post_nr} {c.daterange_str}"
+tw_text:
+    "Une semaine d'actualité #OpenStreetMap : hebdoOSM n°{c.post_nr} à lire *en
+    français* sur https://www.weeklyosm.eu/fr/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
 mail_body: |
-  Bonjour,
+    Bonjour,
 
-  Le résumé hebdomadaire n° {c.post_nr} de l'actualité OpenStreetMap vient de paraître *en français*. Un condensé à retrouver sur :
+    Le résumé hebdomadaire n° {c.post_nr} de l'actualité OpenStreetMap vient de paraître *en français*. Un condensé à retrouver sur :
 
-  {c.url}
+    {c.url}
 
-  Bonne lecture !
+    Bonne lecture !
 
-  Saviez-vous que vous pouvez vous aussi soumettre des messages pour la note hebdomadaire sans être membre ? Il vous suffit de vous connecter sur https://osmbc.openstreetmap.de/login avec votre compte OSM. Pour en savoir plus sur la rédaction d'un article, cliquez ici: https://www.weeklyosm.eu/fr/this-news-should-be-in-weeklyosm
+    Saviez-vous que vous pouvez vous aussi soumettre des messages pour la note hebdomadaire sans être membre ? Il vous suffit de vous connecter sur https://osmbc.openstreetmap.de/login avec votre compte OSM. Pour en savoir plus sur la rédaction d'un article, cliquez ici: https://www.weeklyosm.eu/fr/this-news-should-be-in-weeklyosm
 
-  hebdoOSM ? 
-  Qui : https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  Où : https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    hebdoOSM ? 
+    Qui : https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    Où : https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

@@ -1,23 +1,25 @@
-lang: 'es' ### overwrite language
+lang: "es" ### overwrite language
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'semanarioOSM Nº {c.post_nr} {c.daterange_str}'
-tw_text: "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del mundo #openstreetmap #osm - https://www.weeklyosm.eu/es/archives/{c.url_nr}"
+mail_subject: "semanarioOSM Nº {c.post_nr} {c.daterange_str}"
+tw_text:
+    "El semanario Nº {c.post_nr} de OSM en *ESPAÑOL* está online, noticias del
+    mundo #openstreetmap #osm - https://www.weeklyosm.eu/es/archives/{c.url_nr}"
 bluesky_text: "{c.tw_text}"
 mail_body: |
-  Hola, el semanario Nº {c.post_nr}, el sumario de mucho lo que está ocurriendo en el mundo de openstreetmap está en línea en *español*:
+    Hola, el semanario Nº {c.post_nr}, el sumario de mucho lo que está ocurriendo en el mundo de openstreetmap está en línea en *español*:
 
-  {c.url}
+    {c.url}
 
-  ¡Disfruta!
+    ¡Disfruta!
 
-  ¿Sabías que también puedes enviar mensajes para la nota semanal sin ser miembro? Simplemente ingresa a https://osmbc.openstreetmap.de/login con tu cuenta de OSM. Lee más sobre cómo escribir una publicación aquí: https://www.weeklyosm.eu/es/this-news-should-be-in-weeklyosm 
+    ¿Sabías que también puedes enviar mensajes para la nota semanal sin ser miembro? Simplemente ingresa a https://osmbc.openstreetmap.de/login con tu cuenta de OSM. Lee más sobre cómo escribir una publicación aquí: https://www.weeklyosm.eu/es/this-news-should-be-in-weeklyosm 
 
-  semanarioOSM? 
-  ¿Dónde?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-  ¿Quién?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3
+    semanarioOSM? 
+    ¿Dónde?: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+    ¿Quién?: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.3

@@ -1,23 +1,26 @@
-lang: 'ja'
+lang: "ja"
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
 #do_twitter: False  # uncomment in order to ignore "--twitter" for this language
 #do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False   # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False      # comment to send an additional josm wiki post in this language if "--josm" is called
+do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
+do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
-mail_subject: 'weeklyOSM #{c.post_nr} {c.daterange_str}'
-tw_text: "週刊OSM issue {c.post_nr} が公開されています。世界の #OpenStreetMap 関連ニュースはこちらからhttps://www.weeklyosm.eu/ja/archives/{c.url_nr} … どうぞご覧ください！ #osmjp"
+mail_subject: "weeklyOSM #{c.post_nr} {c.daterange_str}"
+tw_text:
+    "週刊OSM issue {c.post_nr} が公開されています。世界の #OpenStreetMap
+    関連ニュースはこちらからhttps://www.weeklyosm.eu/ja/archives/{c.url_nr} …
+    どうぞご覧ください！ #osmjp"
 bluesky_text: "{c.tw_text}"
-mail_body: | 
-   週刊OSMの第{c.post_nr}号が公開されました。OpenStreetMapに関する出来事を毎週お届けしています。
+mail_body: |
+    週刊OSMの第{c.post_nr}号が公開されました。OpenStreetMapに関する出来事を毎週お届けしています。
 
-   {c.url}
+    {c.url}
 
-    ぜひご覧ください！
+     ぜひご覧ください！
 
-    週刊OSMに掲載したいニュースをお持ちの方は、 https://osmbc.openstreetmap.de/login からぜひ情報をお寄せください。詳細は https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm をお読みください。
+     週刊OSMに掲載したいニュースをお持ちの方は、 https://osmbc.openstreetmap.de/login からぜひ情報をお寄せください。詳細は https://www.weeklyosm.eu/this-news-should-be-in-weeklyosm をお読みください。
 
-    週刊OSMは世界の各地からお届けしています。
-    制作メンバー: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
-    地域: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.
+     週刊OSMは世界の各地からお届けしています。
+     制作メンバー: https://wiki.openstreetmap.org/wiki/WeeklyOSM#Available_Languages 
+     地域: https://umap.openstreetmap.fr/en/map/weeklyosm-is-currently-produced-in_56718#2/8.6/108.

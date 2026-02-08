@@ -1,5 +1,5 @@
-context: 'WEEKLYTEST'
-lang: 'ko'
+context: "WEEKLYTEST"
+lang: "ko"
 runnable: True
 url: "https://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"
 do_mail: False
@@ -8,4 +8,6 @@ do_twitter: True
 do_mastodon: False
 do_josm: False
 #tw_text = "Die OpenStreetMap Wochennotiz Nr. {c.post_nr} ist da, wie immer mit allen Neuigkeiten aus der #openstreetmap #osm Welt: {c.url}"
-tw_text: "#openstreetmap #osm 관련 뉴스를 전하는 주간OSM이 {c.post_nr}번째 기사를 발행했습니다! https://www.weeklyosm.eu/archives/{c.url_nr}"
+tw_text:
+    "#openstreetmap #osm 관련 뉴스를 전하는 주간OSM이 {c.post_nr}번째 기사를
+    발행했습니다! https://www.weeklyosm.eu/archives/{c.url_nr}"
