@@ -1,3 +1,4 @@
+---
 # This creates a hierarchy of files which are loaded after each other
 # Each config which is loaded passes its settings down to files which are loaded as children
 # Children as such can override settings from their parents

@@ -1,3 +1,4 @@
+---
 context: "WEEKLY"
 url: "https://www.weeklyosm.eu/{c.lang}/archives/{c.url_nr}/"
 mail_smtp_host: "www.weeklyosm.eu"

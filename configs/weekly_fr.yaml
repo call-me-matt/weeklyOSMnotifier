@@ -1,3 +1,4 @@
+---
 lang: "fr" ### overwrite language
 runnable: True
 #do_mail: False     # uncomment in order to ignore "--mail" for this language
