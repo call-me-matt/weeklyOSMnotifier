@@ -1,14 +1,14 @@
 ---
 context: "EMAILTEST"
 lang: "en"
-runnable: False
+runnable: false
 mail_smtp_host: "www.weeklyosm.eu"
 mail_smtp_port: 587
 url: "https://www.weeklyosm.eu/"
-do_mail: True # " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
-do_twitter: False #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
-do_mastodon: False #" wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
-do_forum: False
+do_mail: true # " wenn dieses auskommentiert wird, wird der paramterer "--mail" ignoriert
+do_twitter: false #" wenn dieses auskommentiert wird, wird der paramterer "--twitter" ignoriert und NICHT getwittert
+do_mastodon: false #" wenn dieses auskommentiert wird, wird der paramterer "--mastodon" ignoriert und NICHT getootet
+do_forum: false
 mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: "Python email test"
 mail_to:

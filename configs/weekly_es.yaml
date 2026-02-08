@@ -1,11 +1,11 @@
 ---
 lang: "es" ### overwrite language
-runnable: True
-#do_mail: False     # uncomment in order to ignore "--mail" for this language
-#do_twitter: False  # uncomment in order to ignore "--twitter" for this language
-#do_mastodon: False # uncomment in order to ignore "--mastodon" for this language
-do_bluesky: False # comment to send an additional post in this language if "--bluesky" is called
-do_josm: False # comment to send an additional josm wiki post in this language if "--josm" is called
+runnable: true
+#do_mail: false     # uncomment in order to ignore "--mail" for this language
+#do_twitter: false  # uncomment in order to ignore "--twitter" for this language
+#do_mastodon: false # uncomment in order to ignore "--mastodon" for this language
+do_bluesky: false # comment to send an additional post in this language if "--bluesky" is called
+do_josm: false # comment to send an additional josm wiki post in this language if "--josm" is called
 mail_from: "weeklyteam <{c.mail_USER}>"
 mail_subject: "semanarioOSM Nº {c.post_nr} {c.daterange_str}"
 tw_text:
