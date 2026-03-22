@@ -279,18 +279,27 @@ class osmSPAM(object):
         self.josm_body = self.josm_body.format(c=self)
 
     def check_url_exists(self):
-        browser = mechanicalsoup.StatefulBrowser()
-        resp = browser.open(self.url, timeout=10)
+        while True:
+            try:
+                browser = mechanicalsoup.StatefulBrowser()
+                resp = browser.open(self.url, timeout=30)
+                break
+            except Exception as e:
+                self.logger.error(f"Timeout checking URL, retrying...")
         if resp.status_code != 200:
             return False
         # check if only fallback language is shown
-        soup = browser.get_current_page()
-        shows_unavailable_msg = (
-            soup.find("p", class_="qtranxs-available-languages-message") is not None
-        )
-        if shows_unavailable_msg:
-            self.logger.warning("Seems to refer to backup language. Skipping.")
-            return False
+        try:
+            soup = browser.get_current_page()
+            shows_unavailable_msg = (
+                soup.find("p", class_="qtranxs-available-languages-message") is not None
+            )
+            if shows_unavailable_msg:
+                self.logger.warning("Seems to refer to backup language. Skipping.")
+                return False
+        except Exception as e:
+            self.logger.warning(f"Failed to check for backup language message: {e}")
+            return True
         return True
 
     def download_file(self, url, filename):
